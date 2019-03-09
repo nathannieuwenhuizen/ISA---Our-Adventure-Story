@@ -10,8 +10,10 @@
 </HEAD>
 
 <BODY>
-
-<?php 	include 'assets/inc/footer.inc'; ?>
+<?php 	
+include 'assets/php/connect.php'; 
+include 'assets/inc/footer.inc'; 
+?>
 </BODY>
 
 </HTML>
