@@ -1,0 +1,118 @@
+//box shadow
+$box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 20px;
+$drop-shadow:  drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.5));
+$box-shadow-color: rgba(0, 0, 0, 0.5); 
+$box_border_color: grey;
+
+//navigation colors
+$nav-color: rgb(61, 61, 61);
+$nav-highlighted-color: rgb(27, 27, 27);
+$nav-light-color: rgb(241, 241, 241);
+
+//colors
+$dark-color: rgb(38, 38, 74);
+$medium-color: 0;
+$light-color: 0;
+
+//link colors
+$p_color: #000;
+$h_color: #336;
+$a_color: rgb(38, 38, 74);
+$a_hover_color: #f00;
+$a_click_color: rgb(38, 38, 74);
+
+$footer_color: rgba(255, 255, 255, 0.7);
+
+$line_duration: 1s;
+$image_duration: 0.5s;
+
+
+@mixin transform($property) {
+    -webkit-transform: $property;
+    -ms-transform: $property;
+    transform: $property;
+}
+
+//image-button
+%image-button {
+    position: relative;
+    display: inline-block;
+
+    box-shadow: $box-shadow;
+    transition: opacity 0.15s ease-in-out;
+
+    border-radius: 50%;
+    border: 2px solid grey;
+    border-radius: 50%;
+
+    background: url(page_elements/github.png);
+    background-color: aliceblue;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.8;
+    // outline: 1px dotted red;
+}
+%image-button:hover{
+    opacity: 1;
+}
+
+%border-button {
+        // @extend %image-button;
+        // width: 60px;
+        display: inline-block;
+        margin: 5px;
+        width: 60%;
+        // height: 60px;    
+        background: darkred;
+        color: white;
+        padding: 5px 10px;
+        float: none;
+        clear: both;
+        border: 1px solid darkred;
+        transition: all 300ms;
+
+    
+}
+%border-button:hover{
+    background: white;
+    color: darkred;
+    border: 5px solid darkred;
+
+}
+
+%speak{
+    border: 5px solid black;
+    width: auto;
+    height: auto;
+    text-align: left;
+    border-radius: 10px;
+    border: 5px solid black;
+    background: black;
+    color: white;
+    position: absolute;
+    top: 10%;
+    left: 75%;
+    padding: 5px;
+    opacity: 0.7;
+    transition: opacity 200ms;
+}
+%speak {
+    // position: absolute;
+    background: black;
+}
+
+%speak:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 20px solid transparent;
+    border-right-color: black;
+    border-left: 0;
+    border-bottom: 0;
+    margin-top: -10px;
+    margin-left: -20px;
+}
