@@ -1,8 +1,64 @@
-@import 'data';
-@import 'component';
+//@import 'data';
+//@import 'component';
 body {
-
-    p {
-        color: black;
+    .wrapper{
+        border: 5px solid black;
+        width: 80%;
+        margin-left: 10%;
+        h1 {
+            border-bottom: 2px solid black;
+            width: 50%;
+        }
+        .storywrapper{
+            padding: 50px;
+            .chooseMessage {
+                background-color: azure;
+                width: 50%;
+                text-align: center;
+                vertical-align: middle;
+                margin-left: 25%;
+                height: 50px;
+            }
+        }
+        .duoWrapper {
+            border: 5px solid red;
+            height: auto;
+            overflow: auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            .leftside{
+                float: left;
+                width: 50%;
+            }
+            .rightside{
+                float: left;
+                width: 50%;
+                height: 300px;
+                position: -webkit-sticky;
+                position: sticky;
+                top: 20px;
+                img{
+                    max-width: 100%;
+                }
+            }
+        }
+        .questionPanel{
+            margin-left: 25%;
+            width: 50%;
+            text-align: center;
+        }
+        .optionsList{
+            position: relative;
+            text-align: center;
+            list-style: none;
+            list-style-image: none;
+            align-content: center;
+            li {
+                width: 200px;
+                padding-top: 20px;
+                float: left;
+            }
+        }
     }
 }
