@@ -29,6 +29,8 @@ $optionIDs;
 $layer;
 $image;
 
+$optionList = "";//defined from the next sql call
+
 //if there is any result
 if (mysqli_num_rows($result) > 0) {
 
@@ -48,6 +50,38 @@ if (mysqli_num_rows($result) > 0) {
     //there are no results
     echo "0 results";
 }
+
+/*
+Loads in the option ids and text associated with this story part.
+ */
+//create an array from the options.
+$optionArray = explode(",", $optionIDs);
+$sql = "SELECT option_text, ID FROM storyparts WHERE ID = ";
+for ($i = 0; $i < sizeof($optionArray); $i++) {
+    $sql .= "'". (int)$optionArray[$i] . "'";
+    if ($i != sizeof($optionArray) - 1) {
+        $sql .= " AND ";
+    }
+}
+echo $sql . "<br>";
+
+$result = mysqli_query($conn, $sql);
+
+
+if (mysqli_num_rows($result) > 0) {
+
+    // output data of each row
+    while($row = mysqli_fetch_assoc($result)) {
+        //echo "id: " . $row["ID"]. "<br>";
+        $optionList .= "<li> <a href='?storypart=2'> ". $row["option_text"] ." </a> </li> ";
+        
+    }
+} else {
+    //there are no results
+    echo "0 results";
+}
+echo "list of options: " . $optionList;
+
 // echo "<br>" . $start;
 // echo "<br>" . $end;
 // echo "<br>" . $option_text;

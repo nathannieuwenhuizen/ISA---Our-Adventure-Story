@@ -20,7 +20,7 @@ include 'assets/php/getpart.php';
 
 
 <div class="wrapper">
-<h1> Choose your own adventure story! </h1>
+<h1> Our adventure story! </h1>
 <div class="storywrapper"> 
 <div class="storyHeader"> 
 	<div class="storyTitle"> <h2>  <?php echo "story title, needs to be from sql"; ?></h2> </div>
@@ -43,12 +43,7 @@ include 'assets/php/getpart.php';
 <p> <?php echo $question_text; ?> </p>
 </div>
 <div class="optionsList">
-	<li> option 1</li>
-	<li> option 1</li>
-	<li> option 1</li>
-	<li> option 1</li>
-	<li> option 1</li>
-	<li> option 1</li>
+<?php echo $optionList; ?>
 </div>
 
 </div>
