@@ -17,7 +17,16 @@ include 'assets/php/getpart.php';
 
 // include 'assets/inc/footer.inc'; 
 ?>
-
+<form  action="assets/php/createPart.php" method="post">
+ <p>Option </p> <input type="text" name="option" />
+ <p>Consequence </p><input type="textarea" name="consequence" />
+ <p>Question </p> <input type="text" name="question"/>
+ <p>Image url </p><input type="text" name="image"/>
+ <p>End of story? </p> <input type="checkbox" name="end"/>
+ <input type="hidden" name="layer" value="<?php echo $layer; ?>">
+ <input type="hidden" name="parentID" value="<?php echo $storyID; ?>">
+ <p><input type="submit" /></p>
+</form>
 
 <div class="wrapper">
 <h1> Our adventure story! </h1>

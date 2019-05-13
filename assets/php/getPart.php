@@ -74,13 +74,12 @@ if (mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_assoc($result)) {
         //echo "id: " . $row["ID"]. "<br>";
         $optionList .= "<li> <a href='?storypart=2'> ". $row["option_text"] ." </a> </li> ";
-        
     }
 } else {
     //there are no results
     echo "0 results";
 }
-echo "list of options: " . $optionList;
+//echo "list of options: " . $optionList;
 
 // echo "<br>" . $start;
 // echo "<br>" . $end;
