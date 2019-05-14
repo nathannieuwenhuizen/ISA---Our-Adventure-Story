@@ -1,4 +1,4 @@
-import { Iproject, Ihomework, HomeWork } from './data';
+import { Iproject } from './data';
 
 export default class App {
 
