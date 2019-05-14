@@ -23,8 +23,9 @@ include 'assets/php/getpart.php';
  <p>Question </p> <input type="text" name="question"/>
  <p>Image url </p><input type="text" name="image"/>
  <p>End of story? </p> <input type="checkbox" name="end"/>
- <input type="hidden" name="layer" value="<?php echo $layer; ?>">
+ <input type="hidden" name="layer" value="<?php echo $layer; ?>"> 
  <input type="hidden" name="parentID" value="<?php echo $storyID; ?>">
+ <input type="text" name="parentOptions" value="<?php echo $optionIDs; ?>"> 
  <p><input type="submit" /></p>
 </form>
 
