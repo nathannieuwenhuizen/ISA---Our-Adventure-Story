@@ -28,7 +28,7 @@ $question_text;
 $optionIDs;
 $layer;
 $image;
-
+$parentID;
 $optionList = "";//defined from the next sql call
 
 //if there is any result
@@ -40,11 +40,12 @@ if (mysqli_num_rows($result) > 0) {
         $start = $row["start"];
         $end = $row["end"];
         $option_text = $row["option_text"];
-        $content_text = $row["content_text"];
+        $content_text = nl2br($row["content_text"]);
         $question_text = $row["question_text"];
         $optionIDs = $row["option_IDs"];
         $layer = $row["layer"];
         $image = $row["image"];
+        $parentID = $row["parentID"];
     }
 } else {
     //there are no results
@@ -63,8 +64,8 @@ for ($i = 0; $i < sizeof($optionArray); $i++) {
         $sql .= ", ";
     }
 }
-$sql .= ")";
-echo $sql . "<br>";
+$sql .= ") ORDER BY option_text ASC";
+//echo $sql . "<br>";
 
 $result = mysqli_query($conn, $sql);
 
@@ -80,16 +81,24 @@ if (mysqli_num_rows($result) > 0) {
     //there are no results
     echo "0 results";
 }
-//echo "list of options: " . $optionList;
 
-// echo "<br>" . $start;
-// echo "<br>" . $end;
-// echo "<br>" . $option_text;
-// echo "<br>" . $content_text;
-// echo "<br>" . $question_text;
-// echo "<br>" . $optionIDs;
-// echo "<br>" . $layer;
-// echo "<br>" . $image;
+/*
+Loads the story title from a different table;
+*/
+$storyTitle= "";
+$sql = "SELECT * FROM `storyinfo`";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+
+    // output data of each row
+    while($row = mysqli_fetch_assoc($result)) {
+        $storyTitle = $row["Name"];
+    }
+} else {
+    //there are no results
+    echo "0 results";
+}
 
 
 $conn->close();
