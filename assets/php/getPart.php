@@ -11,7 +11,6 @@ if ( isset($_GET[$stringname]) || !empty($_GET[$stringname]))
 if ($storyID < 1) {
     $storyID = 1;
 }
-//echo $storyID; 
 
 
 
@@ -79,7 +78,7 @@ if (mysqli_num_rows($result) > 0) {
     }
 } else {
     //there are no results
-    echo "0 results";
+    //echo "0 results";
 }
 
 /*

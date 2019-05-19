@@ -10,6 +10,11 @@ export default class App {
     public chooseMessage: Element;
     public questionPanel: Element;
 
+    public aboutButton: Element;
+    public storyButton: Element;
+    public aboutPage: Element;
+    public storyPage: Element;
+
     //the start function goes here
     constructor() {
         this.data = this.loadFile('./assets/projects.json');
@@ -19,27 +24,30 @@ export default class App {
         this.questionPanel = document.getElementsByClassName('questionPanel')[0];
         this.consequenceImage = document.getElementsByClassName('consequenceImage')[0];
         
+        this.aboutPage = document.getElementsByClassName('aboutwrapper')[0];
+        this.aboutButton = document.getElementsByClassName("about")[0];
+        this.aboutButton.addEventListener('click', () => { this.ToggleAboutPage(false)});
+        this.storyPage = document.getElementsByClassName('storywrapper')[0];
+        this.storyButton = document.getElementsByClassName("story")[0];
+        this.storyButton.addEventListener('click', () => {this.ToggleAboutPage(true)});
+
         let objImg = new Image();
         objImg.src = this.consequenceImage.src;
-        if(objImg.complete) {
-            //window.alert("loaded succeed!"));
+        if(objImg.complete) { 
             this.consequenceImage.classList.add('show');
-
-        } else {
-            //window.alert("no valid url");
         }
 
         if (END == 1) {
             this.showButton.classList.add('hide');
-            this.questionPanel.innerHTML = "this is the end of this branch, but you can always read the others or create your own ;)";
+            this.questionPanel.innerHTML = "this is the end of this branch.";
         }
         if (START == 1) {
             this.chooseMessage.classList.add('hide');
             //this.chooseMessage.innerHTML = "Start of the story!";
-
         }
 
 
+        this.ToggleAboutPage(true);
         this.showButton.addEventListener('click', () => {
             this.fromShowed = !this.fromShowed;
             this.ToggleShow();
@@ -48,6 +56,7 @@ export default class App {
             //window.alert("Image loaded: " + this.consequenceImage.complete);
         };
     }
+
     public ToggleShow() {
         if (this.fromShowed) {
             this.createForm.classList.add('show');
@@ -60,6 +69,17 @@ export default class App {
             this.showButton.innerHTML = 'Create your own path!';
 
         }
+    }
+
+    public ToggleAboutPage(about: boolean) {
+        if (about) {
+            this.aboutPage.classList.add('hide');
+            this.storyPage.classList.remove('hide');
+        } else {
+            this.aboutPage.classList.remove('hide');
+            this.storyPage.classList.add('hide');
+        }
+
     }
 
     public static cap(value: number, min: number, max: number): number {

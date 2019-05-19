@@ -12,34 +12,52 @@
 <BODY>
 	<?php 	
 include 'assets/php/connect.php'; 
-include 'assets/php/getpart.php'; 
+//include 'assets/php/getpart.php'; 
 // include 'assets/inc/footer.inc'; 
 
 
 ?>
-<script> 
- START = "<?php echo $start ?>"; 
- END = "<?php echo $end ?>"; 
-// window.alert(v);
-</script>
+	<script>
+		START = "<?php echo $start ?>";
+		END = "<?php echo $end ?>";
+		// window.alert(v);
+	</script>
 
 	<div class="wrapper">
-		<a href="?storypart=1">
-		<h1> Our adventure story! </h1>
-		</a>
-
-		<h4>A choose your own adventure story created by the internet</h4>
+		<div class="navigation">
+			<ul>
+				<li class="about">About</li>
+				<li class ="story">Story</li>
+			</ul>
+			<a href="?storypart=1">
+				<h1> Our adventure story! </h1>
+			</a>
+			<h4>A choose your own adventure story created by the internet</h4>
+		</div>
+			
+		<div class="aboutwrapper hide">
+		<h2>About</h2>
+			<p> Hello readers, this is an experiment I want to conduct with you guys.</p>
+			<p>This choose your own adventure story will be written by you guys! I don't know if this story will be super huge or just one part only written by me.</p>
+			<p>Also I want to see what crazy stuff you guys will come up with the parts you will write.</p>
+			<br>
+			<p> If you want to give me some feedback, you can try to read a story and write some create parts you can come up with. Also you can help me out by filling up the google form down below! </p>
+			<p> I hope you enjoy this project I have so far, and maybe it will become bigger!</p>
+			<br>
+			<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfqG4y_UTqwWL_kP_D6iiOV-3ZHK3p8VT3jHO21FSAGt1Yb7Q/viewform?embedded=true" width="640" height="2008" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+		</div>
 		<div class="storywrapper">
 			<div class="storyHeader">
 				<div class="layerNumber">page <?php echo $layer; ?></div>
 				<div class="storyTitle">
 					<h2> <?php echo $storyTitle; ?></h2>
 				</div>
-				<div class="navigation"> </div>
 			</div>
 			<div class="chooseMessage">
 				<a href="?storypart=<?php echo $parentID; ?>">Go back</a>
-				<i><p> You chose...<br> <b> <?php echo $option_text; ?> </b> </p></i>
+				<i>
+					<p> You chose...<br> <b> <?php echo $option_text; ?> </b> </p>
+				</i>
 			</div>
 			<div class="duoWrapper">
 				<div class="leftside">
@@ -51,9 +69,11 @@ include 'assets/php/getpart.php';
 					</div>
 				</div>
 			</div>
+			 <i>
 			<div class="questionPanel">
 				<p> <?php echo $question_text; ?> </p>
 			</div>
+			</i>
 			<div class="optionsList">
 				<ul>
 					<?php echo $optionList; ?>
@@ -73,14 +93,14 @@ include 'assets/php/getpart.php';
 		<p>End of story <input type="checkbox" name="end" /> </p>
 		<p>Question <input type="text" name="question" value="What do you do?" /> </p>
 
-		<p>Image url <input type="text" name="image"
-				placeholder="jpg, png, gif" /></p>
+		<p>Image url <input type="text" name="image" placeholder="jpg, png, gif" /></p>
 
 		<!-- hidden data to create a new part -->
 		<input type="hidden" name="layer" value="<?php echo $layer; ?>">
 		<input type="hidden" name="parentID" value="<?php echo $storyID; ?>">
 		<input type="hidden" name="parentOptions" value="<?php echo $optionIDs; ?>">
-		<p><input type="submit" class="createButton" value="Create!"/></p>
+		<input type="hidden" name="parentEnd" value="<?php echo $end; ?>">
+		<p><input type="submit" class="createButton" value="Create!" /></p>
 	</form>
 
 </BODY>
