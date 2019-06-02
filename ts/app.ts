@@ -3,7 +3,7 @@ import { Iproject } from './data';
 export default class App {
 
     public data: Iproject[];
-    public showButton: Element;
+    public showNewPartButton: Element;
     public createForm: Element;
     public fromShowed: Boolean = false;
     public consequenceImage: Element;
@@ -15,18 +15,39 @@ export default class App {
     public aboutPage: Element;
     public storyPage: Element;
 
+    public updateEndValueCheckbox: Element;
+    public ShowEditButton: Element;
+    public hideEditButton: Element;
+    public editForm: Element;
+
     //the start function goes here
     constructor() {
         this.data = this.loadFile('./assets/projects.json');
-        this.showButton = document.getElementsByClassName('createnewPartButton')[0];
+
+        //new part
+        this.showNewPartButton = document.getElementsByClassName('createnewPartButton')[0];
         this.createForm = document.getElementsByClassName('createWrapper')[0];
+
+        //the current part
         this.chooseMessage = document.getElementsByClassName('chooseMessage')[0];
         this.questionPanel = document.getElementsByClassName('questionPanel')[0];
         this.consequenceImage = document.getElementsByClassName('consequenceImage')[0];
+
+        //edit current part
+        this.updateEndValueCheckbox = document.getElementsByClassName('update_end')[0];
+        this.ShowEditButton = document.getElementsByClassName('editButton')[0];
+        this.ShowEditButton.addEventListener('click', () => { this.ToggleEditForm(true)});
+        this.hideEditButton = document.getElementsByClassName('hideButton')[0];
+        this.hideEditButton.addEventListener('click', () => { this.ToggleEditForm(false)});
+        this.editForm = document.getElementsByClassName('updateWrapper')[0];
         
+
+
+        //website navigation
         this.aboutPage = document.getElementsByClassName('aboutwrapper')[0];
         this.aboutButton = document.getElementsByClassName("about")[0];
         this.aboutButton.addEventListener('click', () => { this.ToggleAboutPage(false)});
+
         this.storyPage = document.getElementsByClassName('storywrapper')[0];
         this.storyButton = document.getElementsByClassName("story")[0];
         this.storyButton.addEventListener('click', () => {this.ToggleAboutPage(true)});
@@ -37,9 +58,11 @@ export default class App {
             this.consequenceImage.classList.add('show');
         }
 
+        document.title = "Our Adventure Story | " + OPTION;
         if (END == 1) {
-            this.showButton.classList.add('hide');
+            this.showNewPartButton.classList.add('hide'); 
             this.questionPanel.innerHTML = "this is the end of this branch.";
+            this.updateEndValueCheckbox.checked = true;
         }
         if (START == 1) {
             this.chooseMessage.classList.add('hide');
@@ -47,8 +70,12 @@ export default class App {
         }
 
 
+        console.log(OPTIONLIST);
+        if (OPTIONLIST == "") {
+            this.ShowEditButton.classList.remove('hide');
+        }
         this.ToggleAboutPage(true);
-        this.showButton.addEventListener('click', () => {
+        this.showNewPartButton.addEventListener('click', () => {
             this.fromShowed = !this.fromShowed;
             this.ToggleShow();
         });
@@ -63,11 +90,10 @@ export default class App {
             this.createForm.scrollIntoView({
                 behavior: 'smooth'
             });
-            this.showButton.innerHTML = 'hide';
+            this.showNewPartButton.innerHTML = 'hide';
         } else {
             this.createForm.classList.remove('show');
-            this.showButton.innerHTML = 'Create your own path!';
-
+            this.showNewPartButton.innerHTML = 'Create your own path!';
         }
     }
 
@@ -79,12 +105,22 @@ export default class App {
             this.aboutPage.classList.remove('hide');
             this.storyPage.classList.add('hide');
         }
+    }
 
+    public ToggleEditForm(show: boolean) {
+        if (!show) {
+            this.editForm.classList.add('hide');
+            this.storyPage.classList.remove('hide');
+            
+        } else {
+            this.editForm.classList.remove('hide');
+            this.storyPage.classList.add('hide');
+            this.createForm.classList.add('hide');
+        }
     }
 
     public static cap(value: number, min: number, max: number): number {
         return Math.min(Math.max( value, min), max);
-
     }
     public static getQueryVariable(variable: string): any {
         let query: any = window.location.href.substring(1);

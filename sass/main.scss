@@ -90,7 +90,18 @@ body {
                 //border: 5px solid red;
                 padding-left: 20px;
             }
-
+            .editButton {
+                position: absolute;
+                width: 30px;
+                padding: 20px;
+                opacity: .5;
+                transition: opacity 0.5s;
+            }
+            .editButton:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
+            
             .chooseMessage {
                 width: 50%;
                 text-align: center;
@@ -195,7 +206,7 @@ body {
         }
     }
 
-    .createWrapper {
+    .createWrapper, .updateWrapper {
         display: none;
 
         //opacity: 0;
@@ -227,6 +238,17 @@ body {
 
         .createButton {
             @extend %border-button;
+        }
+    }
+    .updateWrapper {
+        display: block;
+        transform: rotate(0deg);
+        width: 65%;
+
+        .hideButton {
+            float: right;
+            @extend %border-button;
+            width: 60px;
         }
     }
     .show {

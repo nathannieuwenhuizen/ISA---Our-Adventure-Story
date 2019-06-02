@@ -1,4 +1,6 @@
 <?php
+//MySQL Database Connect 
+include 'assets/php/connect.php'; 
 
 //retreive url var
 $stringname = 'storypart';
@@ -6,7 +8,6 @@ $storyID = 1;
 if ( isset($_GET[$stringname]) || !empty($_GET[$stringname]))
 {
     $storyID = $_GET[$stringname];
-
 }
 if ($storyID < 1) {
     $storyID = 1;
@@ -15,7 +16,7 @@ if ($storyID < 1) {
 
 
 //retreive database storypart
-$sql = "SELECT * FROM storyparts WHERE ID = $storyID";
+$sql = "SELECT * FROM storyparts WHERE ID = $storyID LIMIT 1";
 $result = mysqli_query($conn, $sql);
 
 
@@ -23,6 +24,7 @@ $start;
 $end;
 $option_text;
 $content_text;
+$content_textNL;
 $question_text;
 $optionIDs;
 $layer;
@@ -39,7 +41,8 @@ if (mysqli_num_rows($result) > 0) {
         $start = $row["start"];
         $end = $row["end"];
         $option_text = $row["option_text"];
-        $content_text = nl2br($row["content_text"]);
+        $content_text = html_entity_decode(nl2br($row["content_text"]));
+        $content_textNL = html_entity_decode($row["content_text"]);
         $question_text = $row["question_text"];
         $optionIDs = $row["option_IDs"];
         $layer = $row["layer"];

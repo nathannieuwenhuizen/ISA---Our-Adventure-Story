@@ -2,7 +2,7 @@
 <HTML>
 
 <HEAD>
-	<TITLE>Our adventure story</TITLE>
+	<TITLE>Our adventure story! </TITLE>
 	<link rel="icon" type="image/png" href="./assets/img/book.png" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 	<link id="stylesheet" rel="stylesheet" href="assets/style.css" type="text/css" />
@@ -11,15 +11,15 @@
 
 <BODY>
 	<?php 	
-include 'assets/php/connect.php'; 
-//include 'assets/php/getpart.php'; 
-// include 'assets/inc/footer.inc'; 
+include 'assets/php/getPart.php'; 
 
 
 ?>
 	<script>
 		START = "<?php echo $start ?>";
 		END = "<?php echo $end ?>";
+		OPTION = "<?php echo $option_text ?>";
+		OPTIONLIST = "<?php echo $optionList ?>";
 		// window.alert(v);
 	</script>
 
@@ -30,7 +30,7 @@ include 'assets/php/connect.php';
 				<li class ="story">Story</li>
 			</ul>
 			<a href="?storypart=1">
-				<h1> Our adventure story! </h1>
+				<h1> Our adventure story</h1>
 			</a>
 			<h4>A choose your own adventure story created by the internet</h4>
 		</div>
@@ -53,6 +53,8 @@ include 'assets/php/connect.php';
 					<h2> <?php echo $storyTitle; ?></h2>
 				</div>
 			</div>
+			<img class="editButton hide" src="assets/img/edit_icon.png">
+
 			<div class="chooseMessage">
 				<a href="?storypart=<?php echo $parentID; ?>">Go back</a>
 				<i>
@@ -84,6 +86,7 @@ include 'assets/php/connect.php';
 
 		</div>
 	</div>
+	<!-- Create a new part field -->
 	<form action="assets/php/createPart.php" method="post" class="createWrapper">
 		<h3> Create a new Part </h3>
 		<p>Option text </p> <input type="text" name="option" placeholder="what the reader can choose" required />
@@ -102,6 +105,26 @@ include 'assets/php/connect.php';
 		<input type="hidden" name="parentEnd" value="<?php echo $end; ?>">
 		<p><input type="submit" class="createButton" value="Create!" /></p>
 	</form>
+
+<!-- Update part field -->
+	<form action="assets/php/updatePart.php" method="post" class="updateWrapper hide">
+		<div class="hideButton"> Hide</div>
+		<h3> Update the current Part </h3>
+		<p>Option text </p> <input type="text" name="option" placeholder="what the reader can choose" value = "<?php echo $option_text ?>" required />
+		<p>Consequence </p>
+		<textarea name="consequence" cols="40" rows="5" required
+			placeholder="Here you can write your consequence..."><?php echo $content_textNL ?></textarea>
+		<p>End of story <input class="update_end" type="checkbox" name="end" /> </p>
+		<p>Question <input type="text" name="question" value= "<?php echo $question_text; ?>"" /> </p>
+
+		<p>Image url <input type="text" name="image" placeholder="jpg, png, gif" value = "<?php echo $image ?>" /></p>
+
+		<!-- hidden data to update the current part -->
+		<input type="hidden" name="id" value="<?php echo $storyID; ?>">
+		<input type="hidden" name="optionIDs" value="<?php echo $optionList; ?>">
+
+		<p><input type="submit" class="createButton" value="Update!" /></p>
+	</form> 
 
 </BODY>
 
