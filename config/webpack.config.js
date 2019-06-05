@@ -112,8 +112,8 @@ module.exports = {
                 to: path.join(basePath, 'builds/dev/dirtest.php')
             },
             {
-                from: path.join(basePath, 'template/index.php'),
-                to: path.join(basePath, 'builds/dev/index.php')
+                from: path.join(basePath, 'template'),
+                to: path.join(basePath, 'builds/dev')
             }
         ]),
         new ForkTsCheckerNotifierWebpackPlugin({alwaysNotify: true}),

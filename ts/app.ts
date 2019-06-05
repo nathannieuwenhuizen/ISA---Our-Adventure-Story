@@ -10,9 +10,6 @@ export default class App {
     public chooseMessage: Element;
     public questionPanel: Element;
 
-    public aboutButton: Element;
-    public storyButton: Element;
-    public aboutPage: Element;
     public storyPage: Element;
 
     public updateEndValueCheckbox: Element;
@@ -43,14 +40,7 @@ export default class App {
         
 
 
-        //website navigation
-        this.aboutPage = document.getElementsByClassName('aboutwrapper')[0];
-        this.aboutButton = document.getElementsByClassName("about")[0];
-        this.aboutButton.addEventListener('click', () => { this.ToggleAboutPage(false)});
-
         this.storyPage = document.getElementsByClassName('storywrapper')[0];
-        this.storyButton = document.getElementsByClassName("story")[0];
-        this.storyButton.addEventListener('click', () => {this.ToggleAboutPage(true)});
 
         let objImg = new Image();
         objImg.src = this.consequenceImage.src;
@@ -69,18 +59,19 @@ export default class App {
             //this.chooseMessage.innerHTML = "Start of the story!";
         }
 
-
-        console.log(OPTIONLIST);
+        if (NAME != "") {
+            document.title = "Our Adventure Story | " + NAME;
+        }
+        console.log("nani?");
         if (OPTIONLIST == "") {
             this.ShowEditButton.classList.remove('hide');
         }
-        this.ToggleAboutPage(true);
         this.showNewPartButton.addEventListener('click', () => {
             this.fromShowed = !this.fromShowed;
             this.ToggleShow();
         });
         document.onload = () => {
-            //window.alert("Image loaded: " + this.consequenceImage.complete);
+            window.alert("Image loaded: " + this.consequenceImage.complete);
         };
     }
 
@@ -97,15 +88,6 @@ export default class App {
         }
     }
 
-    public ToggleAboutPage(about: boolean) {
-        if (about) {
-            this.aboutPage.classList.add('hide');
-            this.storyPage.classList.remove('hide');
-        } else {
-            this.aboutPage.classList.remove('hide');
-            this.storyPage.classList.add('hide');
-        }
-    }
 
     public ToggleEditForm(show: boolean) {
         if (!show) {
@@ -115,6 +97,7 @@ export default class App {
         } else {
             this.editForm.classList.remove('hide');
             this.storyPage.classList.add('hide');
+            console.log("test"); 
             this.createForm.classList.add('hide');
         }
     }

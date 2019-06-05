@@ -1,14 +1,14 @@
 
 %border-button {
-    transition: border .2s;
+    transition: outline .2s;
     text-align: center;
     background-color: #3a2483;
-    border: 0px solid black;
+    outline: 0px solid black;
     color: white;
     padding: 10px 20px;
 }
 %border-button:hover{
-    border: 5px solid black;
+    outline: 5px solid black;
     cursor: pointer;
 }
 
@@ -37,6 +37,10 @@ body {
             }
             h1 {
                 border-bottom: 2px solid black;
+            }
+            img {
+                display: inline-block;
+                height: 30px;
             }
             ul {
                 position: absolute;
@@ -78,6 +82,117 @@ body {
             }
         }
         .storywrapper {
+            .storyList {
+                align-content: center;
+                list-style-type: none;
+                padding: 0px;
+                width: 80%;
+                margin: 10px auto;
+
+                a {
+                    border: 0px solid black;
+                    li {
+                        margin: 20px 0;
+                        outline: 2px solid black;
+                        background: aliceblue;
+                        transition: outline .2s;
+
+                        padding: 20px 5px;
+                        b {
+                            font-size: 1.5em;
+                        }
+                        p {
+                            float: right;
+                        }
+                    }
+                    li:hover{
+                        background: white;
+                        outline: 5px solid black;
+                    }
+                }
+            }
+            .half{
+                display: inline-block;
+                width: 49%;
+                vertical-align:top;
+                min-width: 400px;
+            }
+            .infoPanel {
+                
+                margin: 20px;
+                //border: 2px solid grey;
+                padding: 10px 20px;
+                .startReadingButton {
+                    text-decoration: none;
+                    background-color: rgb(10, 93, 24);
+                    @extend %border-button;
+
+                }
+                table {
+                    border: 1px solid black;
+                    text-align: center;
+                    tr{
+                    }
+                    th{
+                        padding: 10px 30px;
+
+                    }
+                    td{
+
+                    }
+                    tr:nth-child(even) {background: #CCC}
+                    tr:nth-child(odd) {background: #FFF}
+                }
+            }
+            .added-parts {
+
+                a {
+                    text-decoration: none;
+                    li {
+                        margin: 20px 0;
+                        outline: 2px solid black;
+                        background: aliceblue;
+                        transition: outline .2s;
+
+                        padding: 10px 5px;
+                        b {
+                            border: 0px solid black;
+                            font-size: 0.8em;
+                        }
+                        p {
+                            float: right;
+                            margin-top: 15px;
+                            font-size: 0.7em;
+
+                        }
+                    }
+                    li:hover{
+                        background: white;
+                        outline: 5px solid black;
+                    }
+                    
+                }
+
+                .navigationButtons {
+                    margin-top: 20px;
+                    text-align: center;
+                    align-content: center;
+                    a {
+                        background-color: rgb(10, 93, 24);
+                        @extend %border-button;
+                        margin: 0px 10px;
+                        padding: 10px 10px;
+
+                    }
+                    b {
+                        //position: absolute;
+                        widows: 100%;
+                        text-align: center;
+                    }
+                }
+
+            }
+            
             .layerNumber {
                 position: absolute;
                 //outline: 1px solid blue;
@@ -113,7 +228,7 @@ body {
                 a {
                     @extend %border-button;
                     background-color: rgb(10, 93, 24);
-
+                    
                 }
             }
         }
