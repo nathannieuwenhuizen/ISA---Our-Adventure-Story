@@ -4,19 +4,19 @@ include 'assets/php/connect.php';
 
 //retreive url var
 $stringname = 'storypart';
-$storyID = 1;
+$storyPartID = 1;
 if ( isset($_GET[$stringname]) || !empty($_GET[$stringname]))
 {
-    $storyID = $_GET[$stringname];
+    $storyPartID = $_GET[$stringname];
 }
-if ($storyID < 1) {
-    $storyID = 1;
+if ($storyPartID < 1) {
+    $storyPartID = 1;
 }
 
 
 
 //retreive database storypart
-$sql = "SELECT * FROM storyparts WHERE ID = $storyID LIMIT 1";
+$sql = "SELECT * FROM storyparts WHERE ID = $storyPartID LIMIT 1";
 $result = mysqli_query($conn, $sql);
 
 
@@ -30,6 +30,7 @@ $optionIDs;
 $layer;
 $image;
 $parentID;
+$storyID;
 $optionList = "";//defined from the next sql call
 
 //if there is any result
@@ -48,6 +49,7 @@ if (mysqli_num_rows($result) > 0) {
         $layer = $row["layer"];
         $image = $row["image"];
         $parentID = $row["parentID"];
+        $storyID = $row["storyID"];
     }
 } else {
     //there are no results
@@ -65,7 +67,7 @@ for ($i = 0; $i < sizeof($optionArray); $i++) {
     if ($i != sizeof($optionArray) - 1) {
         $sql .= ", ";
     }
-}
+} 
 $sql .= ") ORDER BY option_text ASC";
 //echo $sql . "<br>";
 
@@ -88,7 +90,7 @@ if (mysqli_num_rows($result) > 0) {
 Loads the story title from a different table;
 */
 $storyTitle= "";
-$sql = "SELECT * FROM `storyinfo`";
+$sql = "SELECT * FROM `storyinfo` WHERE  ID = $storyID";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {

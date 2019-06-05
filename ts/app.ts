@@ -46,8 +46,15 @@ export default class App {
 
         let objImg = new Image();
         objImg.src = this.consequenceImage.src;
+        console.log(objImg.src);
+        if (!this.ContainsAny(objImg.src, ['jpeg', 'png', 'gif', 'jpg'])) {
+            document.getElementsByClassName('duoWrapper')[0].classList.add('duoWrapperWithoutImg');
+        }
         if(objImg.complete) { 
             this.consequenceImage.classList.add('show');
+        } else {
+            document.getElementsByClassName('duoWrapper')[0].classList.add('duoWrapperWithoutImg');
+
         }
 
         document.title = "Our Adventure Story | " + OPTION;
@@ -87,6 +94,15 @@ export default class App {
         }
     }
 
+    public ContainsAny(str: string, items: any){
+        for(var i in items){
+            var item = items[i];
+            if (str.indexOf(item) > -1){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public ToggleEditForm(show: boolean) {
         if (!show) {

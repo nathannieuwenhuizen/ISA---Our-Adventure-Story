@@ -111,7 +111,12 @@ body {
                     }
                 }
             }
+            .storyInfoWrapper{
+                text-align: center;
+            }
+
             .half{
+                text-align: left;
                 display: inline-block;
                 width: 49%;
                 vertical-align:top;
@@ -194,15 +199,19 @@ body {
             }
             
             .layerNumber {
-                position: absolute;
+                //position: absolute;
                 //outline: 1px solid blue;
-                width:75%;
                 //right: 100px;
                 text-align: right;
+                margin-bottom: -50px;
+                padding: 10px;
+                height: 50px;
                 font-size: 20px;
             }
             .storyTitle {
                 //border: 5px solid red;
+                width: auto;
+                display: inline-block;
                 padding-left: 20px;
             }
             .editButton {
@@ -238,18 +247,29 @@ body {
 
             //overflow: auto;
             //display: flex;
-            justify-content: space-around;
 
             //align-items: flex-start;
-            .leftside .rightside {
-                //float: left;
-                //width: 50%;
+            text-align: center;
+            vertical-align: top;
+            .leftside {
+                display: inline-block;
+                width: 45%;
+                // border: 5px solid red;
+            }
+            .rightside {
+                display: inline-block;
+                width: 45%;
+                vertical-align: top;
+                margin: auto 0;
+                min-width: 400px;
 
+                text-align: left;
             }
 
             .leftside {
                 align-content: center;
                 text-align: center;
+                min-width: 400px;
 
                 img {
 
@@ -260,9 +280,8 @@ body {
 
                     //padding: 50px;
                     display: none;
-                    max-width: 50%;
-                    width: 500px;
-                    box-shadow: 18px 10px 2px -6px rgba(0, 0, 0, 0.149);
+                    width: 90%;
+                    box-shadow: -18px 10px 2px -6px rgba(0, 0, 0, 0.149);
 
                 }
                 .show {
@@ -271,9 +290,20 @@ body {
             }
 
             .rightside {
-                padding: 50px;
-                //top: 20px;
+                .contentPanel {
+                    padding: 20px;
+                }
             }
+        }
+        .duoWrapperWithoutImg {
+            .leftside {
+                    display: none;
+            }
+            .rightside {
+                text-align: left;
+                width: 70%;
+            }
+
         }
 
         .questionPanel {

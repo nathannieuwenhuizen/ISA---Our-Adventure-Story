@@ -11,6 +11,7 @@ $question = htmlspecialchars($_POST['question'],ENT_QUOTES);
 $image = htmlspecialchars($_POST['image']);
 $layer = $_POST['layer'] + 1;
 $parentID = htmlspecialchars($_POST['parentID']);
+$storyID = htmlspecialchars($_POST['storyID']);
 $parentEnd = htmlspecialchars($_POST['parentEnd']);
 $end = "0";
 if (isset($_POST['end'])) {
@@ -21,8 +22,8 @@ if ($parentEnd == "1") {
     //header("location: ../../?storypart=". $parentID);
     return;
 }
-$sql = "INSERT INTO `storyparts` (`ID`, `start`, `end`, `option_text`, `content_text`, `question_text`, `option_IDs`, `Date`, `layer`, `image`, `parentID`)" .
-" VALUES (NULL, '0', '$end', '$option', '$consequence', '$question', '', CURRENT_TIMESTAMP, $layer, '$image', $parentID);";
+$sql = "INSERT INTO `storyparts` (`ID`, `start`, `end`, `option_text`, `content_text`, `question_text`, `option_IDs`, `Date`, `layer`, `image`, `parentID`, `storyID`)" .
+" VALUES (NULL, '0', '$end', '$option', '$consequence', '$question', '', CURRENT_TIMESTAMP, $layer, '$image', $parentID, $storyID);";
 
 $last_id = -1;
 

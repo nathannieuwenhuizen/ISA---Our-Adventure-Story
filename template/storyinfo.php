@@ -28,6 +28,8 @@
             <hr>
 
 
+            <div class="storyInfoWrapper">
+
             <div class="half">
                 <div class="infoPanel">
                     <h3>General information </h3>
@@ -100,6 +102,7 @@ if ($offset >= Floor( $amountOfParts / 10)) {
                     </ul>
                 </div>
             </div>
+</div>
 
         </div>
     </div>

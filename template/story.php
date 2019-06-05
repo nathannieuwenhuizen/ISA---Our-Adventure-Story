@@ -25,7 +25,7 @@
 			<div class="storyHeader">
 				<div class="layerNumber">page <?php echo $layer; ?></div>
 				<div class="storyTitle">
-					<h2> <?php echo $storyTitle; ?></h2>
+					<a href="storyinfo.php?ID=<?php echo $storyID; ?>&offset=0"><h2> <?php echo $storyTitle; ?></h2> </a>
 				</div>
 			</div>
 			<img class="editButton hide" src="assets/img/edit_icon.png">
@@ -35,7 +35,9 @@
 				<i>
 					<p> You chose...<br> <b> <?php echo $option_text; ?> </b> </p>
 				</i>
-			</div>
+            </div>
+            <hr>
+
 			<div class="duoWrapper">
 				<div class="leftside">
 					<img class="consequenceImage" src="<?php echo $image; ?>" />
@@ -45,7 +47,8 @@
 						<?php echo $content_text; ?>
 					</div>
 				</div>
-			</div>
+            </div>
+            <hr>
 			 <i>
 			<div class="questionPanel">
 				<p> <?php echo $question_text; ?> </p>
@@ -85,7 +88,8 @@
 
 		<!-- hidden data to create a new part -->
 		<input type="hidden" name="layer" value="<?php echo $layer; ?>">
-		<input type="hidden" name="parentID" value="<?php echo $storyID; ?>">
+		<input type="hidden" name="parentID" value="<?php echo $storyPartID; ?>">
+		<input type="hidden" name="storyID" value="<?php echo $storyID; ?>">
 		<input type="hidden" name="parentOptions" value="<?php echo $optionIDs; ?>">
         <input type="hidden" name="parentEnd" value="<?php echo $end; ?>">
         <input type="hidden" name="form_token" value="<?php echo $form_token; ?>" />
@@ -106,7 +110,7 @@
 		<p>Image url <input type="text" name="image" placeholder="jpg, png, gif" value = "<?php echo $image ?>" /></p>
 
 		<!-- hidden data to update the current part -->
-		<input type="hidden" name="id" value="<?php echo $storyID; ?>">
+		<input type="hidden" name="id" value="<?php echo $storyPartID; ?>">
 		<input type="hidden" name="optionIDs" value="<?php echo $optionList; ?>">
 
 		<p><input type="submit" class="createButton" value="Update!" /></p>
