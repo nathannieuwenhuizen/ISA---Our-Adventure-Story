@@ -24,25 +24,31 @@ if ($parentEnd == "1") {
 $sql = "INSERT INTO `storyparts` (`ID`, `start`, `end`, `option_text`, `content_text`, `question_text`, `option_IDs`, `Date`, `layer`, `image`, `parentID`)" .
 " VALUES (NULL, '0', '$end', '$option', '$consequence', '$question', '', CURRENT_TIMESTAMP, $layer, '$image', $parentID);";
 
+$last_id = -1;
 
-
-$last_id = 7;
+session_start();
+if($_POST['form_token'] == $_SESSION['form_token'])
+    {
 if ($conn->query($sql) === TRUE) {
-   $last_id = $conn->insert_id;
-   //echo "<br>New part created successfully.<br>";
+    $last_id = $conn->insert_id;
+    //echo "<br>New part created successfully.<br>";
 } else {
     //echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+ }
 }
+
 
 //echo "<br><br><br>";
 /*
 Updates the option list of the parent ID
 */
 $parentOptions = htmlspecialchars($_POST['parentOptions']);
-if ( $parentOptions != "") {
-    $parentOptions .= ", ";
+if ($last_id != -1) {
+    if ( $parentOptions != "") {
+        $parentOptions .= ", ";
+    }
+    $parentOptions .= $last_id;
 }
-$parentOptions .= $last_id;
 
 //echo $sql;
 $sql = "UPDATE `storyparts` SET `option_IDs` = '". $parentOptions . "' WHERE `storyparts`.`ID` = ". $parentID . ";";
@@ -58,5 +64,5 @@ if ($conn->query($sql) === TRUE) {
 /*
 Redirect ot the new page
 */
-header("location: ../../?storypart=". $last_id);
+header("location: ../../story.php?storypart=". $last_id);
 ?>

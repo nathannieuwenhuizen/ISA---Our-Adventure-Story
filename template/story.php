@@ -60,7 +60,17 @@
 			</div>
 
 		</div>
-	</div>
+    </div>
+    <?php
+        /*** begin the session ***/
+        session_start();
+ 
+        /*** create the form token ***/
+        $form_token = uniqid();
+ 
+        /*** add the form token to the session ***/
+        $_SESSION['form_token'] = $form_token;
+?>
 	<!-- Create a new part field -->
 	<form action="assets/php/createPart.php" method="post" class="createWrapper">
 		<h3> Create a new Part </h3>
@@ -77,8 +87,9 @@
 		<input type="hidden" name="layer" value="<?php echo $layer; ?>">
 		<input type="hidden" name="parentID" value="<?php echo $storyID; ?>">
 		<input type="hidden" name="parentOptions" value="<?php echo $optionIDs; ?>">
-		<input type="hidden" name="parentEnd" value="<?php echo $end; ?>">
-		<p><input type="submit" class="createButton" value="Create!" /></p>
+        <input type="hidden" name="parentEnd" value="<?php echo $end; ?>">
+        <input type="hidden" name="form_token" value="<?php echo $form_token; ?>" />
+		<p><input type="submit" name="submit" class="createButton" value="Create!"/></p>
 	</form>
 
 <!-- Update part field -->

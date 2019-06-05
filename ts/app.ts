@@ -19,6 +19,8 @@ export default class App {
 
     //the start function goes here
     constructor() {
+        console.log("click!");
+
         this.data = this.loadFile('./assets/projects.json');
 
         //new part
@@ -59,10 +61,6 @@ export default class App {
             //this.chooseMessage.innerHTML = "Start of the story!";
         }
 
-        if (NAME != "") {
-            document.title = "Our Adventure Story | " + NAME;
-        }
-        console.log("nani?");
         if (OPTIONLIST == "") {
             this.ShowEditButton.classList.remove('hide');
         }
@@ -76,6 +74,7 @@ export default class App {
     }
 
     public ToggleShow() {
+        console.log("click!");
         if (this.fromShowed) {
             this.createForm.classList.add('show');
             this.createForm.scrollIntoView({

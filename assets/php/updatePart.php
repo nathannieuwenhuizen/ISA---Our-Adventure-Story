@@ -33,6 +33,6 @@ if ($conn->query($sql) === TRUE) {
 
 }
 
-header("location: ../../?storypart=". $id);
+header("location: ../../story.php?storypart=". $id);
 
 ?>
