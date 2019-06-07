@@ -1,4 +1,6 @@
-import { Iproject } from './data';
+import {
+    Iproject
+} from './data';
 
 export default class App {
 
@@ -19,7 +21,18 @@ export default class App {
 
     //the start function goes here
     constructor() {
-        console.log("click!");
+        window.applicationCache.addEventListener('updateready', () => {
+            window.applicationCache.update();
+            console.log("cache update!");
+
+        });;
+        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+            console.log("cache update!");
+            window.applicationCache.update();
+        } else {
+            console.log("no cache update!");
+
+        }
 
         this.data = this.loadFile('./assets/projects.json');
 
@@ -35,11 +48,15 @@ export default class App {
         //edit current part
         this.updateEndValueCheckbox = document.getElementsByClassName('update_end')[0];
         this.ShowEditButton = document.getElementsByClassName('editButton')[0];
-        this.ShowEditButton.addEventListener('click', () => { this.ToggleEditForm(true)});
+        this.ShowEditButton.addEventListener('click', () => {
+            this.ToggleEditForm(true)
+        });
         this.hideEditButton = document.getElementsByClassName('hideButton')[0];
-        this.hideEditButton.addEventListener('click', () => { this.ToggleEditForm(false)});
+        this.hideEditButton.addEventListener('click', () => {
+            this.ToggleEditForm(false)
+        });
         this.editForm = document.getElementsByClassName('updateWrapper')[0];
-        
+
 
 
         this.storyPage = document.getElementsByClassName('storywrapper')[0];
@@ -50,7 +67,7 @@ export default class App {
         if (!this.ContainsAny(objImg.src, ['jpeg', 'png', 'gif', 'jpg'])) {
             document.getElementsByClassName('duoWrapper')[0].classList.add('duoWrapperWithoutImg');
         }
-        if(objImg.complete) { 
+        if (objImg.complete) {
             this.consequenceImage.classList.add('show');
         } else {
             document.getElementsByClassName('duoWrapper')[0].classList.add('duoWrapperWithoutImg');
@@ -59,7 +76,7 @@ export default class App {
 
         document.title = "Our Adventure Story | " + OPTION;
         if (END == 1) {
-            this.showNewPartButton.classList.add('hide'); 
+            this.showNewPartButton.classList.add('hide');
             this.questionPanel.innerHTML = "this is the end of this branch.";
             this.updateEndValueCheckbox.checked = true;
         }
@@ -94,10 +111,10 @@ export default class App {
         }
     }
 
-    public ContainsAny(str: string, items: any){
-        for(var i in items){
+    public ContainsAny(str: string, items: any) {
+        for (var i in items) {
             var item = items[i];
-            if (str.indexOf(item) > -1){
+            if (str.indexOf(item) > -1) {
                 return true;
             }
         }
@@ -108,17 +125,17 @@ export default class App {
         if (!show) {
             this.editForm.classList.add('hide');
             this.storyPage.classList.remove('hide');
-            
+
         } else {
             this.editForm.classList.remove('hide');
             this.storyPage.classList.add('hide');
-            console.log("test"); 
+            console.log("test");
             this.createForm.classList.add('hide');
         }
     }
 
     public static cap(value: number, min: number, max: number): number {
-        return Math.min(Math.max( value, min), max);
+        return Math.min(Math.max(value, min), max);
     }
     public static getQueryVariable(variable: string): any {
         let query: any = window.location.href.substring(1);
@@ -134,7 +151,7 @@ export default class App {
                     return pair[1];
                 }
             }
-            }
+        }
         return -1;
     }
     private loadFile(url: string): any {

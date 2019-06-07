@@ -11,7 +11,6 @@
 
 <BODY>
     
-<div class="component"> test </div>
 	<div class="wrapper">
 	<?php 	include 'assets/inc/nav.inc'; ?>
 		<div class="blogWrapper">
@@ -26,7 +25,7 @@ The most important features are as follows:<br>
 1. You can edit a story that you have just written if images do not work or if there are grammatical errors.
 Removal of a part is not possible to prevent trolls.<br>
 2. You can see the information about the statistics of the story per story, you can also see if recent pieces have been written.<br>
-3. There is an additional story beginning for zombies when your story allows you to write.<br><br>
+3. There is an additional story beginning where you can write too!<br><br>
 Enjoy!
 </p>
 <hr>
