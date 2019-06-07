@@ -14,6 +14,8 @@
 	<div class="wrapper">
 	<?php 	include 'assets/inc/nav.inc'; ?>
 		<div class="aboutwrapper">
+		<div class= "left">
+
 		<h2>About</h2>
 			<p> Hello readers, this is an experiment I want to conduct with you guys.</p>
 			<p>This choose your own adventure story will be written by you guys! I don't know if this story will be super huge or just one part only written by me.</p>
@@ -22,8 +24,18 @@
 			<p> If you want to give me some feedback, you can try to read a story and write some create parts you can come up with. Also you can help me out by filling up the google form down below! </p>
 			<p> I hope you enjoy this project I have so far, and maybe it will become bigger!</p>
 			<br>
-			<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfqG4y_UTqwWL_kP_D6iiOV-3ZHK3p8VT3jHO21FSAGt1Yb7Q/viewform?embedded=true" width="640" height="2008" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-		</div>
+
+			<p> This is the second version so far, published on 7-6-2019</p>
+			<br>
+			</div>
+			<div class= "right">
+			<img src="assets/img/logo.png">
+			</div>
+
+			<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSel43NxzYX_dqhS_wl_O54nfGlR_4Be8XL5AMmhz3BMZbA5sA/viewform?embedded=true" width="640" height="1447" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>		</div>
+<br>
+<?php 	include 'assets/inc/footer.inc'; ?>
+
 </BODY>
 
 </HTML>

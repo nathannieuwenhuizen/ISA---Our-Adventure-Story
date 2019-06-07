@@ -63,18 +63,7 @@
 			</div>
 
 		</div>
-    </div>
-    <?php
-        /*** begin the session ***/
-        session_start();
- 
-        /*** create the form token ***/
-        $form_token = uniqid();
- 
-        /*** add the form token to the session ***/
-        $_SESSION['form_token'] = $form_token;
-?>
-	<!-- Create a new part field -->
+		<!-- Create a new part field -->
 	<form action="assets/php/createPart.php" method="post" class="createWrapper">
 		<h3> Create a new Part </h3>
 		<p>Option text </p> <input type="text" name="option" placeholder="what the reader can choose" required />
@@ -115,6 +104,10 @@
 
 		<p><input type="submit" class="createButton" value="Update!" /></p>
 	</form> 
+    </div>
+    
+	
+	<?php 	include 'assets/inc/footer.inc'; ?>
 
 </BODY>
 

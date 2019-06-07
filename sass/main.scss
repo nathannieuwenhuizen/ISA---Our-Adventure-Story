@@ -1,38 +1,31 @@
-
-%border-button {
-    transition: outline .2s;
-    text-align: center;
-    background-color: #3a2483;
-    outline: 0px solid black;
-    color: white;
-    padding: 10px 20px;
-}
-%border-button:hover{
-    outline: 5px solid black;
-    cursor: pointer;
-}
+@import 'component.scss';
+@import 'data.scss';
 
 body {
     background-color: rgb(226, 214, 164);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
 
-    background: linear-gradient(rgba(255, 220, 174, 0.5), rgba(172, 199, 0, 0.5)), url("./img/pattern.jpg");
+    background: linear-gradient($bg_color, $bg_color2), url("./img/pattern.jpg");
     margin: 0;
     padding: 0;
     min-height: 100vh;
     .wrapper {
+        min-height: 90vh;
+        margin: 0;
         .navigation {
             a {
+
                 text-decoration: none;
+                width: auto;
             }
             h1, h4 {
-                color: #1e0d58;
+                // color: $headerButtonColor;
                 margin: 10px 20px;
                 padding: 5px 20px;
                 width: 50%;
                 text-align: center;
             }
-            h1:hover {
+            a:hover {
                 color: rgb(0, 0, 0);
             }
             h1 {
@@ -59,7 +52,7 @@ body {
             }
         }
         
-        .aboutwrapper, .storywrapper {
+        .aboutwrapper, .storywrapper, .blogWrapper {
             box-shadow: 18px 10px 2px -6px rgba(0, 0, 0, 0.149);
 
             width: 80%;
@@ -74,12 +67,36 @@ body {
             align-content: center;
         }
         .aboutwrapper {
-            h2 {
-                margin: 10px 20px;
+            .left{
+                width: 70%;
+                float: left;
+    
+                h2 {
+                    margin: 10px 20px;
+                }
+                p {
+                    margin: 10px 20px;
+                }
             }
-            p {
-                margin: 10px 20px;
+            .right {
+                width: 20%;
+                float: left;
+                img{
+                    display: inline-block;
+                    margin: 0 auto;
+                    max-width: 100%;
+                }
             }
+            iframe{
+                display: block;
+                position: relative;
+                width: 100%;
+                margin: 0 auto;
+                
+            }
+        }
+        .blogWrapper{
+            padding: 20px;
         }
         .storywrapper {
             .storyList {
@@ -129,8 +146,7 @@ body {
                 padding: 10px 20px;
                 .startReadingButton {
                     text-decoration: none;
-                    background-color: rgb(10, 93, 24);
-                    @extend %border-button;
+                    @extend %storyBorder-button;
 
                 }
                 table {
@@ -183,8 +199,7 @@ body {
                     text-align: center;
                     align-content: center;
                     a {
-                        background-color: rgb(10, 93, 24);
-                        @extend %border-button;
+                        @extend %storyBorder-button;
                         margin: 0px 10px;
                         padding: 10px 10px;
 
@@ -235,9 +250,7 @@ body {
                 margin-bottom: 40px;
                 //transform: rotate(-5deg);
                 a {
-                    @extend %border-button;
-                    background-color: rgb(10, 93, 24);
-                    
+                    @extend %storyBorder-button;
                 }
             }
         }
@@ -337,9 +350,11 @@ body {
 
                     a {
                         text-decoration: none;
-                        background-color: rgb(10, 93, 24);
-                        @extend %border-button;
+                        @extend %storyBorder-button;
 
+                    }
+                    a:visited {
+                        background-color: $visistedStorycolor;
                     }
                 }
             }
@@ -402,4 +417,15 @@ body {
     .hide {
         display: none;
     }
+    footer {
+        position: relative;
+        right: 0;
+        left: 0;
+        padding: 0;
+        padding: 10px;
+        margin: 20px;
+        background-color: #efefef;
+        text-align: center;
+        font-size: 10px;
+      }
 }

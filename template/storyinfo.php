@@ -42,7 +42,7 @@
                     <p><b> Amount of endings </b> <?php echo $amountOfEnds; ?></p>
                     <p><b> Deepest layer into the story </b> <?php echo $deepestLayer; ?></p>
                     <br>
-                    <a class="startReadingButton" href="story.php?storyPart=<?php echo $startID; ?>"> Start reading!
+                    <a class="startReadingButton" href="story.php?storypart=<?php echo $startID; ?>"> Start reading!
                     </a>
                 </div>
 
@@ -106,6 +106,9 @@ if ($offset >= Floor( $amountOfParts / 10)) {
 
         </div>
     </div>
+
+    <?php 	include 'assets/inc/footer.inc'; ?>
+
 </BODY>
 
 </HTML>

@@ -29,6 +29,8 @@
 					<i> more will follow soon ;)</i>
 		</div>
 	</div>
+	<?php 	include 'assets/inc/footer.inc'; ?>
+
 </BODY>
 
 </HTML>

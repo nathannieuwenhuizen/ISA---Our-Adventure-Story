@@ -68,7 +68,7 @@ export default class App {
             //this.chooseMessage.innerHTML = "Start of the story!";
         }
 
-        if (OPTIONLIST == "") {
+        if (OPTIONLIST == "" && START == "0") {
             this.ShowEditButton.classList.remove('hide');
         }
         this.showNewPartButton.addEventListener('click', () => {

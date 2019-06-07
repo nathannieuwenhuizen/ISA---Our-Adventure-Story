@@ -108,20 +108,16 @@ module.exports = {
                 to: path.join(basePath, 'builds/dev/assets')
             },
             {
-                from: path.join(basePath, 'template/dirtest.php'),
-                to: path.join(basePath, 'builds/dev/dirtest.php')
-            },
-            {
                 from: path.join(basePath, 'template'),
                 to: path.join(basePath, 'builds/dev')
             }
         ]),
-        new ForkTsCheckerNotifierWebpackPlugin({alwaysNotify: true}),
-        new ForkTsCheckerWebpackPlugin({
-            checkSyntacticErrors: true,
-            tslint: path.join(__dirname, '../tslint.json'),
-            tsconfig: path.join(__dirname, '../tsconfig.json'),
-        }),
+        // new ForkTsCheckerNotifierWebpackPlugin({alwaysNotify: true}),
+        // new ForkTsCheckerWebpackPlugin({
+        //     checkSyntacticErrors: true,
+        //     tslint: path.join(__dirname, '../tslint.json'),
+        //     tsconfig: path.join(__dirname, '../tsconfig.json'),
+        // }),
   ]
 
 };

@@ -27,16 +27,14 @@ $sql = "INSERT INTO `storyparts` (`ID`, `start`, `end`, `option_text`, `content_
 
 $last_id = -1;
 
-session_start();
-if($_POST['form_token'] == $_SESSION['form_token'])
-    {
+
 if ($conn->query($sql) === TRUE) {
     $last_id = $conn->insert_id;
     //echo "<br>New part created successfully.<br>";
 } else {
     //echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
  }
-}
+
 
 
 //echo "<br><br><br>";

@@ -55,7 +55,7 @@ $amountOfParts = 0;
 $deepestLayer = 0;
 $layerTableValues = "";
 //layer count info
-$sql = "SELECT layer, COUNT(id) FROM `storyparts` GROUP BY layer";
+$sql = "SELECT layer, COUNT(id) FROM `storyparts` WHERE `storyID` = $storyID GROUP BY layer";
 $result = mysqli_query($conn, $sql);
 
 
@@ -73,7 +73,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 $amountOfEnds = 0;
-$sql = "SELECT COUNT(`end`) FROM `storyparts` WHERE `end` = 1";
+$sql = "SELECT COUNT(`end`) FROM `storyparts` WHERE `end` = 1 AND `storyID` = $storyID";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
@@ -85,7 +85,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 $sqlOffset = $offset * 10;
-$sql = "SELECT `ID`, `option_text`, `Date` FROM `storyparts` ORDER BY `storyparts`.`Date` DESC LIMIT 10 OFFSET $sqlOffset ";
+$sql = "SELECT `ID`, `option_text`, `Date` FROM `storyparts` WHERE `storyID` = $storyID ORDER BY `storyparts`.`Date` DESC LIMIT 10 OFFSET $sqlOffset ";
 $result = mysqli_query($conn, $sql);
 
 $addedPartsList = "";
@@ -98,7 +98,11 @@ if (mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_assoc($result)) {
         $addeddate = GetIntervalRounded($row["Date"]);
         //echo "id: " . $row["ID"]. "<br>";
-        $addedPartsList .= "<a href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $row["option_text"] ." </b> <p>Added " .  $addeddate . " ago </p> </li> </a>";
+        $option =  $row["option_text"];
+        if ($option == "") {
+            $option = "-start of the story-";
+        }
+        $addedPartsList .= "<a href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate . " ago </p> </li> </a>";
 
     }
 
