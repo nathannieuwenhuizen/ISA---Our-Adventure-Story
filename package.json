@@ -21,6 +21,7 @@
   "author": "super author (check contributors)",
   "license": "ISC",
   "devDependencies": {
+    "@types/jquery": "^3.3.30",
     "@types/lodash": "^4.14.104",
     "browser-sync": "^2.23.6",
     "browser-sync-webpack-plugin": "^2.0.1",
@@ -33,6 +34,7 @@
     "fork-ts-checker-notifier-webpack-plugin": "^0.4.0",
     "fork-ts-checker-webpack-plugin": "^0.4.1",
     "happypack": "^4.0.1",
+    "jquery": "^3.4.1",
     "node-sass": "^4.11.0",
     "phaser-ce": "^2.10.1",
     "sass-loader": "^6.0.7",
@@ -44,5 +46,7 @@
     "webpack-dev-server": "^2.11.2",
     "webpack-spritesmith": "^0.4.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "jquery": "^3.4.1"
+  }
 }
