@@ -68,7 +68,6 @@
 
                     <div class="navigationButtons">
 
-
 <a class=<?php 
     if ($offset <= 0) {
         echo "hide";
@@ -85,17 +84,17 @@ if ($offset <= 0) {
     <b> <?php echo $offset + 1  ?> / <?php echo Round($amountOfParts / 10); ?> </b>
     
     <a class=<?php 
-if ($offset >= Floor( $amountOfParts / 10)) {
+if ($offset + 1 >= Round( $amountOfParts / 10)) {
     echo "hide";
 } else {
     echo "something";
 }?> href="?ID=<?php echo $storyID; ?>&offset=<?php echo $offset + 1; ?>"> ></a>
     <a class=<?php 
-if ($offset >= Floor( $amountOfParts / 10)) {
+if ($offset + 1 >= Round( $amountOfParts / 10)) {
     echo "hide";
 } else {
     echo "something";
-}?> href="?ID=<?php echo $storyID; ?>&offset=<?php echo Floor($amountOfParts / 10); ?>"> >></a>
+}?> href="?ID=<?php echo $storyID; ?>&offset=<?php echo Round($amountOfParts / 10) - 1; ?>"> >></a>
 </div>
                     <ul class="storyList">
                         <?php echo  $addedPartsList;?>
