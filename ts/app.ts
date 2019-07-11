@@ -1,6 +1,8 @@
+import 'jquery';
 import {
     Iproject
 } from './data';
+import BranchTree from './branchTree';
 
 export default class App {
 
@@ -19,19 +21,30 @@ export default class App {
     public hideEditButton: Element;
     public editForm: Element;
 
+    public branchCanvas: Element;
+    public branchTree: BranchTree;
+
     //the start function goes here
     constructor() {
+        
         window.applicationCache.addEventListener('updateready', () => {
             window.applicationCache.update();
             console.log("cache update!");
 
         });;
+        
         if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
             console.log("cache update!");
             window.applicationCache.update();
         } else {
             console.log("no cache update!");
+        }
 
+        if (document.getElementById("branchCanvas") != null) {
+
+            this.branchCanvas = document.getElementById("branchCanvas");
+            this.branchTree = new BranchTree(this.branchCanvas, document.getElementById("HbranchCanvas"));
+            console.log($('#branchCanvas'));
         }
 
         this.data = this.loadFile('./assets/projects.json');
@@ -95,6 +108,7 @@ export default class App {
         document.onload = () => {
             window.alert("Image loaded: " + this.consequenceImage.complete);
         };
+
     }
 
     public ToggleShow() {

@@ -26,6 +26,7 @@
 				<div class="layerNumber">page <?php echo $layer; ?></div>
 				<div class="storyTitle">
 					<a href="storyinfo.php?ID=<?php echo $storyID; ?>&offset=0"><h2> <?php echo $storyTitle; ?></h2> </a>
+					<a href="branchtree.php?ID=<?php echo $storyID; ?>">Branch tree</a>
 				</div>
 			</div>
 			<img class="editButton hide" src="assets/img/edit_icon.png">

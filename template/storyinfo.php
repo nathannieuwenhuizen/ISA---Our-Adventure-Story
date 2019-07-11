@@ -42,7 +42,12 @@
                     <p><b> Amount of endings </b> <?php echo $amountOfEnds; ?></p>
                     <p><b> Deepest layer into the story </b> <?php echo $deepestLayer; ?></p>
                     <br>
-                    <a class="startReadingButton" href="story.php?storypart=<?php echo $startID; ?>"> Start reading!
+                    <a class="startReadingButton" href="story.php?storypart=<?php echo $startID; ?>"> Start from beginning
+                    </a>
+                    <br>
+                    <br>
+                    <br>
+                    <a class="startReadingButton" href="branchtree.php?ID=<?php echo $storyID; ?>"> Tree branch
                     </a>
                 </div>
 

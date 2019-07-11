@@ -48,7 +48,7 @@ if (mysqli_num_rows($result) > 0) {
 
 } else {
     //there are no results
-    echo "0 results";
+    // echo "0 results";
 }
 
 $amountOfParts = 0;
@@ -69,7 +69,7 @@ if (mysqli_num_rows($result) > 0) {
 
 } else {
     //there are no results
-    echo "0 results";
+    // echo "0 results";
 }
 
 $amountOfEnds = 0;
