@@ -23,7 +23,7 @@ if ($parentEnd == "1") {
     return;
 }
 $sql = "INSERT INTO `storyparts` (`ID`, `start`, `end`, `option_text`, `content_text`, `question_text`, `option_IDs`, `Date`, `layer`, `image`, `parentID`, `storyID`)" .
-" VALUES (NULL, '0', '$end', '$option', '$consequence', '$question', '', CURRENT_TIMESTAMP, $layer, '$image', $parentID, $storyID);";
+" VALUES (NULL, '0', '$end', '$option', '$consequence', '$question', '', NOW(), $layer, '$image', $parentID, $storyID);";
 
 $last_id = -1;
 
