@@ -226,6 +226,7 @@ body {
                 a {
                     text-decoration: none;
                     li {
+                        position: relative;
                         margin: 20px 0;
                         outline: 2px solid black;
                         background: aliceblue;
@@ -240,6 +241,17 @@ body {
                             float: right;
                             margin-top: 15px;
                             font-size: 0.7em;
+
+                        }
+                        section{
+                            position: absolute;
+                            // border: 1px solid black;
+                            width: 20px;
+                            height: 15px;
+                            right: 2px;
+                            top: 2px;
+                            background: url("./img/image_icon.PNG");
+                            background-size: cover;
 
                         }
                     }

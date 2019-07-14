@@ -85,7 +85,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 $sqlOffset = $offset * 10;
-$sql = "SELECT `ID`, `option_text`, `Date` FROM `storyparts` WHERE `storyID` = $storyID ORDER BY `storyparts`.`Date` DESC LIMIT 10 OFFSET $sqlOffset ";
+$sql = "SELECT `ID`, `option_text`, `Date`, `image` FROM `storyparts` WHERE `storyID` = $storyID ORDER BY `storyparts`.`Date` DESC LIMIT 10 OFFSET $sqlOffset ";
 $result = mysqli_query($conn, $sql);
 
 $addedPartsList = "";
@@ -102,7 +102,11 @@ if (mysqli_num_rows($result) > 0) {
         if ($option == "") {
             $option = "-start of the story-";
         }
-        $addedPartsList .= "<a href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate . " ago </p> </li> </a>";
+        $image = "";
+        if ($row["image"] != "") {
+            $image .= "<section></section>";
+        }
+        $addedPartsList .= "<a href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate . " ago </p> ". $image." </li> </a>";
 
     }
 
