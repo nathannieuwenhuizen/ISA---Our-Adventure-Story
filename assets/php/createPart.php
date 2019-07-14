@@ -5,9 +5,9 @@ include 'connect.php';
 /*
 Creates the new story part
 */
-$option = htmlspecialchars($_POST['option'], ENT_QUOTES);
-$consequence = htmlspecialchars($_POST['consequence'], ENT_QUOTES);
-$question = htmlspecialchars($_POST['question'],ENT_QUOTES);
+$option = htmlspecialchars( removeAllTags( $_POST['option']), ENT_QUOTES);
+$consequence = htmlspecialchars(removeScriptTags( $_POST['consequence']), ENT_QUOTES);
+$question = htmlspecialchars(removeScriptTags($_POST['question']),ENT_QUOTES);
 $image = htmlspecialchars($_POST['image']);
 $layer = $_POST['layer'] + 1;
 $parentID = htmlspecialchars($_POST['parentID']);
@@ -49,7 +49,7 @@ if ($last_id != -1) {
     $parentOptions .= $last_id;
 }
 
-//echo $sql;
+// echo $sql;
 $sql = "UPDATE `storyparts` SET `option_IDs` = '". $parentOptions . "' WHERE `storyparts`.`ID` = ". $parentID . ";";
 if ($conn->query($sql) === TRUE) {
     //echo "<br>Optionlist is updated inserted ID is: " . $last_id . "<br>";

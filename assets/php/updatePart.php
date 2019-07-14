@@ -5,9 +5,9 @@ include 'connect.php';
 /*
 Creates the new story part
 */
-$option = htmlspecialchars($_POST['option'], ENT_QUOTES);
-$consequence = htmlspecialchars($_POST['consequence'], ENT_QUOTES);
-$question = htmlspecialchars($_POST['question'],ENT_QUOTES);
+$option = htmlspecialchars(removeScriptTags($_POST['option']), ENT_QUOTES);
+$consequence = htmlspecialchars(removeScriptTags($_POST['consequence']), ENT_QUOTES);
+$question = htmlspecialchars(removeScriptTags($_POST['question']),ENT_QUOTES);
 $image = htmlspecialchars($_POST['image']);
 $optionIDs = htmlspecialchars($_POST['optionIDs']);
 $end = "0";

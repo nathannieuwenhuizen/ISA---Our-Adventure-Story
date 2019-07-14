@@ -4,15 +4,15 @@ $username = "root";
 $password = "";
 $dbname = "ouradventurestorydb";
 
-$servername = "remotemysql.com";
-$username = "NBEf0XGIkY";
-$password = "5PpbZUQgNX";
-$dbname = "NBEf0XGIkY";
-
 // $servername = "remotemysql.com";
-// $username = "mTTXio0REs";
-// $password = "43Kz77Z0Ql";
-// $dbname = "mTTXio0REs";
+// $username = "NBEf0XGIkY";
+// $password = "5PpbZUQgNX";
+// $dbname = "NBEf0XGIkY";
+
+$servername = "remotemysql.com";
+$username = "mTTXio0REs";
+$password = "43Kz77Z0Ql";
+$dbname = "mTTXio0REs";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -20,4 +20,12 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
+
+
+function removeScriptTags($data) {
+    return  strip_tags($data, '<p><h1><h2><h3><h4><h5><a><b><i>');
+}
+function removeAllTags($data) {
+    return  strip_tags($data);
+}
 ?>

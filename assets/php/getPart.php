@@ -41,10 +41,10 @@ if (mysqli_num_rows($result) > 0) {
         //echo "id: " . $row["ID"]. "<br>";
         $start = $row["start"];
         $end = $row["end"];
-        $option_text = $row["option_text"];
-        $content_text = html_entity_decode(nl2br($row["content_text"]));
-        $content_textNL = html_entity_decode($row["content_text"]);
-        $question_text = $row["question_text"];
+        $option_text = removeAllTags($row["option_text"]);
+        $content_text = html_entity_decode(nl2br( removeScriptTags($row["content_text"])));
+        $content_textNL = html_entity_decode( removeScriptTags($row["content_text"]));
+        $question_text = removeScriptTags($row["question_text"]);
         $optionIDs = $row["option_IDs"];
         $layer = $row["layer"];
         $image = $row["image"];
