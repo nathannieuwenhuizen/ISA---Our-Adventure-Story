@@ -32,7 +32,9 @@
 			<img class="editButton hide" src="assets/img/edit_icon.png">
 
 			<div class="chooseMessage">
-				<a href="?storypart=<?php echo $parentID; ?>">Go back</a>
+
+			<a style="display:<?php if ($startID == $parentID) {echo 'none'; } else { echo 'inline-block'; } ?>;" href="?storypart=<?php echo $startID; ?>">Go to beginning</a>
+			<a href="?storypart=<?php echo $parentID; ?>">Go back</a>
 				<i>
 					<p> You chose...<br> <b> <?php echo $option_text; ?> </b> </p>
 				</i>

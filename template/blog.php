@@ -14,10 +14,20 @@
 	<div class="wrapper">
 	<?php 	include 'assets/inc/nav.inc'; ?>
 		<div class="blogWrapper">
-
         <h2>Blog</h2>
         <hr>
 
+
+<h3> Circular branch tree | 16-7-2019</h3>
+        <p> I've made a circular branch tree where you can navigate towards the selected parts. That way it will be easier to navigate complicated narative branches like the one down under. You can see the tree branch by clicking the 'tree branch' button in the story information page and in every story page.
+</p>
+<p> I've also made some other fixes and tweaks which are as follows: </P>
+<li> In the story info page you can see an image icon on recently added parts which have an image icon.</li>
+<li>Duplication story parts bug is fixed, you may still see it in older parts, but new ones wont have this isue.</li>
+<li>script tags entries have been removed, that was one dangorous bug!</li>
+<br>
+		<img src="https://i.gyazo.com/a05f50bc0d88496887df5571811281f6.gif" alt="Image from Gyazo" width="1000"/>
+		<hr>
         <h3> Second itteration | 7-6-2019</h3>
         <p>
         The website has been updated. It is therfore the end of my induvidual study for tihs project. I'll probably work on it later in July when I have summer vacation. <br>
