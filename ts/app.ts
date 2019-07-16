@@ -87,7 +87,7 @@ export default class App {
 
         }
 
-        document.title = "Our Adventure Story | " + OPTION;
+        document.title =  TITLE + " | " + OPTION;
         if (END == 1) {
             this.showNewPartButton.classList.add('hide');
             this.questionPanel.innerHTML = "this is the end of this branch.";

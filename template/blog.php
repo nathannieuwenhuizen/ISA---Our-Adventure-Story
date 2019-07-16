@@ -26,7 +26,7 @@
 <li>Duplication story parts bug is fixed, you may still see it in older parts, but new ones wont have this isue.</li>
 <li>script tags entries have been removed, that was one dangorous bug!</li>
 <br>
-		<img src="https://i.gyazo.com/a05f50bc0d88496887df5571811281f6.gif" alt="Image from Gyazo" width="1000"/>
+		<img src="https://i.gyazo.com/a05f50bc0d88496887df5571811281f6.gif" alt="Image from Gyazo"/>
 		<hr>
         <h3> Second itteration | 7-6-2019</h3>
         <p>

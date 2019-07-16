@@ -16,6 +16,7 @@
 		END = "<?php echo $end ?>";
 		OPTION = "<?php echo $option_text ?>";
 		OPTIONLIST = "<?php echo $optionList ?>";
+		TITLE = "<?php echo $storyTitle ?>";
 		//window.alert(START);
 	</script>
 
