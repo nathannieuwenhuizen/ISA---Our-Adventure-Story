@@ -116,6 +116,13 @@ module.exports = {
                 to: path.join(basePath, 'builds/dev')
             }
         ]),
+        new webpack.DefinePlugin({
+            PRODUCTION: JSON.stringify(true),
+            APP_NAME: "'Our TG captions'",
+            BROWSER_SUPPORTS_HTML5: true,
+            TWO: "1+1",
+            "typeof window": JSON.stringify("object")
+          })
         // new ForkTsCheckerNotifierWebpackPlugin({alwaysNotify: true}),
         // new ForkTsCheckerWebpackPlugin({
         //     checkSyntacticErrors: true,

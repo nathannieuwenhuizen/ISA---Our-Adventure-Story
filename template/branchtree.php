@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <HTML>
+<?php session_start(); ?>
 
 <HEAD>
 	<TITLE>Circular branch tree | Our adventure story</TITLE>

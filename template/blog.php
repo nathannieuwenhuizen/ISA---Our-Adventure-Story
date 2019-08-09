@@ -2,7 +2,7 @@
 <HTML>
 
 <HEAD>
-	<TITLE>About | Our adventure story</TITLE>
+	<TITLE>About | Our TG caption</TITLE>
 	<link rel="icon" type="image/png" href="./assets/img/logo.png" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 	<link id="stylesheet" rel="stylesheet" href="assets/style.css" type="text/css" />

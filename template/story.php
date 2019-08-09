@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <HTML>
+<?php session_start(); ?>
 
 <HEAD>
 	<TITLE>Our adventure story</TITLE>
@@ -24,7 +25,7 @@
 	<?php include 'assets/inc/nav.inc'; ?>
 		<div class="storywrapper">
 			<div class="storyHeader">
-				<div class="layerNumber">page <?php echo $layer; ?></div>
+				<div class="layerNumber">page <?php echo $layer; ?> <div class="author">written by <?php echo $authorName; ?></div></div>
 				<div class="storyTitle">
 					<a href="storyinfo.php?ID=<?php echo $storyID; ?>&offset=0"><h2> <?php echo $storyTitle; ?></h2> </a>
 					<a href="branchtree.php?ID=<?php echo $storyID; ?>">Branch tree</a>

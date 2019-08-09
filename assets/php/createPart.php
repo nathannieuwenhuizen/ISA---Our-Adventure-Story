@@ -2,6 +2,8 @@
 //MySQL Database Connect 
 include 'connect.php'; 
 
+session_start();
+
 /*
 Creates the new story part
 */
@@ -33,8 +35,12 @@ if (mysqli_num_rows($result) > 0) {
 } else {
     // echo "Error: " . $sql . "<br>" . $conn->error . "<br> pee pee!";
     
-    $sql = "INSERT INTO `storyparts` (`ID`, `start`, `end`, `option_text`, `content_text`, `question_text`, `option_IDs`, `Date`, `layer`, `image`, `parentID`, `storyID`)" .
-" VALUES (NULL, '0', '$end', '$option', '$consequence', '$question', '', NOW(), $layer, '$image', $parentID, $storyID);";
+    $author = -1;
+    if (isset($_SESSION['logged_in'])) {
+        $author = $_SESSION['userID'];
+    }
+    $sql = "INSERT INTO `storyparts` (`ID`, `start`, `end`, `option_text`, `content_text`, `question_text`, `option_IDs`, `Date`, `layer`, `image`, `parentID`, `storyID`, `authorID`)" .
+" VALUES (NULL, '0', '$end', '$option', '$consequence', '$question', '', NOW(), $layer, '$image', $parentID, $storyID, $author);";
 
     $last_id = -1;
 

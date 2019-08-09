@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <HTML>
+<?php session_start(); ?>
 
 <HEAD>
     <TITLE>Story information </TITLE>

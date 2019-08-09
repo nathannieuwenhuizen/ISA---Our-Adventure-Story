@@ -32,7 +32,7 @@ $image;
 $parentID;
 $storyID;
 $optionList = "";//defined from the next sql call
-
+$authorID;
 //if there is any result
 if (mysqli_num_rows($result) > 0) {
 
@@ -50,10 +50,26 @@ if (mysqli_num_rows($result) > 0) {
         $image = $row["image"];
         $parentID = $row["parentID"];
         $storyID = $row["storyID"];
+        $authorID = $row["authorID"];
+
     }
 } else {
     //there are no results
     echo "0 results";
+}
+
+$authorName = 'anonymous';
+if ($authorID != -1) {
+    $sql = "SELECT username FROM users WHERE id = $authorID LIMIT 1";
+    $result = mysqli_query($conn, $sql);
+    
+    //if there is any result
+    if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+        while($row = mysqli_fetch_assoc($result)) {
+            $authorName = $row["username"];
+        }
+    }
 }
 
 /*
