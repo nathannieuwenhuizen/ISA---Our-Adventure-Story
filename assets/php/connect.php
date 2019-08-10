@@ -1,18 +1,24 @@
 <?php
+$websiteURL = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/";
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "ouradventurestorydb";
+$name = "TG Captions";
 
+// $websiteURL = "https://studenthome.hku.nl/~nathan.nieuwenhuizen/assets/ouradventurestory/";
 // $servername = "remotemysql.com";
 // $username = "NBEf0XGIkY";
 // $password = "5PpbZUQgNX";
 // $dbname = "NBEf0XGIkY";
+// $name = "Adventure Stories";
 
+// $websiteURL = "https://ourinteractivetgcaption.000webhostapp.com/";
 // $servername = "remotemysql.com";
 // $username = "mTTXio0REs";
 // $password = "43Kz77Z0Ql";
 // $dbname = "mTTXio0REs";
+// $name = "TG Captions";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

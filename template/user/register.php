@@ -2,6 +2,8 @@
 /* Registration process, inserts user info into the database 
    and sends account confirmation email message
  */
+require 'db.php';
+
 
 // Set session variables to be used on profile.php page
 $_SESSION['email'] = $_POST['email'];
@@ -60,7 +62,7 @@ if ( $result->num_rows > 0 ) {
 
             Please click this link to activate your account:
 
-            http://localhost/login-system/verify.php?email='.$email.'&hash='.$hash;  
+            '.$websiteURL.'user/verify.php?email='.$email.'&hash='.$hash;  
 
             mail( $to, $subject, $message_body );
 

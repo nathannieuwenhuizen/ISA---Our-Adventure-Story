@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <HTML>
 <?php session_start(); ?>
+<?php require "assets/php/connect.php" ?>
 
 <HEAD>
 	<TITLE>Circular branch tree | Our adventure story</TITLE>

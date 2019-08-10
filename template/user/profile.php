@@ -112,7 +112,8 @@ if (mysqli_num_rows($result) > 0) {
 
 <body>
   <div class="wrapper">
-    <?php 	include '../assets/inc/nav_login.inc'; ?>
+    <?php 
+    	include '../assets/inc/nav_login.inc'; ?>
 
     <div class="form">
 

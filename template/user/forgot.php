@@ -36,7 +36,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' )
 
         Please click this link to reset your password:
 
-        http://localhost/login-system/reset.php?email='.$email.'&hash='.$hash;  
+        '.$websiteURL.'user/reset.php?email='.$email.'&hash='.$hash;  
 
         mail($to, $subject, $message_body);
 
