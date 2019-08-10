@@ -1,6 +1,6 @@
 <?php
 /* Database connection settings */
-require('../assets/php/connect.php');
+require '../assets/php/connect.php';
 // $host = 'localhost';
 // $user = 'root';
 // $pass = '';

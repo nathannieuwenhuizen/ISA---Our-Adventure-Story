@@ -1,6 +1,7 @@
 <?php
 //MySQL Database Connect 
 include 'assets/php/connect.php'; 
+include 'assets/php/globalfunctions.php'; 
 
 //retreive url var
 $stringname = 'storypart';

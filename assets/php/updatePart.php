@@ -1,6 +1,7 @@
 <?php
 //MySQL Database Connect 
 include 'connect.php'; 
+include 'globalfunctions.php'; 
 
 /*
 Creates the new story part

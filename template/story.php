@@ -33,7 +33,7 @@
 	<?php include 'assets/inc/nav.inc'; ?>
 		<div class="storywrapper">
 			<div class="storyHeader">
-				<div class="layerNumber">page <?php echo $layer; ?> <div class="author"><i>written by <?php echo $authorName; ?></i></div></div>
+				<div class="layerNumber">page <?php echo $layer; ?> <div class="author"><i><?php if ( $authorName != "anonymous") { echo "written by ". $authorName; } ?></i></div></div>
 				<div class="storyTitle">
 					<a href="storyinfo.php?ID=<?php echo $storyID; ?>&offset=0"><h2> <?php echo $storyTitle; ?></h2> </a>
 					<a href="branchtree.php?ID=<?php echo $storyID; ?>">Branch tree</a>

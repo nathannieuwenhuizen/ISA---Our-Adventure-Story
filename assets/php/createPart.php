@@ -1,6 +1,7 @@
 <?php
 //MySQL Database Connect 
 include 'connect.php'; 
+include 'globalfunctions.php'; 
 
 session_start();
 

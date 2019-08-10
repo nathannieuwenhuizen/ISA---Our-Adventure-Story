@@ -32,7 +32,13 @@ if ($storyPartID != -1 && $storyID != -1) {
             // $last_id = $conn->insert_id;
             $object = '{"result": "1", "message" : "remove like!"}';
     
+        } else {
+            $object = '{"result": "0", "message" : "no internet connection"}';
+
         }
+    }else {
+        $object = '{"result": "0", "message" : "you are somehow not logged in"}';
+
     }
 } 
 

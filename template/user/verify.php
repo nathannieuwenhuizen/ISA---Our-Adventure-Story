@@ -12,7 +12,7 @@ if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !
     $hash = $conn->escape_string($_GET['hash']); 
     
     // Select user with matching email and hash, who hasn't verified their account yet (active = 0)
-    $result = $conn->query("SELECT * FROM users WHERE email='$email' AND hash='$hash' AND active='0'");
+    $result = $conn->query("SELECT * FROM users WHERE email='$email' AND hash='$hash'");
 
     if ( $result->num_rows == 0 )
     { 

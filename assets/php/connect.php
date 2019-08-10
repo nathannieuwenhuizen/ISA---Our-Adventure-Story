@@ -1,24 +1,21 @@
 <?php
-$websiteURL = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/";
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ouradventurestorydb";
-$websiteName = "TG Captions";
+// $websiteURL = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/";
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $dbname = "ouradventurestorydb";
 
-// $websiteURL = "https://studenthome.hku.nl/~nathan.nieuwenhuizen/assets/ouradventurestory/";
-// $servername = "remotemysql.com";
-// $username = "NBEf0XGIkY";
-// $password = "5PpbZUQgNX";
-// $dbname = "NBEf0XGIkY";
-// $websiteName = "Adventure Stories";
+$websiteURL = "https://studenthome.hku.nl/~nathan.nieuwenhuizen/assets/ouradventurestory/";
+$servername = "remotemysql.com";
+$username = "NBEf0XGIkY";
+$password = "5PpbZUQgNX";
+$dbname = "NBEf0XGIkY";
 
 // $websiteURL = "https://ourinteractivetgcaption.000webhostapp.com/";
 // $servername = "remotemysql.com";
 // $username = "mTTXio0REs";
 // $password = "43Kz77Z0Ql";
 // $dbname = "mTTXio0REs";
-// $websiteName = "TG Captions";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -26,37 +23,5 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
-
-
-function removeScriptTags($data) {
-    return  strip_tags($data, '<p><h1><h2><h3><h4><h5><a><b><i>');
-}
-function removeAllTags($data) {
-    return  strip_tags($data);
-}
-
-function GetIntervalRounded ($date) {
-    $now = new DateTime();
-    $current = new DateTime($date);
-    $dif = date_diff($now, $current);
-    $result =  $result = $dif->format('%s') . " seconds";
-
-    if ($dif->format('%i') != 0) {
-        $result = $dif->format('%i') . " minutes";
-    }
-    if ($dif->format('%h') != 0) {
-        $result = $dif->format('%h') . " hours";
-    }
-    if ($dif->format('%d') != 0) {
-        $result = $dif->format('%d') . " days";
-    }
-    if ($dif->format('%m') != 0) {
-        $result = $dif->format('%m') . " months";
-    }
-    if ($dif->format('%y') != 0) {
-        $result = $dif->format('%y') . " months";
-    }
-    return $result;
-}
 
 ?>

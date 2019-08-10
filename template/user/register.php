@@ -2,6 +2,7 @@
 /* Registration process, inserts user info into the database 
    and sends account confirmation email message
  */
+require 'db.php';
 
 
 // Set session variables to be used on profile.php page
@@ -44,6 +45,7 @@ if ( $result->num_rows > 0 ) {
         // Add user to the database
         if ( $conn->query($sql) ){
 
+            $_SESSION['userID'] = $conn->insert_id;
             $_SESSION['active'] = 0; //0 until user activates their account with verify.php
             $_SESSION['logged_in'] = true; // So we know the user has logged in
             $_SESSION['message'] =

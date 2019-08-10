@@ -1,3 +1,5 @@
+<?php require './assets/php/global.php'?>
+
 <div class="navigation">
 	<ul>
 		<a href="./user/">

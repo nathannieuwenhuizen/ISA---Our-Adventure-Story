@@ -3,8 +3,6 @@
 session_start();
 session_unset();
 session_destroy(); 
-require 'db.php';
-
 ?>
 <!DOCTYPE html>
 <html>

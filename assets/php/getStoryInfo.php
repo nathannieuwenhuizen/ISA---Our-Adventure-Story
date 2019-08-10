@@ -1,6 +1,7 @@
 <?php
 //MySQL Database Connect 
 include 'assets/php/connect.php'; 
+include 'assets/php/globalfunctions.php'; 
 
 //retreive url var
 $stringname = 'ID';
@@ -85,7 +86,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 $sqlOffset = $offset * 10;
-$sql = "SELECT `ID`, `option_text`, `Date`, `image` FROM `storyparts` WHERE `storyID` = $storyID ORDER BY `storyparts`.`Date` DESC LIMIT 10 OFFSET $sqlOffset ";
+$sql = "SELECT `ID`, `option_text`, `Date`, `image`, `authorID` FROM `storyparts` WHERE `storyID` = $storyID ORDER BY `storyparts`.`Date` DESC LIMIT 10 OFFSET $sqlOffset ";
 $result = mysqli_query($conn, $sql);
 
 $addedPartsList = "";
@@ -106,7 +107,23 @@ if (mysqli_num_rows($result) > 0) {
         if ($row["image"] != "") {
             $image .= "<section></section>";
         }
-        $addedPartsList .= "<a href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate . " ago </p> ". $image." </li> </a>";
+
+        $writerName = '';
+        $authorID = $row["authorID"];
+
+        if ($row["authorID"] != -1) {
+            $sql2 = "SELECT username FROM users WHERE id = $authorID LIMIT 1";
+            $result2 = mysqli_query($conn, $sql2);
+            // $authorName = $id;
+            //if there is any result
+            if (mysqli_num_rows($result2) > 0) {
+                // output data of each row
+                while($row2 = mysqli_fetch_assoc($result2)) {
+                    $writerName = " | written by " . $row2["username"];
+                }
+            }
+        }
+        $addedPartsList .= "<a href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate .$writerName." </p> ". $image." </li> </a>";
 
     }
 
@@ -114,7 +131,6 @@ if (mysqli_num_rows($result) > 0) {
     //there are no results
     $addedPartsList = "0 results";
 }
-
 
 $conn->close();
 ?>
