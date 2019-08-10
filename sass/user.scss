@@ -195,6 +195,71 @@
         margin-top: -20px;
         text-align: right;
       }
+
+      .added-parts {
+        text-decoration: none;
+        a {
+            li {
+                list-style-type: none;
+                position: relative;
+                margin: 20px 0;
+                outline: 2px solid black;
+                background: aliceblue;
+                transition: outline .2s;
+
+                padding: 10px 5px;
+                b {
+                    font-size: 0.8em;
+                }
+                p {
+                    position: absolute;
+                    float: right;
+                    margin-top: 15px;
+                    font-size: 0.7em;
+                    right: 2px; 
+                    top: 10px;
+
+
+                }
+                section{
+                    position: absolute;
+                    // border: 1px solid black;
+                    width: 20px;
+                    height: 15px;
+                    right: 2px; 
+                    top: 2px;
+                    background: url("./img/image_icon.PNG");
+                    background-size: cover;
+
+                }
+            }
+            li:hover{
+                background: white;
+                outline: 5px solid black;
+            }
+            
+        }
+
+        .navigationButtons {
+            margin-top: 20px;
+            text-align: center;
+            align-content: center;
+            a {
+                @extend %storyBorder-button;
+                margin: 0px 10px;
+                padding: 10px 10px;
+
+            }
+            b {
+                //position: absolute;
+                widows: 100%;
+                text-align: center;
+            }
+        }
+ 
+    }
+    
+
   }
   
   

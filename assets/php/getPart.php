@@ -122,6 +122,43 @@ if (mysqli_num_rows($result) > 0) {
     echo "0 results";
 }
 
+session_start();
+
+//check if user has liked the part
+$likeMessage = "login to like";
+$like = false;
+if (isset($_SESSION['userID'])) {
+    $userID =  $_SESSION['userID'];
+    if (isset($_SESSION['logged_in'])) {
+        $likeMessage = "add like";
+
+        $sql = "SELECT * FROM likes WHERE storyPartID = $storyPartID  AND userID = $userID LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+        
+        //if there is any result
+        if (mysqli_num_rows($result) > 0) {
+                $likeMessage = "remove like";
+                $like = true;
+        }
+    }
+}
+$amountOfLikes = "0 likes";
+$sql = "SELECT COUNT(storyPartID) FROM likes WHERE storyPartID = $storyPartID";
+$result = mysqli_query($conn, $sql);     
+//if there is any result
+if (mysqli_num_rows($result) > 0) {
+    // output data of each row
+    while($row = mysqli_fetch_assoc($result)) {
+        if ($row["COUNT(storyPartID)"] != 1) {
+            $amountOfLikes = $row["COUNT(storyPartID)"] . " likes"; 
+        } else {
+            $amountOfLikes = "1 like"; 
+        }
+    }
+}
+        
+
+
 
 $conn->close();
 ?>

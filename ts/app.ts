@@ -6,7 +6,10 @@ import BranchTree from './branchTree';
 
 export default class App {
 
+    //test
     public data: Iproject[];
+
+    //story view
     public showNewPartButton: Element;
     public createForm: Element;
     public fromShowed: Boolean = false;
@@ -21,140 +24,184 @@ export default class App {
     public hideEditButton: Element;
     public editForm: Element;
 
+    public starIcon: Element;
+    public starMessage: Element;
+
+    //branch tree
     public branchCanvas: Element;
     public branchTree: BranchTree;
 
     //the start function goes here
     constructor() {
         document.title = APP_NAME;
+
+        this.checkCacheUpdate();
+        this.checkBranchCanvasAndApply();
+
+        this.checkStoryView();
+
+        // this.data = this.loadFile('./assets/projects.json');
+    }
+
+    public LoginEvents() {
+        $('.form').find('input, textarea').on('keyup blur focus', function (e) {
+
+            let $this = $(this),
+                label = $this.prev('label');
+
+            if (e.type === 'keyup') {
+                if ($this.val() === '') {
+                    label.removeClass('active highlight');
+                } else {
+                    label.addClass('active highlight');
+                }
+            } else if (e.type === 'blur') {
+                if ($this.val() === '') {
+                    label.removeClass('active highlight');
+                } else {
+                    label.removeClass('highlight');
+                }
+            } else if (e.type === 'focus') {
+
+                if ($this.val() === '') {
+                    label.removeClass('highlight');
+                } else if ($this.val() !== '') {
+                    label.addClass('highlight');
+                }
+            }
+
+        });
+
+        $('.tab a').on('click', function (e) {
+
+            e.preventDefault();
+
+            $(this).parent().addClass('active');
+            $(this).parent().siblings().removeClass('active');
+
+            let target = $(this).attr('href');
+
+            $('.tab-content > div').not(target).hide();
+
+            $(target).fadeIn(600);
+
+        });
+    }
+
+    public checkCacheUpdate() {
         window.applicationCache.addEventListener('updateready', () => {
             window.applicationCache.update();
             console.log("cache update!");
 
         });;
-        
+
         if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
             console.log("cache update!");
             window.applicationCache.update();
         } else {
             console.log("no cache update!");
         }
+    }
 
+    public checkBranchCanvasAndApply() {
         if (document.getElementById("branchCanvas") != null) {
 
             this.branchCanvas = document.getElementById("branchCanvas");
             this.branchTree = new BranchTree(this.branchCanvas, document.getElementById("HbranchCanvas"));
             console.log($('#branchCanvas'));
         } else if (document.getElementsByClassName("form")[0] != null) {
-            $('.form').find('input, textarea').on('keyup blur focus', function (e) {
-  
-                let $this = $(this),
-                    label = $this.prev('label');
-              
-                    if (e.type === 'keyup') {
-                          if ($this.val() === '') {
-                        label.removeClass('active highlight');
-                      } else {
-                        label.addClass('active highlight');
-                      }
-                  } else if (e.type === 'blur') {
-                      if( $this.val() === '' ) {
-                          label.removeClass('active highlight'); 
-                          } else {
-                          label.removeClass('highlight');   
-                          }   
-                  } else if (e.type === 'focus') {
-                    
-                    if( $this.val() === '' ) {
-                          label.removeClass('highlight'); 
-                          } 
-                    else if( $this.val() !== '' ) {
-                          label.addClass('highlight');
-                          }
-                  }
-              
-              });
-              
-              $('.tab a').on('click', function (e) {
-                
-                e.preventDefault();
-                
-                $(this).parent().addClass('active');
-                $(this).parent().siblings().removeClass('active');
-                
-                let target = $(this).attr('href');
-              
-                $('.tab-content > div').not(target).hide();
-                
-                $(target).fadeIn(600);
-                
-              });
+            this.LoginEvents();
         }
-
-        this.data = this.loadFile('./assets/projects.json');
-
-        //new part
-        this.showNewPartButton = document.getElementsByClassName('createnewPartButton')[0];
-        this.createForm = document.getElementsByClassName('createWrapper')[0];
-
-        //the current part
-        this.chooseMessage = document.getElementsByClassName('chooseMessage')[0];
-        this.questionPanel = document.getElementsByClassName('questionPanel')[0];
-        this.consequenceImage = document.getElementsByClassName('consequenceImage')[0];
-
-        //edit current part
-        this.updateEndValueCheckbox = document.getElementsByClassName('update_end')[0];
-        this.ShowEditButton = document.getElementsByClassName('editButton')[0];
-        this.ShowEditButton.addEventListener('click', () => {
-            this.ToggleEditForm(true)
-        });
-        this.hideEditButton = document.getElementsByClassName('hideButton')[0];
-        this.hideEditButton.addEventListener('click', () => {
-            this.ToggleEditForm(false)
-        });
-        this.editForm = document.getElementsByClassName('updateWrapper')[0];
-
-
-
-        this.storyPage = document.getElementsByClassName('storywrapper')[0];
-
-        let objImg = new Image();
-        objImg.src = this.consequenceImage.src;
-        //console.log(objImg.src);
-        if (!this.ContainsAny(objImg.src, ['jpeg', 'png', 'gif', 'jpg'])) {
-            //document.getElementsByClassName('duoWrapper')[0].classList.add('duoWrapperWithoutImg');
-        }
-        if (objImg.complete) {
-            this.consequenceImage.classList.add('show');
-        } else {
-            document.getElementsByClassName('duoWrapper')[0].classList.add('duoWrapperWithoutImg');
-
-        }
-
-        document.title =  TITLE + " | " + OPTION;
-        if (END == 1) {
-            this.showNewPartButton.classList.add('hide');
-            this.questionPanel.innerHTML = "this is the end of this branch.";
-            this.updateEndValueCheckbox.checked = true;
-        }
-        if (START == 1) {
-            this.chooseMessage.classList.add('hide');
-            //this.chooseMessage.innerHTML = "Start of the story!";
-        }
-
-        if (OPTIONLIST == "" && START == "0") {
-            this.ShowEditButton.classList.remove('hide');
-        }
-        this.showNewPartButton.addEventListener('click', () => {
-            this.fromShowed = !this.fromShowed;
-            this.ToggleShow();
-        });
-        document.onload = () => {
-            window.alert("Image loaded: " + this.consequenceImage.complete);
-        };
 
     }
 
+    public checkStoryView() {
+        if (document.getElementsByClassName('createWrapper')[0]) {
+            //new part
+            this.showNewPartButton = document.getElementsByClassName('createnewPartButton')[0];
+            this.createForm = document.getElementsByClassName('createWrapper')[0];
+
+            //the current part
+            this.chooseMessage = document.getElementsByClassName('chooseMessage')[0];
+            this.questionPanel = document.getElementsByClassName('questionPanel')[0];
+            this.consequenceImage = document.getElementsByClassName('consequenceImage')[0];
+
+            //edit current part
+            this.updateEndValueCheckbox = document.getElementsByClassName('update_end')[0];
+            this.ShowEditButton = document.getElementsByClassName('editButton')[0];
+            this.ShowEditButton.addEventListener('click', () => {
+                this.ToggleEditForm(true)
+            });
+            this.hideEditButton = document.getElementsByClassName('hideButton')[0];
+            this.hideEditButton.addEventListener('click', () => {
+                this.ToggleEditForm(false)
+            });
+            this.editForm = document.getElementsByClassName('updateWrapper')[0];
+
+            this.starIcon = document.getElementsByClassName('starIcon')[0];
+            this.starMessage = document.getElementById('starMessage');
+
+            this.starIcon.addEventListener('click', () => { 
+                if (!LOGGEDIN) { return; }
+                // console.log("your are logged in");
+                // console.log(this.starIcon.getAttribute("src"));
+                let result;
+                if (this.starIcon.getAttribute("src") == "assets/img/star_empty.png") {
+                    console.log("./assets/php/like/addLike.php?id=" + PARTID +  "&story=" + STORYID);
+                    result = this.setSQLData("./assets/php/like/addLike.php?id=" + PARTID +  "&story=" + STORYID);
+                    if (result.result != 0) {
+                        this.starIcon.setAttribute("src", "assets/img/star_full.png");
+                    }
+                } else {
+                    result = this.setSQLData("./assets/php/like/removeLike.php?id=" + PARTID);
+                    if (result.result != 0) {
+                        this.starIcon.setAttribute("src", "assets/img/star_empty.png");
+                    }
+                }
+                console.log(result.message);
+                this.starMessage.innerHTML = result.message;
+
+            });
+
+
+            this.storyPage = document.getElementsByClassName('storywrapper')[0];
+
+            let objImg = new Image();
+            objImg.src = this.consequenceImage.src;
+            //console.log(objImg.src);
+            if (!this.ContainsAny(objImg.src, ['jpeg', 'png', 'gif', 'jpg'])) {
+                //document.getElementsByClassName('duoWrapper')[0].classList.add('duoWrapperWithoutImg');
+            }
+            if (objImg.complete) {
+                this.consequenceImage.classList.add('show');
+            } else {
+                document.getElementsByClassName('duoWrapper')[0].classList.add('duoWrapperWithoutImg');
+
+            }
+
+            document.title = TITLE + " | " + (OPTION != "" ? OPTION : "start of story");
+            if (END == 1) {
+                this.showNewPartButton.classList.add('hide');
+                this.questionPanel.innerHTML = "<br><h3>this is the end of this branch</h3><br><br>";
+                this.updateEndValueCheckbox.checked = true;
+            }
+            if (START == 1) {
+                this.chooseMessage.classList.add('hide');
+                //this.chooseMessage.innerHTML = "Start of the story!";
+            }
+
+            if (OPTIONLIST == "" && START == "0") {
+                this.ShowEditButton.classList.remove('hide');
+            }
+            this.showNewPartButton.addEventListener('click', () => {
+                this.fromShowed = !this.fromShowed;
+                this.ToggleShow();
+            });
+            document.onload = () => {
+                window.alert("Image loaded: " + this.consequenceImage.complete);
+            };
+        }
+    }
     public ToggleShow() {
         console.log("click!");
         if (this.fromShowed) {
@@ -212,6 +259,32 @@ export default class App {
         }
         return -1;
     }
+
+    private setSQLData(url: string): any {
+        let request: XMLHttpRequest = new XMLHttpRequest();
+        request.open('GET', url, false);
+        let data: any;
+        request.onload = () => {
+            if (request.status >= 200 && request.status < 400) {
+                // Success!
+                data = JSON.parse(request.responseText);
+            } else {
+                console.log('We reached our target server, but it returned an error');
+
+            }
+        };
+
+        request.onerror = () => {
+            console.log('There was a connection error of some sort');
+
+            // There was a connection error of some sort
+        };
+
+        request.send();
+        return data;
+    }
+
+
     private loadFile(url: string): any {
         let request: XMLHttpRequest = new XMLHttpRequest();
         request.open('GET', url, false);

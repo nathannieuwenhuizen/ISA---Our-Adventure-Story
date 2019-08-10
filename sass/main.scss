@@ -306,6 +306,53 @@ body {
                 opacity: 1;
                 cursor: pointer;
             }
+            #starElement {
+                position: absolute;
+                display: block;
+                right: 10%;
+                margin-top: -50px;
+                .starIcon {
+                    width: 30px;
+                    padding: 10px;
+                    opacity: .5;
+                    transition: opacity 0.5s;
+
+                }
+                .starIcon:hover {
+                    opacity: 1;
+                    cursor: pointer;
+                }
+                .starIcon:hover + #starMessage {
+                    opacity: 1;
+                }
+                p {
+                    font-size: 0.8em;
+                    color: rgb(195, 150, 2);
+                    position: absolute;
+                    // outline: 1px solid black;
+                    right: 45px;
+                    top: 5px;
+                    text-align: right;
+                    width: 100px;
+                }
+                #starMessage {
+                    background: black;
+                    padding: 5px;
+                    border-radius: 20px;
+                    display: block;
+                    position: absolute;
+                    color: white;
+                    width: 100px;
+                    text-align: center;
+                    opacity: 0;
+                    margin-top: -5px;
+                    margin-right: -20px;
+                    transition: opacity 0.5s;
+
+                }
+            }
+            
+
             
             .chooseMessage {
                 width: 50%;

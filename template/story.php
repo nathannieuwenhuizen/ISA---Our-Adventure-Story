@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 <HTML>
-<?php session_start(); ?>
 
 <HEAD>
 	<TITLE>Our adventure story</TITLE>
@@ -18,29 +17,48 @@
 		OPTION = "<?php echo $option_text ?>";
 		OPTIONLIST = "<?php echo $optionList ?>";
 		TITLE = "<?php echo $storyTitle ?>";
-		//window.alert(START);
+		PARTID = "<?php echo $storyPartID ?>"
+		STORYID = "<?php echo $storyID ?>"
+		LOGGEDIN = "<?php 
+		if (isset($_SESSION['logged_in'])) { 
+			echo $_SESSION['logged_in']; 
+			} 
+		else { 
+			echo 0; 
+		} ?>";
+		// window.alert(LOGGEDIN);
 	</script>
 
 	<div class="wrapper">
 	<?php include 'assets/inc/nav.inc'; ?>
 		<div class="storywrapper">
 			<div class="storyHeader">
-				<div class="layerNumber">page <?php echo $layer; ?> <div class="author">written by <?php echo $authorName; ?></div></div>
+				<div class="layerNumber">page <?php echo $layer; ?> <div class="author"><i>written by <?php echo $authorName; ?></i></div></div>
 				<div class="storyTitle">
 					<a href="storyinfo.php?ID=<?php echo $storyID; ?>&offset=0"><h2> <?php echo $storyTitle; ?></h2> </a>
 					<a href="branchtree.php?ID=<?php echo $storyID; ?>">Branch tree</a>
 				</div>
 			</div>
 			<img class="editButton hide" src="assets/img/edit_icon.png">
-
+			<div id="starElement"> <p> <?php echo $amountOfLikes; ?> </p>
+			<img class="starIcon" src=<?php 
+			if ($like) { 
+				echo "assets/img/star_full.png";
+			} else { 
+				echo "assets/img/star_empty.png";
+			} ?>>
+			<div id="starMessage"><?php echo $likeMessage;  ?></div>
+</div>
 			<div class="chooseMessage">
 
 			<a style="display:<?php if ($startID == $parentID) {echo 'none'; } else { echo 'inline-block'; } ?>;" href="?storypart=<?php echo $startID; ?>">Go to beginning</a>
 			<a href="?storypart=<?php echo $parentID; ?>">Go back</a>
 				<i>
-					<p> You chose...<br> <b> <?php echo $option_text; ?> </b> </p>
+					<p> You chose...<br> <b> <?php echo $option_text; ?> </b>  </p>
 				</i>
-            </div>
+				
+			</div>
+			<br>
             <hr>
 
 			<div class="duoWrapper">
