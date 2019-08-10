@@ -21,7 +21,7 @@ if (isset($_POST['end'])) {
     $end = "1";
 }
 
-if ($parentEnd == "1") {
+if ($parentEnd == "1" || strictEmpty($option) || strictEmpty($consequence)) {
     //header("location: ../../?storypart=". $parentID);
     return;
 }

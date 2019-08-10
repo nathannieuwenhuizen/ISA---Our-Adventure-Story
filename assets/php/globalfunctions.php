@@ -30,4 +30,16 @@ function GetIntervalRounded ($date) {
     }
     return $result;
 }
+function strictEmpty($var) {
+    // Delete this line if you want space(s) to count as not empty
+    $var = trim($var);
+    if(isset($var) === true && $var === '') {
+        return true;
+        // It's empty
+    }
+    else {
+        return false;
+        // It's not empty
+    }
+}
 ?>
