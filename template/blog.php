@@ -18,6 +18,16 @@
         <hr>
 
 
+		<h3> Account system | 11-8-2019</h3>
+        <p> I've made a user account system so that you and I can get to know eachother! It has an e-mail verify system and even an password forgot functionality. :D</p>
+        <p> There is also a profile page on where you can only your username and a log-out button. But thats not all! I've also made a favourite list where you can see your favourite story parts! You can add a story part to your favourites by clicking on the star right on the page of the corresponding part. </p>
+        <p> And for the writers out there, your username will finally be displayed when you write a part.</p>
+        <p> The user account system is made using the help of the youtube channel 'Clever Techie'. The tutorial video can be found here: <a href="https://www.youtube.com/watch?v=Pz5CbLqdGwM"> link </a> </p>
+<p> Other tweaks  are as follows: </P>
+<li> Empty strings aren't allowed anymore for submissions in order to prevent trolls.</li>
+<li> Small style tweaks in the info page.</li>
+<img src="https://i.gyazo.com/7a7593759d0226a6a949fb7d7b4662b5.png" width="80%" alt="Image from Gyazo"/>
+		<hr>
 <h3> Circular branch tree | 16-7-2019</h3>
         <p> I've made a circular branch tree where you can navigate towards the selected parts. That way it will be easier to navigate complicated narative branches like the one down under. You can see the tree branch by clicking the 'tree branch' button in the story information page and in every story page.
 </p>
