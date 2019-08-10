@@ -1,6 +1,7 @@
 <?php
 /* Displays all successful messages */
 session_start();
+require 'db.php';
 
 ?>
 <!DOCTYPE html>

@@ -2,7 +2,6 @@
 /* Registration process, inserts user info into the database 
    and sends account confirmation email message
  */
-require 'db.php';
 
 
 // Set session variables to be used on profile.php page
@@ -39,8 +38,8 @@ if ( $result->num_rows > 0 ) {
     else { // Email doesn't already exist in a database, proceed...
 
         // active is 0 by DEFAULT (no need to include it here)
-        $sql = "INSERT INTO users (username,  email, password, hash) " 
-                . "VALUES ('$username','$email','$password', '$hash')";
+        $sql = "INSERT INTO users (username,  email, password, hash, date) " 
+                . "VALUES ('$username','$email','$password', '$hash', NOW())";
 
         // Add user to the database
         if ( $conn->query($sql) ){

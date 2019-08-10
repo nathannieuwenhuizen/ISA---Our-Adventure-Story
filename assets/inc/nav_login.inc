@@ -23,6 +23,6 @@
 
 	<h1> <a href="../">
 			<img src="../assets/img/logo.png">
-			Our <?php echo $name ?></a></h1>
-	<h4>Interactive <?php echo $name ?> created by the internet</h4>
+			Our <?php echo $websiteName ?></a></h1>
+	<h4>Interactive <?php echo $websiteName ?> created by the internet</h4>
 </div>

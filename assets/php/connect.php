@@ -4,21 +4,21 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "ouradventurestorydb";
-$name = "TG Captions";
+$websiteName = "TG Captions";
 
 // $websiteURL = "https://studenthome.hku.nl/~nathan.nieuwenhuizen/assets/ouradventurestory/";
 // $servername = "remotemysql.com";
 // $username = "NBEf0XGIkY";
 // $password = "5PpbZUQgNX";
 // $dbname = "NBEf0XGIkY";
-// $name = "Adventure Stories";
+// $websiteName = "Adventure Stories";
 
 // $websiteURL = "https://ourinteractivetgcaption.000webhostapp.com/";
 // $servername = "remotemysql.com";
 // $username = "mTTXio0REs";
 // $password = "43Kz77Z0Ql";
 // $dbname = "mTTXio0REs";
-// $name = "TG Captions";
+// $websiteName = "TG Captions";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
