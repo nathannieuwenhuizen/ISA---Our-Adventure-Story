@@ -32,7 +32,8 @@ require("../assets/php/connect.php");
 $sql = "SELECT `storypartID` FROM likes WHERE userID = $userID ORDER BY `Date` DESC LIMIT 10 OFFSET $sqlOffset";
 $result = mysqli_query($conn, $sql);
 $id = "";
-if (mysqli_num_rows($result) > 0) {
+if ($result != null) {
+  if (mysqli_num_rows($result) > 0) {
     // output data of each row
     while($row = mysqli_fetch_assoc($result)) {
       if ($row["storypartID"] != -1) {
@@ -40,14 +41,17 @@ if (mysqli_num_rows($result) > 0) {
       }
 
     }
+  }
 
 }
+
 
 $amountOfParts = 0;
 //layer count info
 $sql = "SELECT COUNT(userID) FROM `likes` WHERE `userID` = $userID GROUP BY userID";
 $result = mysqli_query($conn, $sql);
 
+if ($result != null) {
 
 if (mysqli_num_rows($result) > 0) {
     // output data of each row
@@ -56,7 +60,7 @@ if (mysqli_num_rows($result) > 0) {
     }
 
 } 
-
+}
 
 $favArray = explode(",", $id);
 
