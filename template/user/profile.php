@@ -117,7 +117,7 @@ if (mysqli_num_rows($result) > 0) {
     <div class="form">
 
       <h1>Welcome <?php echo $_SESSION['username']; ?> </h1>
-      <p>Email: <?= $email ?></p>
+      <!-- <p>Email: <?= $email ?></p> -->
       <!-- <p><?= $userID ?></p> -->
 
       <p>
