@@ -8,7 +8,6 @@ require 'db.php';
 // Set session variables to be used on profile.php page
 $_SESSION['email'] = $_POST['email'];
 $_SESSION['username'] = $_POST['username'];
-$_SESSION['userID'] = $user['id'];
 
 // Escape all $_POST variables to protect against SQL injections
 $username = $conn->escape_string($_POST['username']);
@@ -55,7 +54,7 @@ if ( $result->num_rows > 0 ) {
 
             // Send registration confirmation link (verify.php)
             $to      = $email;
-            $subject = 'Account Verification | Our Adventure Story!';
+            $subject = 'Account Verification | Our TG Caption!';
             $message_body = '
             Hello '.$username.',
 
@@ -68,7 +67,7 @@ if ( $result->num_rows > 0 ) {
             mail( $to, $subject, $message_body );
 
             header("location: profile.php"); 
-
+ 
         }
 
         else {

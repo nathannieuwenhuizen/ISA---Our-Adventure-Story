@@ -4,23 +4,6 @@ require '../assets/php/connect.php';
 session_start();
 
 
-// $to      = 'nathansan1995@gmail.com';
-// $subject = 'Account Verification ( clevertechie.com )';
-// $message_body = 'Hello nathan, Thank you for signing up! Please click this link to activate your account:';
-// mail( $to, $subject, $message_body );
-?>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Sign-Up/Login Form</title>
-  <link rel="icon" type="image/png" href="../assets/img/logo.png" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-	<link id="stylesheet" rel="stylesheet" href="../assets/style.css" type="text/css" />
-	<script src="../app.js"></script>
-</head>
-
-<?php 
-
 if (isset($_SESSION['logged_in']) == 1 ) {
     header("location: profile.php");
 
@@ -32,19 +15,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         require 'login.php';
         
     }
-    
-    elseif (isset($_POST['register'])) { //user registering
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign-Up/Login Form</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<link id="stylesheet" rel="stylesheet" href="../assets/style.css" type="text/css" />
+	<script src="../app.js"></script>
+</head>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') 
+{
+    if (isset($_POST['register'])) { //user registering
         
         require 'register.php';
         
     }
 }
+
+
 ?>
 
 <body>
 <div class="wrapper">
-	<?php 	include '../assets/inc/nav_login.inc'; ?>
+<div class="navigation">
+	<ul>
+		<a href="../user/">
+			<li class="index">
+                Login
+            </li>
+		</a>
+		<a href="../blog.php">
+			<li class="blog">blog</li>
+		</a>
+		<a href="../about.php">
+			<li class="about">About</li>
+		</a>
+		<a href="../">
+			<li class="index">Stories</li>
+		</a>
+	</ul>
 
+	<h1> <a href="../">
+			<img src="../assets/img/logo.png">
+			Our TG Captions</a></h1>
+	<h4>Interactive TG aptions created by the internet</h4>
+</div>
   <div class="form">
       
       <ul class="tab-group">
