@@ -1,6 +1,7 @@
+<?php session_start(); ?>
+
 <!DOCTYPE HTML>
 <HTML>
-<?php session_start(); ?>
 <?php require "assets/php/connect.php" ?>
 
 <HEAD>

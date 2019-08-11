@@ -1,6 +1,7 @@
+<?php session_start(); ?>
+
 <!DOCTYPE HTML>
 <HTML>
-<?php require "assets/php/connect.php" ?>
 <HEAD>
 	<TITLE>About | Our <?php echo $websiteName ?></TITLE>
 	<link rel="icon" type="image/png" href="./assets/img/logo.png" />

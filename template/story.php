@@ -1,3 +1,5 @@
+<?php 	include 'assets/php/getPart.php'; ?>
+
 <!DOCTYPE HTML>
 <HTML>
 
@@ -10,7 +12,6 @@
 </HEAD>
 
 <BODY>
-	<?php 	include 'assets/php/getPart.php'; ?>
 	<script>
 		START = "<?php echo $start ?>";
 		END = "<?php echo $end ?>";

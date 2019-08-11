@@ -1,6 +1,7 @@
+<?php session_start(); ?>
+
 <!DOCTYPE HTML>
 <HTML>
-<?php session_start(); ?>
 <HEAD>
 	<TITLE></TITLE>
 	<link rel="icon" type="image/png" href="./assets/img/logo.png" />

@@ -3,7 +3,7 @@
 <?php require "assets/php/connect.php" ?>
 
 <HEAD>
-	<TITLE>About | Our <?php echo $websiteName ?></TITLE>
+	<TITLE>About | Our <?php echo $websiteName ?>!</TITLE>
 	<link rel="icon" type="image/png" href="./assets/img/logo.png" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 	<link id="stylesheet" rel="stylesheet" href="assets/style.css" type="text/css" />
@@ -24,7 +24,7 @@
 			<br>
 			<p> If you want to give me some feedback, you can try to read a story and write some create parts you can come up with. Also you can help me out by filling up the google form down below! </p>
 			<p> I hope you enjoy this project I have so far, and maybe it will become bigger!</p>
-			<!-- <p> There is also a <b> <a href="https://discord.gg/dAyDwak"> discord group </a> </b>where you can connect with other readers and writers on this website.</p> -->
+			<p> There is also a <b> <a href="https://discord.gg/dAyDwak"> discord group </a> </b>where you can connect with other readers and writers on this website.</p>
 			
 			<br>
 
@@ -33,7 +33,8 @@
 			<img src="assets/img/logo.png">
 			</div>
 			<!-- <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdcfWVcZhlGsZ75vweGC9zi8U4iAqlDucnaIkoo8MFD1zcwtQ/viewform?embedded=true" width="640" height="1493" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe> -->
-				<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSel43NxzYX_dqhS_wl_O54nfGlR_4Be8XL5AMmhz3BMZbA5sA/viewform?embedded=true" width="640" height="1447" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+				<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfi19NKgVWSAftoDP4VjSlbW-eKo0Ef2fHwmiuylg8yPJvGUQ/viewform?embedded=true" width="640" height="1485" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+				<!-- <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSel43NxzYX_dqhS_wl_O54nfGlR_4Be8XL5AMmhz3BMZbA5sA/viewform?embedded=true" width="640" height="1447" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> -->
 			</div>
 <br>
 <?php 	include 'assets/inc/footer.inc'; ?>
