@@ -3,7 +3,7 @@ import {
     Iproject
 } from './data';
 import BranchTree from './branchTree';
-
+import PatreonObject from './patreon';
 export default class App {
 
     //test
@@ -27,12 +27,17 @@ export default class App {
     public starIcon: Element;
     public starMessage: Element;
 
+    public patronObj: PatreonObject;
+
     //branch tree
     public branchCanvas: Element;
     public branchTree: BranchTree;
 
     //the start function goes here
     constructor() {
+        this.patronObj = new PatreonObject();
+        // this.patronObj.handleOAuthRedirectRequest();
+        console.log(this.patronObj.CLIENT_ID);
         document.title = APP_NAME;
 
         this.checkCacheUpdate();

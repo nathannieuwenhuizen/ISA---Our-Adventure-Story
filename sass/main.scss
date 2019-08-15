@@ -525,6 +525,15 @@ body {
             @extend %border-button;
         }
     }
+    .newStoryButton {
+        @extend %border-button;
+        margin: 30px auto;
+        display: block;
+        width: 200px;
+        text-decoration: none;
+
+    }
+
     .updateWrapper {
         display: block;
         transform: rotate(0deg);

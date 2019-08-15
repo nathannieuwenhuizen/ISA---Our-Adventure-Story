@@ -1,0 +1,148 @@
+<?php
+
+use Patreon\API; 
+use Patreon\OAuth;
+
+// Set the redirect url where the user will land after the flow. That url is where the access code will be sent as a _GET parameter. 
+// This may be any url in your app that you can accept and process the access code and login
+
+// In this case, say, /patreon_login request uri. This doesnt need to be your final redirect uri. You can send your final redirect uri in your state vars to Patreon, receive it back, 
+// and then send your user to that final redirect uri
+CheckGetVariable();
+function CreateUnlockButton() {
+
+    if (isset($_SESSION['userID'])) {
+        $client_id = 'KdUXDDsA01kaI2EZiJQ0UsnIICK0mhPVBi6YeMGwxJKTmK9VgoWRd3vnYUPuiWvh';      // Replace with your data
+        $client_secret = 'IcN4YFb3dW3xvB6jdv-kb9xDzGJ4LHB_ym8NbgxayVFj0cbsi0ShTvfclgF0Qohb';  // Replace with your data
+    
+        $redirect_uri = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/";
+    
+        // Min cents is the amount in cents that you locked your content or feature with. Say, if a feature or content requires $5 to access in your site/app, 
+        // then you send 500 as min cents variable. Patreon will ask the user to pledge $5 or more.
+        $min_cents = '100';
+    
+        // Scopes! You must request the scopes you need to have the access token.
+        // In this case, we are requesting the user's identity (basic user info), user's email
+        // For example, if you do not request email scope while logging the user in, later you wont be able to get user's email via /identity endpoint when fetching the user details
+        // You can only have access to data identified with the scopes you asked. Read more at https://docs.patreon.com/#scopes
+    
+        // Lets request identity of the user, and email.
+        $scope_parameters = '&scope=identity%20identity'.urlencode('[email]');
+    
+        // Generate the unified flow url - this is different from oAuth login url. oAuth login url just processes oAuth login. 
+        // Unified flow will do everything.
+        $href = 'https://www.patreon.com/oauth2/become-patron?response_type=code&min_cents=' . $min_cents . '&client_id=' . $client_id . $scope_parameters . '&redirect_uri=' . urlencode($redirect_uri);
+    
+        // You can send an array of vars to Patreon and receive them back as they are. Ie, state vars to set the user state, app state or any other info which should be sent back and forth. 
+        $state = array();
+    
+        $state['final_redirect'] = 'http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/'; //locked content
+    
+        // Or, http://mydomain.com/premium-feature. Or any url at which a locked feature or content will be unlocked after the user is verified to become a qualifying member 
+    
+        // Add any number of vars you need to this array by $state['key'] = variable value
+    
+        // Prepare state var. It must be json_encoded, base64_encoded and url encoded to be safe in regard to any odd chars. When you receive it back, decode it in reverse of the below order - urldecode, 
+        // base64_decode, json_decode (as array)
+        $state_parameters = '&state=' . urlencode( base64_encode( json_encode( $state ) ) );
+    
+        // Append it to the url 
+        $href .= $state_parameters;
+    
+        // Now place the url into a flow link. Below is a very simple login link with just text. in assets/images folder, there is a button image made with official Patreon assets (unlock_with_patreon.png). 
+        // You can also use this image as the inner html of the <a> tag instead of the text provided here
+    
+        // Simply echoing it here. You can present the login link/button in any other way.
+    
+        echo '<a href="'.$href.'"><img class="patreonButton" src="assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
+    } else {
+        $href = "user/";
+        echo '<a href="'.$href.'"><img class="patreonButton" src="assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
+    }
+   
+}
+
+// The below code snippet needs to be active wherever the the user is landing in $redirect_uri parameter above. It will grab the auth code from Patreon and get the tokens via the oAuth client
+function CheckGetVariable() {
+    $redirect_uri = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/";
+
+    $client_id = 'KdUXDDsA01kaI2EZiJQ0UsnIICK0mhPVBi6YeMGwxJKTmK9VgoWRd3vnYUPuiWvh';      // Replace with your data
+    $client_secret = 'IcN4YFb3dW3xvB6jdv-kb9xDzGJ4LHB_ym8NbgxayVFj0cbsi0ShTvfclgF0Qohb';  // Replace with your data
+
+    if (isset( $_GET['code'])) {
+        if ( $_GET['code'] != '' ) {
+            
+            // From this part on, its no different from oAuth login example. Just do whatever you need.
+            
+            $oauth_client = new OAuth($client_id, $client_secret);	
+                
+            $tokens = $oauth_client->get_tokens($_GET['code'], $redirect_uri);
+    
+            $access_token = $tokens['access_token'];
+            $refresh_token = $tokens['refresh_token'];
+                
+            updateTokens($access_token, $refresh_token);    
+            // Here, you should save the access and refresh tokens for this user somewhere. Conceptually this is the point either you link an existing user of your app with his/her Patreon account, or, 
+            // if the user is a new user, create an account for him or her in your app, log him/her in, and then link this new account with the Patreon account. More or less a social login logic applies here. 
+            
+            // Here you can decode the state var returned from Patreon, and use the final redirect url to redirect your user to the relevant unlocked content or feature in your site/app.
+            
+        }
+    }    
+}
+
+function updateTokens ($access_token, $refresh_token) {
+    require 'assets/php/connect.php';
+
+    if (isset($_SESSION['userID']) && isset($access_token) && isset($refresh_token)) {
+        $sql = "UPDATE `users` SET `access_token`='$access_token', `refresh_token` = '$refresh_token' WHERE id = " . $_SESSION['userID'] .";";
+    
+        if ($conn->query($sql) === TRUE) {
+            echo "<br>User update created successfully.<br>";
+            $_SESSION['access_token'] = $access_token;
+            $_SESSION['refresh_token'] = $refresh_token;    
+        } else {
+            echo "<br><br>Error: " . $sql . "<br>" . $conn->error . "<br>";
+        }
+    }
+
+}
+
+function IsPLedger($amount) {
+
+    $access_token;
+    if (isset($_SESSION['access_token'])){
+        $access_token = $_SESSION['access_token'];
+    }    
+
+    if (isset($access_token)) {
+
+        // echo $access_token;
+        $api_client = new API($access_token);
+    
+        // Return from the API can be received in either array, object or JSON formats by setting the return format. It defaults to array if not specifically set. Specifically setting return format is not necessary. 
+        // Below is shown as an example of having the return parsed as an object. If there is anyone using Art4 JSON parser lib or any other parser, they can just set the API return to JSON and then have the return 
+        // parsed by that parser
+    
+        // You dont need the below line if you simply want the result as an array
+        $api_client->api_return_format = 'object';
+    
+        // Now get the current user:
+        $patron_response = $api_client->fetch_user();
+    
+        $myAmount = $patron_response->included[0]->attributes->currently_entitled_amount_cents;
+        // echo '<br><br>';
+        // print_r ($amount);
+        if ($myAmount >= $amount) {
+            return true;
+        } 
+        // $data = json_encode((array)$patron_response);
+        // print_r($data);
+    
+    }
+    return false;
+}
+
+
+?>
+

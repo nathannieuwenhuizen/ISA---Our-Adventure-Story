@@ -20,7 +20,7 @@ session_start(); ?>
 	<?php include 'assets/inc/nav.inc'; ?>
 
 		<div class="storywrapper">
-			<div class="storyHeader">
+		<div class="storyHeader">
 				<div class="storyTitle">
 					<h2>List of stories</h2>
 				</div>
@@ -31,9 +31,34 @@ session_start(); ?>
 						<?php echo  $storyList;?>
 						</ul>
 						<hr>
-					<i> more will follow soon ;)</i>
+					
+		<div class="storyHeader">
+				<div class="storyTitle">
+					<h2>Your stories</h2>
+				</div>
+			</div>
+			<hr>
+			<!-- <p>Create your own stories here!</p> -->
+			<?php 
+			require 'assets/php/patreon/src/API.php';
+			require 'assets/php/patreon/src/Oauth.php';
+		
+			include 'assets/php/patreon/patreonCalls.php';
+			
+			if (IsPLedger(100)) {
+				echo '<a class="newStoryButton" href="newstory.php"> Create a new Story</a>';
+			} else {
+				CreateUnlockButton();
+			}			
+			 ?>
+
+			<ul class="storyList"> 
+						<!-- <?php echo  $storyList;?> -->
+						</ul>
+						<hr>
 		</div>
 	</div>
+	
 	<?php 	include 'assets/inc/footer.inc'; ?>
 
 </BODY>

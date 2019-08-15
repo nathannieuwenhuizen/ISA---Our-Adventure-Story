@@ -1,0 +1,40 @@
+{
+    "data": {
+        "attributes": {
+            "email": "nathansan1995@gmail.com",
+            "first_name": "TGedNathan",
+            "full_name": "TGedNathan",
+            "image_url": "https:\/\/c10.patreonusercontent.com\/3\/eyJ3IjoyMDB9\/patreon-media\/p\/user\/2362370\/bdf8ee8b499a476eb8ccf83758605e9c\/4.jpg?token-time=2145916800&token-hash=9cFhoK4aIRrzpXk97bIO1ivroa9LXkr-6Pu8UxcC5kY%3D",
+            "is_email_verified": true,
+            "last_name": "",
+            "thumb_url": "https:\/\/c10.patreonusercontent.com\/3\/eyJ3IjoyMDB9\/patreon-media\/p\/user\/2362370\/bdf8ee8b499a476eb8ccf83758605e9c\/4.jpg?token-time=2145916800&token-hash=9cFhoK4aIRrzpXk97bIO1ivroa9LXkr-6Pu8UxcC5kY%3D",
+            "url": "https:\/\/www.patreon.com\/tgednathan",
+            "vanity": "tgednathan"
+        },
+        "id": "2362370",
+        "relationships": {
+            "memberships": {
+                "data": [{
+                    "id": "2c9d0377-4212-474f-9d52-265679d41cdf",
+                    "type": "member"
+                }]
+            }
+        },
+        "type": "user"
+    },
+    "included": [{
+        "attributes": {
+            "currently_entitled_amount_cents": 100,
+            "last_charge_date": null,
+            "last_charge_status": null,
+            "lifetime_support_cents": 0,
+            "patron_status": "active_patron",
+            "pledge_relationship_start": "2019-08-15T15:15:08.572+00:00"
+        },
+        "id": "2c9d0377-4212-474f-9d52-265679d41cdf",
+        "type": "member"
+    }],
+    "links": {
+        "self": "https:\/\/www.patreon.com\/api\/oauth2\/v2\/user\/2362370"
+    }
+}

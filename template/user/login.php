@@ -18,7 +18,9 @@ else { // User exists
         $_SESSION['username'] = $user['username'];
         $_SESSION['active'] = $user['active'];
         $_SESSION['userID'] = $user['id'];
-        
+        $_SESSION['access_token'] = $user['access_token'];
+        $_SESSION['refresh_token'] = $user['refresh_token'];
+
         $_SESSION['message'] = "You are logged in.";
 
         // This is how we'll know the user is logged in
