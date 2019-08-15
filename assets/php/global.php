@@ -1,6 +1,6 @@
 <?php
 
-// $websiteName = "TG Captions";
+$websiteName = "TG Captions";
 
-$websiteName = "Adventure Stories";
+// $websiteName = "Adventure Stories";
 ?>
