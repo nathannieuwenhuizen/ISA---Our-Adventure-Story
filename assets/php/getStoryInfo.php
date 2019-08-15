@@ -123,7 +123,7 @@ if (mysqli_num_rows($result) > 0) {
                 }
             }
         }
-        $addedPartsList .= "<a href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate .$writerName." </p> ". $image." </li> </a>";
+        $addedPartsList .= "<a href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate . " ago" .$writerName." </p> ". $image." </li> </a>";
 
     }
 

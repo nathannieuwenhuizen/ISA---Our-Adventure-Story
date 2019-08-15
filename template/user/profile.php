@@ -1,5 +1,9 @@
 <?php
 /* Displays user information and some useful messages */
+//set cookie lifetime for 100 days (60sec * 60mins * 24hours * 7days)
+ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
+ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
+
 session_start();
 require '../assets/php/globalfunctions.php';
 // Check if user is logged in using the session variable

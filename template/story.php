@@ -1,4 +1,8 @@
-<?php 	include 'assets/php/getPart.php'; ?>
+<?php 	
+//set cookie lifetime for 100 days (60sec * 60mins * 24hours * 7days)
+ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
+ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
+include 'assets/php/getPart.php'; ?>
 
 <!DOCTYPE HTML>
 <HTML>
