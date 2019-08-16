@@ -49,14 +49,14 @@ session_start(); ?>
 				if ($myStories != "") {
 					echo "<ul class='storyList'> " . $myStories. "</ul>";
 				} else {
-					echo '<a class="newStoryButton" href="newstory.php"> Create a new Story</a>';
+					echo '<a class="newStoryButton" href="newstory.php"> Start a new Story</a>';
 				}
 			} else {
 				CreateUnlockButton();
 			}			
 			 ?>
 
-						</ul>
+						
 						<hr>
 		</div>
 	</div>

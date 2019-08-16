@@ -10,7 +10,7 @@
     *, *:before, *:after {
         box-sizing: border-box;
       }
-      
+
       a {
         text-decoration: none;
         color: $headerButtonColor;
@@ -239,6 +239,7 @@
             }
             
         }
+        
 
         .navigationButtons {
             margin-top: 20px;
@@ -258,7 +259,43 @@
         }
  
     }
-    
+    .newStoryButton {
+      color: white;
+    }
+    .newStoryButton:hover {
+      color: white;
+    }
+    .myList {
+      align-content: center;
+      list-style-type: none;
+      padding: 0px;
+      width: 80%;
+      margin: 10px auto;
+
+      a {
+        color: white;
+          border: 0px solid black;
+          text-decoration: none;
+          li {
+              margin: 20px 0;
+              outline: 2px solid black;
+              background: aliceblue;
+              transition: outline .2s;
+
+              padding: 20px 5px;
+              b {
+                  font-size: 1.5em;
+              }
+              p {
+                  float: right;
+              }
+          }
+          li:hover{
+              background: white;
+              outline: 5px solid black;
+          }
+      }
+  }
 
   }
   

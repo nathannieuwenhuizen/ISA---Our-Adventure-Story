@@ -9,7 +9,7 @@ use Patreon\OAuth;
 // In this case, say, /patreon_login request uri. This doesnt need to be your final redirect uri. You can send your final redirect uri in your state vars to Patreon, receive it back, 
 // and then send your user to that final redirect uri
 CheckGetVariable();
-function CreateUnlockButton() {
+function CreateUnlockButton($basePath = "./") {
 
     if (isset($_SESSION['userID'])) {
         $client_id = 'KdUXDDsA01kaI2EZiJQ0UsnIICK0mhPVBi6YeMGwxJKTmK9VgoWRd3vnYUPuiWvh';      // Replace with your data
@@ -54,10 +54,10 @@ function CreateUnlockButton() {
     
         // Simply echoing it here. You can present the login link/button in any other way.
     
-        echo '<a href="'.$href.'"><img class="patreonButton" src="assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
+        echo '<a href="'.$href.'"><img class="patreonButton" src="'. $basePath.'assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
     } else {
         $href = "user/";
-        echo '<a href="'.$href.'"><img class="patreonButton" src="assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
+        echo '<a href="'.$href.'"><img class="patreonButton" src="'.$basePath.'assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
     }
    
 }

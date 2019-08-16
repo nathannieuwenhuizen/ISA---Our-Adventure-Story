@@ -197,6 +197,26 @@ if ($offset + 1 >= Round( $amountOfParts / 10)) {
       </div>
 
       <hr>
+      <h3> My story </h3>
+      <?php 
+			require '../assets/php/patreon/src/API.php';
+			require '../assets/php/patreon/src/Oauth.php';
+		
+			include '../assets/php/patreon/patreonCalls.php';
+			$myStories = getStoryList($conn, true, "../");
+			if (IsPLedger(100)) {
+				if ($myStories != "") {
+					echo "<ul class='myList'> " . $myStories. "</ul>";
+				} else {
+					echo '<a class="newStoryButton" href="../newstory.php"> Start a new Story</a>';
+				}
+			} else {
+				CreateUnlockButton("../");
+      }			
+			 ?>
+<br>
+<hr>
+
       <br>
   <a href="logout.php"><button class="button button-block" name="logout" />Log Out</button></a>
 
