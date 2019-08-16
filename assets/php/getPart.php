@@ -90,19 +90,6 @@ for ($i = 0; $i < sizeof($optionArray); $i++) {
 $sql .= ") ORDER BY option_text ASC";
 //echo $sql . "<br>";
 
-if ($optionIDs != "" && $end != 0 && $start != 0) {
-    $canEdit = true;
-}
-require 'assets/php/patreon/src/API.php';
-require 'assets/php/patreon/src/Oauth.php';
-include 'assets/php/patreon/patreonCalls.php'; 
-session_start();
-
-if (IsCreator($conn, $storyID)) {
-    if (IsPledger(100)) {
-        $canEdit = true;
-    }
-}
 
 
 $result = mysqli_query($conn, $sql);
@@ -134,10 +121,37 @@ if (mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_assoc($result)) {
         $storyTitle = $row["Name"];
         $startID = $row["Introduction_ID"];
+        $creatorID = $row["AuthorID"];
     }
 } else {
     //there are no results
     echo "0 results";
+}
+
+
+require 'assets/php/patreon/src/API.php';
+require 'assets/php/patreon/src/Oauth.php';
+include 'assets/php/patreon/patreonCalls.php'; 
+session_start();
+
+//if user is creator
+if (IsCreator($conn, $storyID)) {
+    //if user is pledging
+    if (IsPledger(100)) { 
+        $canEdit = true;
+    }
+} elseif ($optionIDs != "" && $end != 0 && $start != 0) {
+    $canEdit = true;
+}
+if (StoryIsOpen($conn, $storyID)) {
+    $canEdit = true;
+    $status = 1;
+    echo "creator is supporting";
+} else {
+    $status = 0;
+    $canEdit = false;
+    echo "creator is NOT supporting";
+
 }
 
 
@@ -159,22 +173,27 @@ if (isset($_SESSION['userID'])) {
         }
     }
 }
-$amountOfLikes = "0 likes";
-$sql = "SELECT COUNT(storyPartID) FROM likes WHERE storyPartID = $storyPartID";
-$result = mysqli_query($conn, $sql);     
-//if there is any result
-if (mysqli_num_rows($result) > 0) {
-    // output data of each row
-    while($row = mysqli_fetch_assoc($result)) {
-        if ($row["COUNT(storyPartID)"] != 1) {
-            $amountOfLikes = $row["COUNT(storyPartID)"] . " likes"; 
-        } else {
-            $amountOfLikes = "1 like"; 
+
+$amountOfLikes = GetAmountOfLikes($conn, $storyPartID);
+
+function GetAmountOfLikes($conn, $storyPartID) {
+    $amountOfLikes = "0 likes";
+    $sql = "SELECT COUNT(storyPartID) FROM likes WHERE storyPartID = $storyPartID";
+    $result = mysqli_query($conn, $sql);     
+    //if there is any result
+    if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+        while($row = mysqli_fetch_assoc($result)) {
+            if ($row["COUNT(storyPartID)"] != 1) {
+                $amountOfLikes = $row["COUNT(storyPartID)"] . " likes"; 
+            } else {
+                $amountOfLikes = "1 like"; 
+            }
         }
     }
+    return $amountOfLikes;
 }
         
-
 
 
 $conn->close();

@@ -3,6 +3,10 @@
 include 'assets/php/connect.php'; 
 include 'assets/php/globalfunctions.php'; 
 
+require 'assets/php/patreon/src/API.php';
+require 'assets/php/patreon/src/Oauth.php';
+include 'assets/php/patreon/patreonCalls.php'; 
+
 //retreive url var
 $stringname = 'ID';
 $storyID = 1;
@@ -55,6 +59,12 @@ if (mysqli_num_rows($result) > 0) {
 $canEdit = false;
 if ($storyAuthorID == $_SESSION['userID']) {
     $canEdit = true;
+}
+if (!StoryIsOpen($conn, $storyID)) {
+    $canEdit = false;
+    $status = "CLOSED";
+} else {
+    $status = "OPEN";
 }
 
 $amountOfParts = 0;

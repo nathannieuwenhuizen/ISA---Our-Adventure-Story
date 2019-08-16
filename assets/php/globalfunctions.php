@@ -43,6 +43,7 @@ function strictEmpty($var) {
     }
 }
 
+//checks id the visitor is the creator of story id
 function IsCreator($conn, $id) {
     $sql = "SELECT AuthorID FROM storyinfo WHERE ID = $id LIMIT 1 ";
     $result = mysqli_query($conn, $sql);

@@ -1,8 +1,13 @@
 <?php
 //MySQL Database Connect 
+
 include 'connect.php'; 
 include 'globalfunctions.php'; 
 
+
+require './patreon/src/API.php';
+require './patreon/src/Oauth.php';
+include './patreon/patreonCalls.php'; 
 session_start();
 
 /*
@@ -17,6 +22,7 @@ $parentID = htmlspecialchars($_POST['parentID']);
 $storyID = htmlspecialchars($_POST['storyID']);
 $parentEnd = htmlspecialchars($_POST['parentEnd']);
 $end = "0";
+
 if (isset($_POST['end'])) {
     $end = "1";
 }
@@ -24,6 +30,15 @@ if (isset($_POST['end'])) {
 if ($parentEnd == "1" || strictEmpty($option) || strictEmpty($consequence)) {
     //header("location: ../../?storypart=". $parentID);
     return;
+}
+if (!StoryIsOpen($conn, $storyID)) {
+    $_SESSION['message'] = "can't create a new part, story is closed";
+    header("location: ../../user/error.php");
+    // echo "appearantly the story is closed...";
+
+    return;
+} else {
+    // echo "appearantly the story is open...";
 }
 
 //this prevents duplicate entries

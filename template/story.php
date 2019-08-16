@@ -86,8 +86,8 @@ include 'assets/php/getPart.php'; ?>
 				<ul>
 					<?php echo $optionList; ?>
 				</ul>
-				<div class="createnewPartButton">Create your own Path! </div>
-
+				<div class="createnewPartButton <?php if ($status == 0) { echo "hide"; } ?>">Create your own Path! </div>
+				<?php if ($status == 0) { echo "This story is closed, you can't add any more parts."; } ?>
 			</div>
 
 		</div>

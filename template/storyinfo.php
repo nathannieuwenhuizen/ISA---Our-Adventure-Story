@@ -47,9 +47,11 @@ session_start();
                     <h3>General information </h3>
                     <hr>
                     <p><b> Name </b> <?php echo $name; ?></p>
-                    <p><b> Created on </b> <?php echo $date; ?></p>
+                    <p><b> Status: </b> <?php echo $status; ?></p>
                     <p><b> Author </b> <?php echo $storyAuthorName; ?></p>
+                    <p><b> Created on </b> <?php echo $date; ?></p>
                     <p><b> Description </b> <br> <?php echo $description; ?></p>
+
                     <p><b> Amount of story parts </b> <?php echo $amountOfParts; ?></p>
                     <p><b> Amount of endings </b> <?php echo $amountOfEnds; ?></p>
                     <p><b> Deepest layer into the story </b> <?php echo $deepestLayer; ?></p>

@@ -27,6 +27,13 @@ if (isset($_POST['end'])) {
     $end = "1";
 }
 
+
+if (!StoryIsOpen($conn, $storyID)) {
+    $_SESSION['message'] = "can't update part, story is closed";
+    header("location: ../../user/error.php");
+    return;
+}
+
 //if options already exist
 if ($optionIDs != "") {
     $end = "0";

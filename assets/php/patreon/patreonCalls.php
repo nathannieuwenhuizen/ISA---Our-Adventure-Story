@@ -108,12 +108,54 @@ function updateTokens ($access_token, $refresh_token) {
 
 }
 
-function IsPLedger($amount) {
+function StoryIsOpen($conn, $storyID) {
+    //checks if the creator is pledged at all.
+    $sql = "SELECT `AuthorID` FROM `storyInfo` WHERE  ID = $storyID";
+    $result = mysqli_query($conn, $sql);
+    $creatorID = "";
+    if (mysqli_num_rows($result) > 0) { 
+        // output data of each row
+        while($row = mysqli_fetch_assoc($result)) {
+            $creatorID = $row['AuthorID'];
+        }
+    }
+    //if there is a creator id
+    if ($creatorID > 0) {
+        //get access token
+        $sql = "SELECT `access_token` FROM `users` WHERE  ID = $creatorID";
+        $result = mysqli_query($conn, $sql);
+        $creatorToken;
+        if (mysqli_num_rows($result) > 0) { 
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result)) {
+                $creatorToken = $row['access_token'];
+            }
+        }
+    
+        if (isset($creatorToken)) {
+            if (IsPledger(100, $creatorToken)) {
+                // echo "creator is pledged!";
 
-    $access_token;
-    if (isset($_SESSION['access_token'])){
-        $access_token = $_SESSION['access_token'];
-    }    
+                return true;
+            } else {
+                // echo "creator isnt pledged, story is closed...";
+            }
+        }
+    } else {
+
+        return true; // nobody is a creator, so it is an community one.
+    }
+    return false;
+}
+
+function IsPLedger($amount, $token = "") {
+
+    $access_token = $token;
+    if ($access_token == "") {
+        if (isset($_SESSION['access_token'])){
+            $access_token = $_SESSION['access_token'];
+        }    
+    }
 
     if (isset($access_token)) {
 
