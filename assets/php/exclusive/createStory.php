@@ -21,20 +21,25 @@ $image = htmlspecialchars($_POST['image']);
 $layer = 1;
 $message = 'failed to create a story';
 
-if (IsPLedger(100)) {
-    echo "I'm pledged";
-    if (strictEmpty($consequence) || strictEmpty($storyDescription) || strictEmpty($storyTitle)) {
-        $storyID = CreateStory($storyTitle, $storyDescription, $conn);
-        if ($storyID != -1) {
-            CreateBeginPath($consequence, $question, $image, $storyID, $conn);
+if (getStoryList($conn, true) == "") {
+
+    if (IsPLedger(100)) {
+        // echo "I'm pledged";
+        if (!strictEmpty($consequence) && !strictEmpty($storyDescription) && !strictEmpty($storyTitle) && !strictEmpty($question)) {
+            $storyID = CreateStory($storyTitle, $storyDescription, $conn);
+            if ($storyID != -1) {
+                CreateBeginPath($consequence, $question, $image, $storyID, $conn);
+            } else {
+                $message = "Failed to create a story";
+            }
         } else {
-            $message = "Failed to create a story";
+            $message = "Some of your submissions are empty";
         }
     } else {
-        $message = "Some of your submissions are empty";
+        $message = "You aren't pledged or your pledge amount isn't high enough";
     }
 } else {
-    $message = "You aren't pledged or your pledge amount isn't high enough";
+    $message = "You have exceeded the maximum of stories for your pledge level";
 }
 
 $_SESSION['message'] = $message;
@@ -143,6 +148,38 @@ function IsPLedger($amount) {
     }
     return false;
 }
+
+function getStoryList($conn, $filter = false) {
+    $sql = "";
+
+    if ($filter) {
+        $author = -1;
+        if (isset($_SESSION['userID'])) {
+            $author = $_SESSION['userID'];
+        }
+        $sql = "SELECT `ID`, `Name`, `Date` FROM storyinfo WHERE `AuthorID` = $author LIMIT 10";
+    } else {
+        $sql = "SELECT `ID`, `Name`, `Date` FROM storyinfo LIMIT 10";
+    }
+    $result = mysqli_query($conn, $sql);
+    $list = "";
+    //if there is any result
+    if ($result && mysqli_num_rows($result) > 0) {
+        // output data of each row
+        while($row = mysqli_fetch_assoc($result)) {
+            $dt = new DateTime($row["Date"]);
+
+            $date = $dt->format('m-d-Y');
+            //echo "id: " . $row["ID"]. "<br>";
+            $list .= "<a href='storyinfo.php?ID=" . $row["ID"] . "&offset=0'><li>  <b>". $row["Name"] ." </b> <p>Created on " .  $date . " </p> </li> </a>";
+
+        }
+
+    }
+    return $list;
+
+}
+
 
 
 ?>

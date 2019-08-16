@@ -44,7 +44,7 @@ include 'assets/php/getPart.php'; ?>
 					<a href="branchtree.php?ID=<?php echo $storyID; ?>">Branch tree</a>
 				</div>
 			</div>
-			<img class="editButton hide" src="assets/img/edit_icon.png">
+			<img class="editButton <?php if (!$canEdit) { echo "hide"; } ?>" src="assets/img/edit_icon.png">
 			<div id="starElement"> <p> <?php echo $amountOfLikes; ?> </p>
 			<img class="starIcon" src=<?php 
 			if ($like) { 
@@ -56,11 +56,11 @@ include 'assets/php/getPart.php'; ?>
 </div>
 			<div class="chooseMessage">
 
-			<a style="display:<?php if ($startID == $parentID) {echo 'none'; } else { echo 'inline-block'; } ?>;" href="?storypart=<?php echo $startID; ?>">Go to beginning</a>
-			<a href="?storypart=<?php echo $parentID; ?>">Go back</a>
-				<i>
-					<p> You chose...<br> <b> <?php echo $option_text; ?> </b>  </p>
-				</i>
+			<a style="display:<?php if ($startID == $parentID || $start) {echo 'none'; } else { echo 'inline-block'; } ?>;" href="?storypart=<?php echo $startID; ?>">Go to beginning</a>
+			<a href="?storypart=<?php echo $parentID; ?>" style="display:<?php if ($start) {echo 'none'; } ?> " >Go back</a>
+					<?php if (!$start) { echo "<i><p> You chose...<br> <b> $option_text </b>  </p></i>"; }
+					else { echo "<i><h3>This is the start of the story</h3></i>"; }
+					 ?>
 				
 			</div>
 			<br>
@@ -117,7 +117,7 @@ include 'assets/php/getPart.php'; ?>
 	<form action="assets/php/updatePart.php" method="post" class="updateWrapper hide">
 		<div class="hideButton"> Hide</div>
 		<h3> Update the current Part </h3>
-		<p>Option text </p> <input type="text" name="option" placeholder="what the reader can choose" value = "<?php echo $option_text ?>" required />
+		<p>Option text </p> <input type="text" name="option" placeholder="what the reader can choose" value = "<?php echo $option_text ?>" <?php if (!$start) { echo "required"; } ?> />
 		<p>Consequence </p>
 		<textarea name="consequence" cols="40" rows="5" required
 			placeholder="Here you can write your consequence..."><?php echo $content_textNL ?></textarea>
@@ -128,6 +128,7 @@ include 'assets/php/getPart.php'; ?>
 
 		<!-- hidden data to update the current part -->
 		<input type="hidden" name="id" value="<?php echo $storyPartID; ?>">
+		<input type="hidden" name="storyID" value="<?php echo $storyID; ?>">
 		<input type="hidden" name="optionIDs" value="<?php echo $optionList; ?>">
 
 		<p><input type="submit" class="createButton" value="Update!" /></p>

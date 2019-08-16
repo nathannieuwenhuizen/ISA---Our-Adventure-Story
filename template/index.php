@@ -34,7 +34,7 @@ session_start(); ?>
 					
 		<div class="storyHeader">
 				<div class="storyTitle">
-					<h2>Your stories</h2>
+					<h2>Your story</h2>
 				</div>
 			</div>
 			<hr>
@@ -46,14 +46,16 @@ session_start(); ?>
 			include 'assets/php/patreon/patreonCalls.php';
 			
 			if (IsPLedger(100)) {
-				echo '<a class="newStoryButton" href="newstory.php"> Create a new Story</a>';
+				if ($myStories != "") {
+					echo "<ul class='storyList'> " . $myStories. "</ul>";
+				} else {
+					echo '<a class="newStoryButton" href="newstory.php"> Create a new Story</a>';
+				}
 			} else {
 				CreateUnlockButton();
 			}			
 			 ?>
 
-			<ul class="storyList"> 
-						<!-- <?php echo  $storyList;?> -->
 						</ul>
 						<hr>
 		</div>

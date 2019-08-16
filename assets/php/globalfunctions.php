@@ -42,4 +42,24 @@ function strictEmpty($var) {
         // It's not empty
     }
 }
+
+function IsCreator($conn, $id) {
+    $sql = "SELECT AuthorID FROM storyinfo WHERE ID = $id LIMIT 1 ";
+    $result = mysqli_query($conn, $sql);
+
+    $storyAuthorID = "";
+    if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+        while($row = mysqli_fetch_assoc($result)) {
+            $storyAuthorID = $row['AuthorID'];
+        }
+    }
+    if (isset($_SESSION['userID'])) {
+        if ($storyAuthorID == $_SESSION['userID']) {
+            return true;
+        }
+    }
+    return false;
+}
+
 ?>

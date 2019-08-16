@@ -35,14 +35,12 @@ export default class App {
 
     //the start function goes here
     constructor() {
-        this.patronObj = new PatreonObject();
-        // this.patronObj.handleOAuthRedirectRequest();
-        console.log(this.patronObj.CLIENT_ID);
         document.title = APP_NAME;
 
         this.checkCacheUpdate();
         this.checkBranchCanvasAndApply();
 
+        this.editButtonEvents();
         this.checkStoryView();
 
         // this.data = this.loadFile('./assets/projects.json');
@@ -120,6 +118,22 @@ export default class App {
 
     }
 
+    public editButtonEvents() {
+        if (document.getElementsByClassName('editButton')[0]) {
+            this.storyPage = document.getElementsByClassName('storywrapper')[0];
+
+            this.ShowEditButton = document.getElementsByClassName('editButton')[0];
+            this.ShowEditButton.addEventListener('click', () => {
+                this.ToggleEditForm(true)
+            });
+            this.hideEditButton = document.getElementsByClassName('hideButton')[0];
+            this.hideEditButton.addEventListener('click', () => {
+                this.ToggleEditForm(false)
+            });
+            this.editForm = document.getElementsByClassName('updateWrapper')[0];
+        }
+    }
+
     public checkStoryView() {
         if (document.getElementsByClassName('createWrapper')[0]) {
             //new part
@@ -133,15 +147,6 @@ export default class App {
 
             //edit current part
             this.updateEndValueCheckbox = document.getElementsByClassName('update_end')[0];
-            this.ShowEditButton = document.getElementsByClassName('editButton')[0];
-            this.ShowEditButton.addEventListener('click', () => {
-                this.ToggleEditForm(true)
-            });
-            this.hideEditButton = document.getElementsByClassName('hideButton')[0];
-            this.hideEditButton.addEventListener('click', () => {
-                this.ToggleEditForm(false)
-            });
-            this.editForm = document.getElementsByClassName('updateWrapper')[0];
 
             this.starIcon = document.getElementsByClassName('starIcon')[0];
             this.starMessage = document.getElementById('starMessage');
@@ -169,8 +174,6 @@ export default class App {
             });
 
 
-            this.storyPage = document.getElementsByClassName('storywrapper')[0];
-
             let objImg = new Image();
             objImg.src = this.consequenceImage.src;
             //console.log(objImg.src);
@@ -191,7 +194,7 @@ export default class App {
                 this.updateEndValueCheckbox.checked = true;
             }
             if (START == 1) {
-                this.chooseMessage.classList.add('hide');
+                // this.chooseMessage.classList.add('hide');
                 //this.chooseMessage.innerHTML = "Start of the story!";
             }
 

@@ -1,0 +1,54 @@
+.createWrapper, .updateWrapper {
+    display: none;
+
+    //opacity: 0;
+    width: 60%;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #FFFFFF;
+    border-bottom: 3px solid rgb(194, 194, 194);
+    border-top: 3px solid rgb(194, 194, 194);
+    padding: 50px;
+    transform: rotate(-1deg);
+    box-shadow: 18px 10px 32px -6px rgba(0, 0, 0, 0.45);
+    box-shadow: 18px 10px 2px -6px rgba(0, 0, 0, 0.149);
+
+    input,
+    textarea {
+        border: 1px solid rgb(78, 78, 78);
+        padding: 4px;
+    }
+
+    input[type=text] {
+        width: 80%;
+        max-width: 400px;
+    }
+    textarea {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .createButton {
+        @extend %border-button;
+    }
+}
+.newStoryButton {
+    @extend %border-button;
+    margin: 30px auto;
+    display: block;
+    width: 200px;
+    text-decoration: none;
+
+}
+
+.updateWrapper {
+    display: block;
+    transform: rotate(0deg);
+    width: 65%;
+
+    .hideButton {
+        float: right;
+        @extend %border-button;
+        width: 60px;
+    }
+}

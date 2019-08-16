@@ -44,12 +44,17 @@ if (mysqli_num_rows($result) > 0) {
         $name = $row["Name"];
         $description = $row["Description"];
         $startID = $row["Introduction_ID"];
-
+        $storyAuthorName = getAuthorName($conn, $row['AuthorID']);
+        $storyAuthorID = $row['AuthorID'];
+        if ($storyAuthorName == "") {
+            $storyAuthorName = "everyone";
+        }
     }
+}
 
-} else {
-    //there are no results
-    // echo "0 results";
+$canEdit = false;
+if ($storyAuthorID == $_SESSION['userID']) {
+    $canEdit = true;
 }
 
 $amountOfParts = 0;
@@ -109,20 +114,12 @@ if (mysqli_num_rows($result) > 0) {
         }
 
         $writerName = '';
-        $authorID = $row["authorID"];
 
-        if ($row["authorID"] != -1) {
-            $sql2 = "SELECT username FROM users WHERE id = $authorID LIMIT 1";
-            $result2 = mysqli_query($conn, $sql2);
-            // $authorName = $id;
-            //if there is any result
-            if (mysqli_num_rows($result2) > 0) {
-                // output data of each row
-                while($row2 = mysqli_fetch_assoc($result2)) {
-                    $writerName = " | written by " . $row2["username"];
-                }
-            }
+        $authorID = getAuthorName($conn, $row["authorID"]);
+        if ($authorID != "") {
+            $writerName = " | written by " . $authorID;
         }
+        
         $addedPartsList .= "<a href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate . " ago" .$writerName." </p> ". $image." </li> </a>";
 
     }
@@ -130,6 +127,22 @@ if (mysqli_num_rows($result) > 0) {
 } else {
     //there are no results
     $addedPartsList = "0 results";
+}
+
+function getAuthorName($conn, $id) {
+    if ($id != -1) {
+        $sql = "SELECT username FROM users WHERE id = $id LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+        // $authorName = $id;
+        //if there is any result
+        if (mysqli_num_rows($result) > 0) {
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result)) {
+                return $row["username"];
+            }
+        }
+    }
+    return "";
 }
 
 $conn->close();

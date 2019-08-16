@@ -34,6 +34,8 @@ $parentID;
 $storyID;
 $optionList = "";//defined from the next sql call
 $authorID;
+$canEdit = false;
+
 //if there is any result
 if (mysqli_num_rows($result) > 0) {
 
@@ -88,6 +90,21 @@ for ($i = 0; $i < sizeof($optionArray); $i++) {
 $sql .= ") ORDER BY option_text ASC";
 //echo $sql . "<br>";
 
+if ($optionIDs != "" && $end != 0 && $start != 0) {
+    $canEdit = true;
+}
+require 'assets/php/patreon/src/API.php';
+require 'assets/php/patreon/src/Oauth.php';
+include 'assets/php/patreon/patreonCalls.php'; 
+session_start();
+
+if (IsCreator($conn, $storyID)) {
+    if (IsPledger(100)) {
+        $canEdit = true;
+    }
+}
+
+
 $result = mysqli_query($conn, $sql);
 
 
@@ -123,7 +140,6 @@ if (mysqli_num_rows($result) > 0) {
     echo "0 results";
 }
 
-session_start();
 
 //check if user has liked the part
 $likeMessage = "login to like";

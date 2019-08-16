@@ -39,11 +39,16 @@ session_start();
 
             <div class="half">
                 <div class="infoPanel">
+                    <div class= "<?php if (!$canEdit) { echo "hide"; } ?>">
+                <img class="editButton" src="assets/img/edit_icon.png">
+                <br>
+<br> <br>
+</div>
                     <h3>General information </h3>
                     <hr>
                     <p><b> Name </b> <?php echo $name; ?></p>
                     <p><b> Created on </b> <?php echo $date; ?></p>
-                    <p><b> Author </b> Everyone</p>
+                    <p><b> Author </b> <?php echo $storyAuthorName; ?></p>
                     <p><b> Description </b> <br> <?php echo $description; ?></p>
                     <p><b> Amount of story parts </b> <?php echo $amountOfParts; ?></p>
                     <p><b> Amount of endings </b> <?php echo $amountOfEnds; ?></p>
@@ -116,6 +121,19 @@ if ($offset + 1 >= Round( $amountOfParts / 10)) {
 </div>
 
         </div>
+        <form action="assets/php/exclusive/editStory.php" method="post" class="updateWrapper hide">
+        <div class="hideButton"> Hide</div>
+
+		<h3> Update Story </h3>
+		<p>Titel </p> <input type="text" name="storyTitle" placeholder="How will your story be called?" value="<?php echo $name; ?>"" required />
+		<p>Description </p>
+		<textarea name="storyDescription" cols="40" rows="5" required
+            placeholder="What will the story be about? Or how do you think it will be about?" ><?php echo $description; ?></textarea>
+            <p><input type="submit" class="createButton" value="Update!" /></p>
+            <input type="hidden" name="id" value = "<?php echo $storyID; ?>">
+	</form>
+
+
     </div>
 
     <?php 	include 'assets/inc/footer.inc'; ?>
