@@ -71,27 +71,74 @@ function getStoryList($conn, $filter = false, $basePath = "./") {
         if (isset($_SESSION['userID'])) {
             $author = $_SESSION['userID'];
         }
-        $sql = "SELECT `ID`, `Name`, `Date` FROM storyinfo WHERE `AuthorID` = $author LIMIT 10";
+        $sql = "SELECT `ID`, `Name`, `Date`, `AuthorID` FROM storyinfo WHERE `AuthorID` = $author LIMIT 10";
     } else {
-        $sql = "SELECT `ID`, `Name`, `Date` FROM storyinfo LIMIT 10";
+        $sql = "SELECT `ID`, `Name`, `Date`, `AuthorID` FROM storyinfo LIMIT 10";
     }
     $result = mysqli_query($conn, $sql);
     $list = "";
     //if there is any result
     if ($result && mysqli_num_rows($result) > 0) {
         // output data of each row
+
         while($row = mysqli_fetch_assoc($result)) {
             $dt = new DateTime($row["Date"]);
 
-            $date = $dt->format('m-d-Y');
-            //echo "id: " . $row["ID"]. "<br>";
-            $list .= "<a href='".$basePath."storyinfo.php?ID=" . $row["ID"] . "&offset=0'><li>  <b>". $row["Name"] ." </b> <p>Created on " .  $date . " </p> </li> </a>";
+            $creatorName = getUserName($conn,$row['AuthorID']);
+            $creatorText = "";
+            if ($creatorName != "") {
+                $creatorText= "<p>Started by " . $creatorName ." </p>";
+            }
 
+            $date = $dt->format('m-d-Y');
+            $amount = amountofParts($conn, $row['ID']);
+            $cureentSotryID =  $row['ID'];
+            // echo "....story function return: ". StoryIsOpen($conn, $cureentSotryID);
+            if (!StoryIsOpen($conn, $cureentSotryID)){
+                $status = "CLOSED";
+            } else {
+                $status ="OPEN";
+            }
+            //echo "id: " . $row["ID"]. "<br>";
+            $list .= "<a href='".$basePath."storyinfo.php?ID=" . $row["ID"] . "&offset=0'>
+            <li><div class='name'>  <b>". $row["Name"] ." </b> </div> 
+            <div class='info'>
+            <p>Created on " .  $date . " </p> ". 
+            "<p>" .  $amount . " parts long</p> ". 
+            // "<p>Status " .  $status . "</p> ". 
+            $creatorText." </div></li> </a>";
         }
 
     }
     return $list;
-
 }
 
+function getUserName($conn, $id) {
+    if ($id != -1) {
+        $sql = "SELECT username FROM users WHERE id = $id LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+        // $authorName = $id;
+        //if there is any result
+        if (mysqli_num_rows($result) > 0) {
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result)) {
+                return $row["username"];
+            }
+        }
+    }
+    return "";
+}
+
+function amountofParts($conn, $storyID) {
+    $amountOfParts = 0;
+    $sql = "SELECT COUNT(id) FROM `storyparts` WHERE `storyID` = $storyID";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+        while($row = mysqli_fetch_assoc($result)) {
+            $amountOfParts += $row["COUNT(id)"];
+        }
+    }
+    return $amountOfParts;
+}
 ?>

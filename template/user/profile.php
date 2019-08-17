@@ -203,7 +203,8 @@ if ($offset + 1 >= Round( $amountOfParts / 10)) {
 			require '../assets/php/patreon/src/Oauth.php';
 		
 			include '../assets/php/patreon/patreonCalls.php';
-			$myStories = getStoryList($conn, true, "../");
+      $myStories = getStoryList($conn, true, "../");
+      echo "is pledger: " .IsPledger(100);
 			if (IsPLedger(100)) {
 				if ($myStories != "") {
 					echo "<ul class='myList'> " . $myStories. "</ul>";

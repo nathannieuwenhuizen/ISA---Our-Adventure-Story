@@ -34,7 +34,6 @@ $parentID;
 $storyID;
 $optionList = "";//defined from the next sql call
 $authorID;
-$canEdit = false;
 
 //if there is any result
 if (mysqli_num_rows($result) > 0) {
@@ -134,23 +133,24 @@ require 'assets/php/patreon/src/Oauth.php';
 include 'assets/php/patreon/patreonCalls.php'; 
 session_start();
 
+$canEdit = false;
 //if user is creator
 if (IsCreator($conn, $storyID)) {
     //if user is pledging
     if (IsPledger(100)) { 
         $canEdit = true;
     }
-} elseif ($optionIDs != "" && $end != 0 && $start != 0) {
+} elseif ($optionIDs == "" && $end == 0 && $start == 0) {
     $canEdit = true;
 }
 if (StoryIsOpen($conn, $storyID)) {
-    $canEdit = true;
+    // $canEdit = true;
     $status = 1;
-    echo "creator is supporting";
+    // echo "creator is supporting";
 } else {
     $status = 0;
     $canEdit = false;
-    echo "creator is NOT supporting";
+    // echo "creator is NOT supporting";
 
 }
 

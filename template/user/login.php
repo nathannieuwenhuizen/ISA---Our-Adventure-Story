@@ -16,7 +16,7 @@ else { // User exists
         
         $_SESSION['email'] = $user['email'];
         $_SESSION['username'] = $user['username'];
-        $_SESSION['active'] = $user['active'];
+        $_SESSION['active'] = $user['active']; 
         $_SESSION['userID'] = $user['id'];
         $_SESSION['access_token'] = $user['access_token'];
         $_SESSION['refresh_token'] = $user['refresh_token'];

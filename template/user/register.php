@@ -47,6 +47,9 @@ if ( $result->num_rows > 0 ) {
             $_SESSION['userID'] = $conn->insert_id;
             $_SESSION['active'] = 0; //0 until user activates their account with verify.php
             $_SESSION['logged_in'] = true; // So we know the user has logged in
+            $_SESSION['access_token'] = "";
+            $_SESSION['refresh_token'] = "";
+    
             $_SESSION['message'] =
                     
                     "Confirmation link has been sent to $email, please verify

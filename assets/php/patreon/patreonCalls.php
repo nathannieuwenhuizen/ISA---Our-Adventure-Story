@@ -8,7 +8,6 @@ use Patreon\OAuth;
 
 // In this case, say, /patreon_login request uri. This doesnt need to be your final redirect uri. You can send your final redirect uri in your state vars to Patreon, receive it back, 
 // and then send your user to that final redirect uri
-CheckGetVariable();
 function CreateUnlockButton($basePath = "./") {
 
     if (isset($_SESSION['userID'])) {
@@ -74,38 +73,73 @@ function CheckGetVariable() {
             
             // From this part on, its no different from oAuth login example. Just do whatever you need.
             
-            $oauth_client = new OAuth($client_id, $client_secret);	
+            $oauth_client = new OAuth($client_id, $client_secret);	 
                 
             $tokens = $oauth_client->get_tokens($_GET['code'], $redirect_uri);
     
-            $access_token = $tokens['access_token'];
-            $refresh_token = $tokens['refresh_token'];
+            if (isset($tokens['access_token']) && isset($tokens['refresh_token'])) {
+                $access_token = $tokens['access_token'];
+                $refresh_token = $tokens['refresh_token'];
+
+                updateTokens($access_token, $refresh_token);    
+                // Here, you should save the access and refresh tokens for this user somewhere. Conceptually this is the point either you link an existing user of your app with his/her Patreon account, or, 
+                // if the user is a new user, create an account for him or her in your app, log him/her in, and then link this new account with the Patreon account. More or less a social login logic applies here. 
                 
-            updateTokens($access_token, $refresh_token);    
-            // Here, you should save the access and refresh tokens for this user somewhere. Conceptually this is the point either you link an existing user of your app with his/her Patreon account, or, 
-            // if the user is a new user, create an account for him or her in your app, log him/her in, and then link this new account with the Patreon account. More or less a social login logic applies here. 
-            
-            // Here you can decode the state var returned from Patreon, and use the final redirect url to redirect your user to the relevant unlocked content or feature in your site/app.
-            
+                // Here you can decode the state var returned from Patreon, and use the final redirect url to redirect your user to the relevant unlocked content or feature in your site/app.
+            } 
         }
     }    
 }
 
+//needs duplication glitch fix/check
 function updateTokens ($access_token, $refresh_token) {
     require 'assets/php/connect.php';
 
+    $redirect_uri = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/";
+
+    $client_id = 'KdUXDDsA01kaI2EZiJQ0UsnIICK0mhPVBi6YeMGwxJKTmK9VgoWRd3vnYUPuiWvh';      // Replace with your data
+    $client_secret = 'IcN4YFb3dW3xvB6jdv-kb9xDzGJ4LHB_ym8NbgxayVFj0cbsi0ShTvfclgF0Qohb';  // Replace with your data
+
+
     if (isset($_SESSION['userID']) && isset($access_token) && isset($refresh_token)) {
-        $sql = "UPDATE `users` SET `access_token`='$access_token', `refresh_token` = '$refresh_token' WHERE id = " . $_SESSION['userID'] .";";
+
+        $DuplicateTokens = false;
+
+        // $sql = "SELECT `ID`, `access_token` FROM `users` WHERE NOT `access_token` = '' OR NOT `refresh_token` = ''";
+
+        // echo $sql;
+        // $result = mysqli_query($conn, $sql);
+        // if ($result && mysqli_num_rows($result) > 0) { 
+        //     // output data of each row
+        //     while($row = mysqli_fetch_assoc($result)) {
+        //         $email = getEmailFromToken($row['access_token']);
+        //         echo "<br> refreshed token: ". $row['access_token'] ." and email: ".$email."<br>";
+
+        //         // $data = json_encode((array)$tokens);
+        //         // print_r($data);
     
-        if ($conn->query($sql) === TRUE) {
-            echo "<br>User update created successfully.<br>";
-            $_SESSION['access_token'] = $access_token;
-            $_SESSION['refresh_token'] = $refresh_token;    
+        //         if ($_SESSION['userID'] != $row['ID']) {
+        //             // $DuplicateTokens = true;
+        //         }
+        //     }
+        // } else {
+        //     echo $conn->error;
+        // }
+        if (!$DuplicateTokens) {
+            $sql = "UPDATE `users` SET `access_token`='$access_token', `refresh_token` = '$refresh_token' WHERE id = " . $_SESSION['userID'] .";";
+            if ($conn->query($sql) === TRUE) {
+                // echo "<br>User update created successfully.<br>";
+                $_SESSION['access_token'] = $access_token;
+                $_SESSION['refresh_token'] = $refresh_token;    
+                header("location: ./index.php");
+
+            } else {
+                // echo "<br><br>Error: " . $sql . "<br>" . $conn->error . "<br>";
+            }
         } else {
-            echo "<br><br>Error: " . $sql . "<br>" . $conn->error . "<br>";
+            // echo "Duplicate tokens";
         }
     }
-
 }
 
 function StoryIsOpen($conn, $storyID) {
@@ -135,7 +169,6 @@ function StoryIsOpen($conn, $storyID) {
         if (isset($creatorToken)) {
             if (IsPledger(100, $creatorToken)) {
                 // echo "creator is pledged!";
-
                 return true;
             } else {
                 // echo "creator isnt pledged, story is closed...";
@@ -156,11 +189,13 @@ function IsPLedger($amount, $token = "") {
             $access_token = $_SESSION['access_token'];
         }    
     }
+    // echo "<br>mail from ispledger function: " . getEmailFromToken($access_token);
 
-    if (isset($access_token)) {
+
+    if (isset($access_token) && $access_token != "") {
 
         // echo $access_token;
-        $api_client = new API($access_token);
+        $api_client = new API($access_token); 
     
         // Return from the API can be received in either array, object or JSON formats by setting the return format. It defaults to array if not specifically set. Specifically setting return format is not necessary. 
         // Below is shown as an example of having the return parsed as an object. If there is anyone using Art4 JSON parser lib or any other parser, they can just set the API return to JSON and then have the return 
@@ -171,18 +206,38 @@ function IsPLedger($amount, $token = "") {
     
         // Now get the current user:
         $patron_response = $api_client->fetch_user();
+        if (isset($patron_response->included[0]->attributes->currently_entitled_amount_cents)) {
+            $myAmount = $patron_response->included[0]->attributes->currently_entitled_amount_cents;
+            // print_r ($amount);
+            $data = json_encode((array)$patron_response->data->attributes->email);
+            // echo $access_token . $data;
+
+            if ($myAmount >= $amount) {
+                return true;
+            } 
     
-        $myAmount = $patron_response->included[0]->attributes->currently_entitled_amount_cents;
-        // echo '<br><br>';
-        // print_r ($amount);
-        if ($myAmount >= $amount) {
-            return true;
-        } 
-        // $data = json_encode((array)$patron_response);
-        // print_r($data);
-    
+        }    
+        
     }
     return false;
+}
+
+// function duplicatePatreonEmails
+function getEmailFromToken($access_token) {
+    echo $access_token;
+
+    $api_client = new API($access_token);
+    $api_client->api_return_format = 'object';
+
+    // echo $api_client;
+    $patron_response = $api_client->fetch_user();
+    // echo $patron_response;
+    if (isset($patron_response->data->attributes->email)) {
+        $data = json_encode((array)$patron_response->data->attributes->email);
+        // echo $access_token . $data;
+        return $data;
+    }    
+    return "-no email-";
 }
 
 

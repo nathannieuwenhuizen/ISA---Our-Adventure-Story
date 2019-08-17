@@ -1,8 +1,17 @@
 <?php 
+require 'assets/php/patreon/src/API.php';
+require 'assets/php/patreon/src/Oauth.php';
+		
+require 'assets/php/patreon/patreonCalls.php';
+
 //set cookie lifetime for 100 days (60sec * 60mins * 24hours * 7days)
 ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
 ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
-session_start(); ?>
+session_start(); 
+ 
+CheckGetVariable();
+
+?>
 
 <!DOCTYPE HTML>
 <HTML>
@@ -40,10 +49,7 @@ session_start(); ?>
 			<hr>
 			<!-- <p>Create your own stories here!</p> -->
 			<?php 
-			require 'assets/php/patreon/src/API.php';
-			require 'assets/php/patreon/src/Oauth.php';
-		
-			include 'assets/php/patreon/patreonCalls.php';
+			// echo "is pledger: " .IsPledger(100);
 			
 			if (IsPLedger(100)) {
 				if ($myStories != "") {
@@ -53,7 +59,7 @@ session_start(); ?>
 				}
 			} else {
 				CreateUnlockButton();
-			}			
+			}	
 			 ?>
 
 						
