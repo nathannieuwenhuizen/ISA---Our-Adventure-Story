@@ -118,8 +118,12 @@ if ($offset + 1 >= Round( $amountOfParts / 10)) {
                     <ul class="storyList">
                         <?php echo  $addedPartsList;?>
                     </ul>
+                    <?php echo $topAuthorsTable; ?>
+
                 </div>
+
             </div>
+
 </div>
 
         </div>

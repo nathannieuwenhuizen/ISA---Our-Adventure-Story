@@ -155,5 +155,34 @@ function getAuthorName($conn, $id) {
     return "";
 }
 
+$topAuthorsTable = GetTop3Authors($conn, $storyID);
+
+function GetTop3Authors($conn, $storyID)
+{
+
+    $sql = "SELECT authorID, COUNT(*) FROM `storyparts` WHERE NOT authorID = -1 AND storyID = $storyID GROUP BY authorID ASC LIMIT 10";
+    // $sql = "SELECT * FROM `users`";
+    $table = "";
+    $result = mysqli_query($conn, $sql);
+    // $authorName = $id;
+    //if there is any result
+    $amount = 0;
+    $authorTableValues = "";
+    if ($result && mysqli_num_rows($result) > 0) {
+        // output data of each row
+        echo "there is result";
+        while($row = mysqli_fetch_assoc($result)) {
+            $amount++;
+            $authorTableValues .= "<tr><td>" . getAuthorName($conn, $row["authorID"]) . "</td><td>";
+        }
+    } else {
+        echo "there is no result";
+    }
+    if ($amount > 0) {
+        $table = "<table class ='top3users'><tr><th>Top ".$amount." most active users</th></tr>".$authorTableValues."</table>"; 
+    }
+    return $table;
+}
+
 $conn->close();
 ?>
