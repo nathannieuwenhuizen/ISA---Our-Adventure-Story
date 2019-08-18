@@ -14,7 +14,8 @@ function CreateUnlockButton($basePath = "./") {
         $client_id = 'KdUXDDsA01kaI2EZiJQ0UsnIICK0mhPVBi6YeMGwxJKTmK9VgoWRd3vnYUPuiWvh';      // Replace with your data
         $client_secret = 'IcN4YFb3dW3xvB6jdv-kb9xDzGJ4LHB_ym8NbgxayVFj0cbsi0ShTvfclgF0Qohb';  // Replace with your data
     
-        $redirect_uri = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/";
+        $redirect_uri = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/user/success.php";
+
     
         // Min cents is the amount in cents that you locked your content or feature with. Say, if a feature or content requires $5 to access in your site/app, 
         // then you send 500 as min cents variable. Patreon will ask the user to pledge $5 or more.
@@ -63,7 +64,7 @@ function CreateUnlockButton($basePath = "./") {
 
 // The below code snippet needs to be active wherever the the user is landing in $redirect_uri parameter above. It will grab the auth code from Patreon and get the tokens via the oAuth client
 function CheckGetVariable() {
-    $redirect_uri = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/";
+    $redirect_uri = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/user/success.php";
 
     $client_id = 'KdUXDDsA01kaI2EZiJQ0UsnIICK0mhPVBi6YeMGwxJKTmK9VgoWRd3vnYUPuiWvh';      // Replace with your data
     $client_secret = 'IcN4YFb3dW3xvB6jdv-kb9xDzGJ4LHB_ym8NbgxayVFj0cbsi0ShTvfclgF0Qohb';  // Replace with your data
@@ -93,9 +94,9 @@ function CheckGetVariable() {
 
 //needs duplication glitch fix/check
 function updateTokens ($access_token, $refresh_token) {
-    require 'assets/php/connect.php';
+    require '../assets/php/connect.php';
 
-    $redirect_uri = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/";
+    $redirect_uri = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/user/success.php";
 
     $client_id = 'KdUXDDsA01kaI2EZiJQ0UsnIICK0mhPVBi6YeMGwxJKTmK9VgoWRd3vnYUPuiWvh';      // Replace with your data
     $client_secret = 'IcN4YFb3dW3xvB6jdv-kb9xDzGJ4LHB_ym8NbgxayVFj0cbsi0ShTvfclgF0Qohb';  // Replace with your data
@@ -131,7 +132,8 @@ function updateTokens ($access_token, $refresh_token) {
                 // echo "<br>User update created successfully.<br>";
                 $_SESSION['access_token'] = $access_token;
                 $_SESSION['refresh_token'] = $refresh_token;    
-                header("location: ./index.php");
+                $_SESSION['message'] = "your account is now connected with patreon";
+                header("location: ./success.php");
 
             } else {
                 // echo "<br><br>Error: " . $sql . "<br>" . $conn->error . "<br>";
@@ -237,7 +239,7 @@ function getEmailFromToken($access_token) {
         // echo $access_token . $data;
         return $data;
     }    
-    return "-no email-";
+    return "";
 }
 
 

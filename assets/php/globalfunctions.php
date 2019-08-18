@@ -94,12 +94,12 @@ function getStoryList($conn, $filter = false, $basePath = "./") {
             $amount = amountofParts($conn, $row['ID']);
             $cureentSotryID =  $row['ID'];
             // echo "....story function return: ". StoryIsOpen($conn, $cureentSotryID);
-            if (!StoryIsOpen($conn, $cureentSotryID)){
-                $status = "CLOSED";
-            } else {
-                $status ="OPEN";
-            }
-            //echo "id: " . $row["ID"]. "<br>";
+            // if (!StoryIsOpen($conn, $cureentSotryID)){
+            //     $status = "CLOSED";
+            // } else {
+            //     $status ="OPEN";
+            // }
+            // //echo "id: " . $row["ID"]. "<br>";
             $list .= "<a href='".$basePath."storyinfo.php?ID=" . $row["ID"] . "&offset=0'>
             <li><div class='name'>  <b>". $row["Name"] ." </b> </div> 
             <div class='info'>

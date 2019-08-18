@@ -7,6 +7,14 @@ ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
 session_start();
 require 'db.php';
 
+
+require '../assets/php/patreon/src/API.php';
+require '../assets/php/patreon/src/Oauth.php';
+		
+require '../assets/php/patreon/patreonCalls.php';
+
+CheckGetVariable();
+
 ?>
 <!DOCTYPE html>
 <html>

@@ -2,6 +2,11 @@
 //MySQL Database Connect 
 include '../connect.php'; 
 include '../globalfunctions.php'; 
+
+include '../patreon/patreonCalls.php'; 
+include '../patreon/src/API.php'; 
+include '../patreon/src/OAuth.php'; 
+
 ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
 ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
 
@@ -21,26 +26,32 @@ $image = htmlspecialchars($_POST['image']);
 $layer = 1;
 $message = 'failed to create a story';
 
-//check if the user already made story before.
-if (getStoryList($conn, true) == "") {
-
-    if (IsPLedger(100)) {
-        // echo "I'm pledged";
-        if (!strictEmpty($consequence) && !strictEmpty($storyDescription) && !strictEmpty($storyTitle) && !strictEmpty($question)) {
-            $storyID = CreateStory($storyTitle, $storyDescription, $conn);
-            if ($storyID != -1) {
-                CreateBeginPath($consequence, $question, $image, $storyID, $conn);
+//check for duplicate tokens
+if (!DuplicateTokens($conn)) {
+    //check if the user already made story before.
+    if (getStoryList($conn, true) == "") {
+        if (IsPLedger(100)) {
+            echo "I'm pledged";
+            if (!strictEmpty($consequence) && !strictEmpty($storyDescription) && !strictEmpty($storyTitle) && !strictEmpty($question)) {
+                $storyID = CreateStory($storyTitle, $storyDescription, $conn);
+                if ($storyID != -1) {
+                    CreateBeginPath($consequence, $question, $image, $storyID, $conn);
+                } else {
+                    $message = "Failed to create a story";
+                }
             } else {
-                $message = "Failed to create a story";
+                $message = "Some of your submissions are empty";
             }
         } else {
-            $message = "Some of your submissions are empty";
+            echo "I'm not pledged";
+
+            $message = "You aren't pledged or your pledge amount isn't high enough";
         }
     } else {
-        $message = "You aren't pledged or your pledge amount isn't high enough";
+        $message = "You have exceeded the maximum of stories for your pledge level";
     }
 } else {
-    $message = "You have exceeded the maximum of stories for your pledge level";
+    $message = "There is another account that has your patreon information";
 }
 
 $_SESSION['message'] = $message;
@@ -67,10 +78,10 @@ function CreateStory($storyTitle, $storyDescription, $conn) {
 function SetStartID($id, $storyID, $conn) {
     $sql = "UPDATE `storyInfo` SET `Introduction_ID` = $id WHERE `ID` = $storyID LIMIT 1"; 
     if ($conn->query($sql) === TRUE) {
-        // echo "<br>New part created successfully.<br>";
-        header("location: ../../../storyinfo.php?ID=". $storyID ."&offset=0");
+        echo "<br>New part created successfully.<br>";
+        // header("location: ../../../storyinfo.php?ID=". $storyID ."&offset=0");
     } else {
-        // echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+        echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
     }
 }
 
@@ -110,46 +121,73 @@ function CreateBeginPath($consequence, $question, $image, $storyID, $conn) {
     }
 }
 
-use Patreon\API; 
-use Patreon\OAuth;
+// use Patreon\API; 
+// use Patreon\OAuth;
 
-function IsPLedger($amount) {
+// function IsPLedger($amount) {
 
-    require '../patreon/src/API.php';
-    require '../patreon/src/Oauth.php';
+//     require '../patreon/src/API.php';
+//     require '../patreon/src/Oauth.php';
 
-    $access_token;
-    if (isset($_SESSION['access_token']));{
-        $access_token = $_SESSION['access_token'];
-    }    
+//     $access_token;
+//     if (isset($_SESSION['access_token']));{
+//         $access_token = $_SESSION['access_token'];
+//     }    
 
-    if (isset($access_token)) {
+//     if (isset($access_token)) {
 
-        $api_client = new API($access_token);
+//         $api_client = new API($access_token);
     
-        // Return from the API can be received in either array, object or JSON formats by setting the return format. It defaults to array if not specifically set. Specifically setting return format is not necessary. 
-        // Below is shown as an example of having the return parsed as an object. If there is anyone using Art4 JSON parser lib or any other parser, they can just set the API return to JSON and then have the return 
-        // parsed by that parser
+//         // Return from the API can be received in either array, object or JSON formats by setting the return format. It defaults to array if not specifically set. Specifically setting return format is not necessary. 
+//         // Below is shown as an example of having the return parsed as an object. If there is anyone using Art4 JSON parser lib or any other parser, they can just set the API return to JSON and then have the return 
+//         // parsed by that parser
     
-        // You dont need the below line if you simply want the result as an array
-        $api_client->api_return_format = 'object';
+//         // You dont need the below line if you simply want the result as an array
+//         $api_client->api_return_format = 'object';
     
-        // Now get the current user:
-        $patron_response = $api_client->fetch_user();
+//         // Now get the current user:
+//         $patron_response = $api_client->fetch_user();
     
-        $myAmount = $patron_response->included[0]->attributes->currently_entitled_amount_cents;
-        // echo '<br><br>';
-        // print_r ($amount);
-        if ($myAmount >= $amount) {
-            return true;
-        } 
-        // $data = json_encode((array)$patron_response);
-        // print_r($data);
+//         $myAmount = $patron_response->included[0]->attributes->currently_entitled_amount_cents;
+//         // echo '<br><br>';
+//         // print_r ($amount);
+//         if ($myAmount >= $amount) {
+//             return true;
+//         } 
+//         // $data = json_encode((array)$patron_response);
+//         // print_r($data);
     
+//     }
+//     return false;
+// }
+
+function DuplicateTokens($conn) {
+
+    $myEmail = getEmailFromToken($_SESSION['access_token']);
+    
+    $sql = "SELECT `ID`, `access_token` FROM `users` WHERE NOT `access_token` = ''";
+    $result = mysqli_query($conn, $sql); 
+    if ($result && mysqli_num_rows($result) > 0) { 
+        // output data of each row
+        while($row = mysqli_fetch_assoc($result)) {
+            $email = getEmailFromToken($row['access_token']);
+
+            if ($email != "") {
+                echo "<br> refreshed token: ". $row['access_token'] ." and email: ".$email."<br>";
+                echo "<br> refreshed token: ". $_SESSION['access_token']." and email: ".$myEmail."<br>";
+                echo "is pledher". IsPLedger(100);
+                // $data = json_encode((array)$tokens);
+                // print_r($data);
+                if ($myEmail == $email) {
+                    return true;
+                }
+                }
+        }
+    } else {
+        echo $conn->error;
     }
     return false;
 }
-
 
 
 

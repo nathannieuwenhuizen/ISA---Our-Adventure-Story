@@ -170,16 +170,16 @@ function GetTop3Authors($conn, $storyID)
     $authorTableValues = "";
     if ($result && mysqli_num_rows($result) > 0) {
         // output data of each row
-        echo "there is result";
+        // echo "there is result";
         while($row = mysqli_fetch_assoc($result)) {
             $amount++;
             $authorTableValues .= "<tr><td>" . getAuthorName($conn, $row["authorID"]) . "</td><td>";
         }
     } else {
-        echo "there is no result";
+        // echo "there is no result";
     }
-    if ($amount > 0) {
-        $table = "<table class ='top3users'><tr><th>Top ".$amount." most active users</th></tr>".$authorTableValues."</table>"; 
+    if ($amount > 2) {
+        $table = "<hr><table class ='top3users'><tr><th>Top ".$amount." most active users</th></tr>".$authorTableValues."</table>"; 
     }
     return $table;
 }
