@@ -4,6 +4,7 @@ import {
 } from './data';
 import BranchTree from './branchTree';
 import PatreonObject from './patreon';
+import StoryPartsHandeler from './storyPartsHandeler';
 export default class App {
 
     //test
@@ -33,6 +34,7 @@ export default class App {
     public branchCanvas: Element;
     public branchTree: BranchTree;
 
+    public storyPartHandeler: StoryPartsHandeler;
     //the start function goes here
     constructor() {
         document.title = APP_NAME;
@@ -43,6 +45,8 @@ export default class App {
         this.editButtonEvents();
         this.checkStoryView();
 
+        console.log("hello");
+        this.storyPartHandeler = new StoryPartsHandeler();
         // this.data = this.loadFile('./assets/projects.json');
     }
 
