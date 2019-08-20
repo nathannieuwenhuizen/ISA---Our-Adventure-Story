@@ -176,7 +176,7 @@ if (isset($_SESSION['userID'])) {
 
 $amountOfLikes = GetAmountOfLikes($conn, $storyPartID);
 
-function GetAmountOfLikes($conn, $storyPartID) {
+function GetAmountOfLikes($conn, $storyPartID) { 
     $amountOfLikes = "0 likes";
     $sql = "SELECT COUNT(storyPartID) FROM likes WHERE storyPartID = $storyPartID";
     $result = mysqli_query($conn, $sql);     

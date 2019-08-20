@@ -23,9 +23,8 @@ $result = mysqli_query($conn, $sql);
 
 $start;
 $end;
-$option_text;
+$option_text = "";
 $content_text;
-$content_textNL;
 $question_text;
 $optionIDs;
 $layer;
@@ -44,9 +43,9 @@ if (mysqli_num_rows($result) > 0) {
         $start = $row["start"];
         $end = $row["end"];
         $option_text = removeAllTags($row["option_text"]);
-        $content_text = html_entity_decode(nl2br( removeScriptTags($row["content_text"])));
-        $content_textNL = html_entity_decode( removeScriptTags($row["content_text"]));
-        $question_text = removeScriptTags($row["question_text"]);
+        $content_text = html_entity_decode(( removeScriptTags($row["content_text"])));
+        // $content_text = html_entity_decode(str_replace("\n", " ABC ",  removeScriptTags($row["content_text"])));
+        $question_text = ($row["question_text"]);
         $optionIDs = $row["option_IDs"];
         $layer = $row["layer"];
         $image = $row["image"];
@@ -59,6 +58,7 @@ if (mysqli_num_rows($result) > 0) {
     //there are no results
     // echo "0 results";
 }
+// echo $option_text . "<br>";
 
 $authorName = 'anonymous';
 if ($authorID != -1) {
@@ -98,8 +98,8 @@ if (mysqli_num_rows($result) > 0) {
 
     // output data of each row
     while($row = mysqli_fetch_assoc($result)) {
-        //echo "id: " . $row["ID"]. "<br>";
-        $optionList .= "<li> <a href='?storypart=" . $row["ID"] . "'> ". $row["option_text"] ." </a> </li> ";
+        // echo "id: " . $row["ID"]. "<br>";
+        $optionList .= "<li> <a id='".$row["ID"]."' href='?storypart=" . $row["ID"] . "'> ". $row["option_text"] ." </a> </li> ";
     }
 } else {
     //there are no results
@@ -195,8 +195,30 @@ function GetAmountOfLikes($conn, $storyPartID) {
 }
 
 $content_text = str_replace("\r", "", $content_text);
+$content_text = str_replace("\n", " ABC ", $content_text);
+$content_text = str_replace("<br>", " ABC ", $content_text);
 
-$content_text = str_replace("\n", "", $content_text);
+$option_text = convert_smart_quotes($option_text); 
+$content_text = convert_smart_quotes($content_text); 
+$question_text = convert_smart_quotes($question_text); 
+
+function convert_smart_quotes($string) 
+
+{ 
+    $search = array(chr(145), 
+                    chr(146), 
+                    chr(147), 
+                    chr(148), 
+                    chr(151)); 
+
+    $replace = array("'", 
+                     "'", 
+                     '"', 
+                     '"', 
+                     '-'); 
+
+    return str_replace($search, $replace, $string); 
+} 
 
 
 $object = "";
@@ -213,7 +235,6 @@ $object .= '{
     "image": "'. $image.'",
     "parentID": "'. $parentID.'",
     "storyID": "'. $storyID.'",
-    "image": "'. $image.'",
     "authorName": "'. $authorName.'",
     "optionList": "'. $optionList.'",
     "canEdit": "'. $canEdit.'",
