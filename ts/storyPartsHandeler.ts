@@ -6,6 +6,13 @@ export default class StoryPartsHandeler {
     public parentDOMObject: Element;
     public wrapper: Element;
     public static instance: StoryPartsHandeler;
+
+    public editForm: Element;
+    public hideEditButton: Element;
+    public hiddenFromEditPart: Element;
+    public createForm: Element;
+    public createParentObject: StoryPartObject;
+
     //the start function goes here
     constructor() {
         if (!StoryPartsHandeler.instance) {
@@ -13,6 +20,13 @@ export default class StoryPartsHandeler {
         }
         this.storyParts = [];
 
+
+        this.createForm = document.getElementsByClassName('createWrapper')[0];
+        this.editForm = document.getElementsByClassName('updateWrapper')[0];
+        this.hideEditButton = document.getElementsByClassName('hideButton')[0];
+        this.hideEditButton.addEventListener('click', () => {
+            this.showEditPart(null, false);
+        });
 
         this.wrapper = document.getElementsByClassName('wrapper')[0];
         this.parentDOMObject = document.createElement('div');
@@ -63,6 +77,68 @@ export default class StoryPartsHandeler {
             this.scrollTo(newPart.domObject);
         }
     }
+    public showEditPart(data: StoryPartObject, show: boolean) {
+        console.log("hide edit", show);
+        if (!show) {
+            this.editForm.classList.add('hide');
+            if (this.hiddenFromEditPart ! = null) {
+                this.hiddenFromEditPart.classList.remove('hide');
+                this.hiddenFromEditPart = null;
+                }
+        } else {
+            // this.editForm.classList.remove('hide');
+            if (this.hiddenFromEditPart != null) {
+                this.hiddenFromEditPart.classList.remove('hide');
+            }
+            this.hiddenFromEditPart = data.domObject;
+            this.hiddenFromEditPart.classList.add('hide');
+            let element: Element = this.wrapper.insertBefore(this.editForm, this.hiddenFromEditPart);
+            element.classList.remove('hide');
+            console.log(element.getElementsByTagName("input"));
+            console.log(element.getElementsByTagName("input")[6].value);
+            element.getElementsByTagName("input")[0].value = data.data.option_text;
+            element.getElementsByTagName("input")[1].checked = data.data.end == 1;
+            element.getElementsByTagName("input")[2].value = data.data.question_text;
+            element.getElementsByTagName("input")[3].value = data.data.image;
+            element.getElementsByTagName("input")[4].value = data.data.ID;
+            element.getElementsByTagName("input")[5].value = data.data.storyID;
+            element.getElementsByTagName("input")[6].value = data.data.optionList;
+            element.getElementsByTagName('textarea')[0].innerHTML = data.data.content_text;
+
+        }
+    }
+    public toggleCfreateForm(object: StoryPartObject, show: boolean) {
+        console.log("show", show);
+
+        if (show) {
+            this.createForm = this.insertAfter(this.createForm, object.domObject);
+            this.createForm.classList.add('show');
+            this.createForm.scrollIntoView({
+                behavior: 'smooth'
+            });
+            if (this.createParentObject != null) {
+                this.createParentObject.showNewPartButton.innerHTML = 'Create your own path!';
+            }
+
+            this.createParentObject = object;
+            this.createParentObject.showNewPartButton.innerHTML = 'hide';
+            console.log(this.createForm.getElementsByTagName('input'));
+            this.createForm.getElementsByTagName('input')[4].value = this.createParentObject.data.layer;
+            this.createForm.getElementsByTagName('input')[5].value = this.createParentObject.data.ID;
+            // this.createForm.getElementsByTagName('input')[6].value = this.createParentObject.data.storyID;
+            this.createForm.getElementsByTagName('input')[7].value = this.createParentObject.data.optionIDs;
+            this.createForm.getElementsByTagName('input')[8].value = this.createParentObject.data.end + "";
+        } else {
+            this.createForm.classList.remove('show');
+            if (this.createParentObject != null) {
+                this.createParentObject.showNewPartButton.innerHTML = 'Create your own path!';
+            }
+        }
+    }
+    public insertAfter(newNode: Element, referenceNode: Element): Element {
+        return referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
+
     public scrollTo(element: Element) {
         $([document.documentElement, document.body]).animate({
             scrollTop: $(element).offset().top
@@ -94,19 +170,29 @@ export default class StoryPartsHandeler {
     }
     
 }
+
+
+
+//--------------------------------------------------------------------------------------------------------------
+//--------------------------------------Part object-------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------
+
+
 class StoryPartObject {
-    public domObject: Element;
+    public domObject: Element; 
     public data: IPart;
     public consequenceImage: Element;
     public starIcon: Element;
     public starMessage: Element;
     public optionButtons: HTMLCollectionOf<HTMLAnchorElement>;
     public contentPanel: Element;
+    public editButton: Element;
+    public showNewPartButton: Element;
     constructor(_data: IPart, parentElement: Element) {
 
         this.data = _data;
 
-        console.log(this.data);
+        // console.log(this.data);
         this.data.content_text = this.data.content_text.split('ABC').join( '<br>');
         this.constructPart(_data, parentElement);
         this.consequenceImage = this.domObject.getElementsByClassName('consequenceImage')[0];
@@ -114,8 +200,13 @@ class StoryPartObject {
         this.starMessage = this.domObject.getElementsByClassName('starMessage')[0];
         this.contentPanel = this.domObject.getElementsByClassName('contentPanel')[0];
 
+        this.showNewPartButton = this.domObject.getElementsByClassName('createnewPartButton')[0];
+        this.editButton = this.domObject.getElementsByClassName('editButton')[0];
+
+
+        console.log(this.showNewPartButton);
         // this.contentPanel.innerHTML = this.data.content_text.split('ABC').join( '<br>'); 
-        console.log( _data.content_text, "and....      ",  this.contentPanel.innerHTML, this.data.content_text);
+        // console.log( _data.content_text, "and....      ",  this.contentPanel.innerHTML, this.data.content_text);
 
         this.optionButtons = this.domObject.getElementsByClassName('optionsList')[0].getElementsByTagName('a');
         for (let i = 0; i < this.optionButtons.length; i++) {
@@ -127,12 +218,21 @@ class StoryPartObject {
                 console.log("urls:", window.location.href, test);
 
                 this.processAjaxData("option |" + button.id, test + "?storypart=" + button.id);
-
+                StoryPartsHandeler.instance.showEditPart(null, false);
+                StoryPartsHandeler.instance.toggleCfreateForm(null, false);
                 StoryPartsHandeler.instance.loadPart(Number(button.id), this);
             });
         }
+
         // console.log(this.optionButtons.length);
         this.starIcon.addEventListener('click', () => { this.starButtonCLick() });
+        this.editButton.addEventListener('click', () => { StoryPartsHandeler.instance.showEditPart(this, true); });
+        this.showNewPartButton.addEventListener('click', () => {
+            console.log("click");
+            StoryPartsHandeler.instance.toggleCfreateForm(this, this.showNewPartButton.innerHTML != 'hide');
+            
+        });
+
 
         this.checkImageURL();
 
@@ -147,10 +247,14 @@ class StoryPartObject {
         let objImg = new Image();
         objImg.src = this.data.image;
         // console.log(objImg.src);
-        if (objImg.complete) {
-            this.consequenceImage.classList.add('show');
-        } else {
+        objImg.onerror = () => {
             this.domObject.getElementsByClassName('duoWrapper')[0].classList.add('duoWrapperWithoutImg');
+
+        };
+        if (objImg.complete) {
+            // this.consequenceImage.classList.add('show');
+        } else {
+            // this.domObject.getElementsByClassName('duoWrapper')[0].classList.add('duoWrapperWithoutImg');
         }
     }
     public starButtonCLick() {

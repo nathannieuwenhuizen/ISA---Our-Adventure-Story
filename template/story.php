@@ -36,7 +36,7 @@ include 'assets/php/getPart.php'; ?>
 
 	<div class="wrapper">
 	<?php include 'assets/inc/nav.inc'; ?>
-		<div class="storywrapper">
+		<div class="storywrapper hide">
 			<div class="storyHeader">
 				<div class="layerNumber">page <?php echo $layer; ?> <div class="author"><i><?php if ( $authorName != "anonymous") { echo "written by ". $authorName; } ?></i></div></div>
 				<div class="storyTitle">

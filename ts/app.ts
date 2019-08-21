@@ -47,7 +47,6 @@ export default class App {
 
         console.log("hello");
         this.storyPartHandeler = new StoryPartsHandeler();
-        // this.data = this.loadFile('./assets/projects.json');
     }
 
     public LoginEvents() {
@@ -248,9 +247,6 @@ export default class App {
         }
     }
 
-    public static cap(value: number, min: number, max: number): number {
-        return Math.min(Math.max(value, min), max);
-    }
     public static getQueryVariable(variable: string): any {
         let query: any = window.location.href.substring(1);
         let startVar: any = query.split('?');
@@ -277,32 +273,6 @@ export default class App {
             if (request.status >= 200 && request.status < 400) {
                 // Success!
                 data = JSON.parse(request.responseText);
-            } else {
-                console.log('We reached our target server, but it returned an error');
-
-            }
-        };
-
-        request.onerror = () => {
-            console.log('There was a connection error of some sort');
-
-            // There was a connection error of some sort
-        };
-
-        request.send();
-        return data;
-    }
-
-
-    private loadFile(url: string): any {
-        let request: XMLHttpRequest = new XMLHttpRequest();
-        request.open('GET', url, false);
-        let data: any;
-        request.onload = () => {
-            if (request.status >= 200 && request.status < 400) {
-                // Success!
-                data = JSON.parse(request.responseText);
-                console.log('data', data);
             } else {
                 console.log('We reached our target server, but it returned an error');
 
