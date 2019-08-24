@@ -9,7 +9,6 @@ export default class StoryPartsHandeler {
 
     public editForm: Element;
     public hideEditButton: Element;
-    public hiddenFromEditPart: Element;
     public createForm: Element;
     public createParentObject: StoryPartObject;
 
@@ -30,7 +29,7 @@ export default class StoryPartsHandeler {
 
         this.wrapper = document.getElementsByClassName('wrapper')[0];
         this.parentDOMObject = document.createElement('div');
-        this.wrapper.appendChild(this.parentDOMObject);
+        this.wrapper.appendChild(this.parentDOMObject); 
         
         // this.loadPart(PARTID);
         this.loadHistory(PARTID);
@@ -77,25 +76,26 @@ export default class StoryPartsHandeler {
             this.scrollTo(newPart.domObject);
         }
     }
+    public showHiddenPart() {
+        this.storyParts.forEach((part: StoryPartObject) => {
+            if (part.domObject.classList.contains('hide')) {
+                console.log("hide", part.domObject);
+                part.domObject.classList.remove('hide');
+            }
+        }); 
+    }
     public showEditPart(data: StoryPartObject, show: boolean) {
-        console.log("hide edit", show);
+
         if (!show) {
             this.editForm.classList.add('hide');
-            if (this.hiddenFromEditPart ! = null) {
-                this.hiddenFromEditPart.classList.remove('hide');
-                this.hiddenFromEditPart = null;
-                }
+            this.showHiddenPart();
         } else {
-            // this.editForm.classList.remove('hide');
-            if (this.hiddenFromEditPart != null) {
-                this.hiddenFromEditPart.classList.remove('hide');
-            }
-            this.hiddenFromEditPart = data.domObject;
-            this.hiddenFromEditPart.classList.add('hide');
-            let element: Element = this.wrapper.insertBefore(this.editForm, this.hiddenFromEditPart);
+            this.showHiddenPart();
+            data.domObject.classList.add('hide');
+
+            let element: Element = this.wrapper.insertBefore(this.editForm, data.domObject);
             element.classList.remove('hide');
-            console.log(element.getElementsByTagName("input"));
-            console.log(element.getElementsByTagName("input")[6].value);
+
             element.getElementsByTagName("input")[0].value = data.data.option_text;
             element.getElementsByTagName("input")[1].checked = data.data.end == 1;
             element.getElementsByTagName("input")[2].value = data.data.question_text;
@@ -144,22 +144,22 @@ export default class StoryPartsHandeler {
             scrollTop: $(element).offset().top
         }, 500);
     }
-    private loadHistory(startID: number) {
+    private loadHistory(currentID: number) {
         console.log("start load history");
 
         let dataArray: IPart[] = [];
-        dataArray.push(this.getSQLData("assets/php/parthandeler/getPartObject.php?storypart=" + startID));
+        dataArray.push(this.getSQLData("assets/php/parthandeler/getPartObject.php?storypart=" + currentID));
         let currentDataStart = dataArray[0].start;
 
         let index = 0; 
-        while (currentDataStart == 0 && index < 5) {
+        while (currentDataStart == 0 && index < 50) {
             index++;
             dataArray.push(this.getSQLData("assets/php/parthandeler/getPartObject.php?storypart=" + dataArray[dataArray.length - 1].parentID));
             currentDataStart = dataArray[dataArray.length - 1].start;
         }
 
         for (let i = dataArray.length- 1; i >= 0; i--) {
-            this.loadPart(-1, null, false, dataArray[i]);
+            this.loadPart(-1, null, i == 0, dataArray[i]);
         }
         
         // console.log(dataArray);
@@ -188,11 +188,18 @@ class StoryPartObject {
     public contentPanel: Element;
     public editButton: Element;
     public showNewPartButton: Element;
+    public selectedButton: Element;
     constructor(_data: IPart, parentElement: Element) {
 
         this.data = _data;
 
-        // console.log(this.data);
+        // console.log(this.data.content_text,  this.data.content_text.split('#039;').join("'"));
+        this.data.content_text = this.data.content_text.split('#039;').join("'");
+        this.data.content_text = this.data.content_text.split("&").join("");
+        this.data.content_text = this.data.content_text.split("amp;").join("");
+        this.data.content_text = this.data.content_text.split("quot;").join('"');
+        this.data.option_text = this.data.option_text.split("/[&quot;]/").join('"');
+
         this.data.content_text = this.data.content_text.split('ABC').join( '<br>');
         this.constructPart(_data, parentElement);
         this.consequenceImage = this.domObject.getElementsByClassName('consequenceImage')[0];
@@ -211,13 +218,27 @@ class StoryPartObject {
         this.optionButtons = this.domObject.getElementsByClassName('optionsList')[0].getElementsByTagName('a');
         for (let i = 0; i < this.optionButtons.length; i++) {
             let button: HTMLAnchorElement = this.optionButtons.item(i);
-            button.removeAttribute('href');
             button.addEventListener('click', () => {
+
+                //this prevents href to reload the page but still show which pages you have visited.
+                let href: string = button.getAttribute('href');
+                button.removeAttribute('href');
+                requestAnimationFrame(() =>{
+                    button.setAttribute('href', href);
+                });
+
+                if (this.selectedButton != null) {
+                    this.selectedButton.classList.remove('selected');
+                }
+                this.selectedButton = button;
+                this.selectedButton.classList.add('selected');
+
+
                 // console.log(button.id, StoryPartsHandeler.instance.storyParts);
                 let test = location.protocol + '//' + location.host + location.pathname;
                 console.log("urls:", window.location.href, test);
 
-                this.processAjaxData("option |" + button.id, test + "?storypart=" + button.id);
+                this.processAjaxData(TITLE + " | " + button.innerHTML, test + "?storypart=" + button.id);
                 StoryPartsHandeler.instance.showEditPart(null, false);
                 StoryPartsHandeler.instance.toggleCfreateForm(null, false);
                 StoryPartsHandeler.instance.loadPart(Number(button.id), this);
@@ -303,27 +324,30 @@ class StoryPartObject {
 
     public constructPart(data: IPart, el: Element) {
 
+        if (ISCREATOR == 1) {
+            data.canEdit = 1;
+        }
         let content = '<div class="storywrapper">' +
         '<div class="storyHeader"> ' +
             '<div class="layerNumber">page '+data.layer+' <div class="author">' +
                     '<i>'+ (data.authorName != "anonymous" ? "written by" + data.authorName : "") + '</i></div>' +
             '</div>' +
             '<div class="storyTitle">' +
-                '<a href="storyinfo.php?ID='+data.storyID+'&offset=0">' +
-                    '<h2>'+data.storyTitle+'</h2>' +
+                '<a href="storyinfo.php?ID='+STORYID+'&offset=0">' +
+                    '<h2>'+TITLE+'</h2>' +
                 '</a>' +
-                '<a href="branchtree.php?ID='+data.storyID+'">Branch tree</a>' +
+                '<a href="branchtree.php?ID='+STORYID+'">Branch tree</a>' +
            ' </div>' +
       '  </div>' +
-       ' <img class="editButton '+ (data.canEdit == 0 ? "hide" : "") + '" src="assets/img/edit_icon.png">' +
+       ' <img class="editButton '+ ((data.canEdit == 1 && STATUS == 1) ? "" : "hide") + '" src="assets/img/edit_icon.png">' +
      '   <div id="starElement">' +
       '      <p>'+data.amountOfLikes+'</p>' +
         '    <img class="starIcon" src= '+(data.like == 1 ? "assets/img/star_full.png" : "assets/img/star_empty.png")+'>' +
           '  <div id="starMessage" class ="starMessage">'+ data.likeMessage+'</div>' +
        ' </div>' +
       '  <div class="chooseMessage">' +
-         '  <a style="display:'+(((data.startID == data.parentID) || data.start == 1) ? "none" : "inline-block")+ '" ' +
-         '       href="?storypart='+data.startID+'">Go to beginning</a>' +
+         '  <a style="display:'+(((STARTID == data.parentID) || data.start == 1) ? "none" : "inline-block")+ '" ' +
+         '       href="?storypart='+STARTID+'">Go to beginning</a>' +
         '    <a href="?storypart='+data.parentID+'" style="display:'+(data.start == 1 ? "none" : "")+' ">Go back</a>' +
        '     '+ (data.start == 0 ? "<i><p> You chose...<br> <b>"+data.option_text+" </b>  </p></i>" : "<i><h3>This is the start of the story</h3></i>") +
       '  </div>' +
@@ -347,7 +371,7 @@ class StoryPartObject {
   '      <div class="optionsList">' +
   '          <ul>' + data.optionList +
   '          </ul>' +
-  '          <div class="createnewPartButton '+(data.status == 0 || data.end == 1? "hide" : "")+'">Create your own Path! </div>' + (data.status == 0 ? "This story is closed, you cant add any more parts" : "")+
+  '          <div class="createnewPartButton '+(STATUS == 0 || data.end == 1? "hide" : "")+'">Create your own Path! </div>' + (data.status == 0 ? "<div class='closeMessage'>This story is closed, you cant add any more parts</div>" : "")+
   '      </div>' +
   '  </div>';
 
@@ -381,7 +405,6 @@ export interface IPart {
     authorName: string;
     optionList: string;
     canEdit: number;
-    status: number;
     likeMessage: string;
     like: number;
     amountOfLikes: string;

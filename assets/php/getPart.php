@@ -133,10 +133,12 @@ require 'assets/php/patreon/src/Oauth.php';
 include 'assets/php/patreon/patreonCalls.php'; 
 session_start();
 
+$isCreator = false;
 $canEdit = false;
 //if user is creator
 if (IsCreator($conn, $storyID)) {
     //if user is pledging
+    $isCreator = true;
     if (IsPledger(100)) { 
         $canEdit = true;
     }

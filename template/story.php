@@ -24,6 +24,9 @@ include 'assets/php/getPart.php'; ?>
 		TITLE = "<?php echo $storyTitle ?>";
 		PARTID = "<?php echo $storyPartID ?>"
 		STORYID = "<?php echo $storyID ?>"
+		STATUS = "<?php echo $status ?>"
+		ISCREATOR = "<?php echo $isCreator ?>"
+		STARTID = "<?php echo $startID ?>"
 		LOGGEDIN = "<?php 
 		if (isset($_SESSION['logged_in'])) { 
 			echo $_SESSION['logged_in']; 
@@ -36,7 +39,7 @@ include 'assets/php/getPart.php'; ?>
 
 	<div class="wrapper">
 	<?php include 'assets/inc/nav.inc'; ?>
-		<div class="storywrapper hide">
+		<div class="storywrapper" style="display: none;">
 			<div class="storyHeader">
 				<div class="layerNumber">page <?php echo $layer; ?> <div class="author"><i><?php if ( $authorName != "anonymous") { echo "written by ". $authorName; } ?></i></div></div>
 				<div class="storyTitle">

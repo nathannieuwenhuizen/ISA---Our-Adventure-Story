@@ -348,7 +348,6 @@
             //padding-top: 20px;
 
 
-            color: white;
 
             a {
                 text-decoration: none;
@@ -359,6 +358,10 @@
             a:visited {
                 background-color: $visistedStorycolor;
             }
+            .selected {
+                outline-width: 10px;
+            }
+     
         }
     }
     .createnewPartButton {
