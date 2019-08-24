@@ -162,7 +162,7 @@ $topAuthorsTable = GetTop3Authors($conn, $storyID);
 function GetTop3Authors($conn, $storyID)
 {
 
-    $sql = "SELECT authorID, COUNT(*) FROM `storyparts` WHERE NOT authorID = -1 AND storyID = $storyID GROUP BY authorID ASC LIMIT 10";
+    $sql = "SELECT authorID, COUNT(*) FROM `storyparts` WHERE NOT authorID = -1 AND storyID = $storyID GROUP BY authorID ORDER BY COUNT(*) DESC LIMIT 10";
     // $sql = "SELECT * FROM `users`";
     $table = "";
     $result = mysqli_query($conn, $sql);

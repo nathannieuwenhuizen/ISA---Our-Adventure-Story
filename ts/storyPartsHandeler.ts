@@ -178,24 +178,28 @@ export default class StoryPartsHandeler {
             return;
         }
 
+
+        currentPart.goToBeginningButton.innerHTML = "loading...";
         console.log("start load history");
 
-        let currentDataStart = 0;
-        let parentID = this.storyParts[0].data.parentID;
-        let chosenID = this.storyParts[0].data.ID;
-        let index = 0; 
-        while (currentDataStart == 0 && index < 50) {
-            index++;
-
-            let part: StoryPartObject = this.loadPart(parentID, null, false, true);
-            part.selectButtonForPart(chosenID);
-            console.log(parentID);
-            currentDataStart = part.data.start;
-            parentID =  part.data.parentID;
-            chosenID = part.data.ID;
-        }
-            this.scrollTo(this.storyParts[this.storyParts.length-1].domObject, 1);
+        setTimeout(()=> {
+            let currentDataStart = 0;
+            let parentID = this.storyParts[0].data.parentID;
+            let chosenID = this.storyParts[0].data.ID;
+            let index = 0; 
+            while (currentDataStart == 0 && index < 10) {
+                index++;
+    
+                let part: StoryPartObject = this.loadPart(parentID, null, false, true);
+                part.selectButtonForPart(chosenID);
+                console.log(parentID);
+                currentDataStart = part.data.start;
+                parentID =  part.data.parentID;
+                chosenID = part.data.ID;
+            }
+            this.scrollTo(currentPart.domObject, 1);
             // this.scrollTo(this.storyParts[this.storyParts.length-1].domObject, 500);
+        }, 1);
     }
 
     //removes a story part from the view and list.
