@@ -57,8 +57,10 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 $canEdit = false;
-if ($storyAuthorID == $_SESSION['userID']) {
-    $canEdit = true;
+if (isset( $_SESSION['userID'])) {
+    if ($storyAuthorID == $_SESSION['userID']) {
+        $canEdit = true;
+    }
 }
 if (!StoryIsOpen($conn, $storyID)) {
     $canEdit = false;

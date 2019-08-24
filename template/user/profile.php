@@ -128,8 +128,6 @@ if (mysqli_num_rows($result) > 0) {
     <div class="form">
 
       <h1>Welcome <?php echo $_SESSION['username']; ?> </h1>
-      <!-- <p>Email: <?= $email ?></p> -->
-      <!-- <p><?= $userID ?></p> -->
 
       <p>
         <?php 
@@ -152,8 +150,9 @@ if (mysqli_num_rows($result) > 0) {
               echo
               '<div class="info">
               Account is unverified, please confirm your email by clicking
-              on the email link!
-              </div>';
+              on the email link! <br>
+              </div>              To resend the mail, click <a href="./newRegisterMail.php">here</a>
+              ';
           }
           ?>
       <div class=" added-parts">
@@ -202,10 +201,15 @@ if ($offset + 1 >= Round( $amountOfParts / 10)) {
 			require '../assets/php/patreon/src/API.php';
 			require '../assets/php/patreon/src/Oauth.php';
 		
-			include '../assets/php/patreon/patreonCalls.php';
+      include '../assets/php/patreon/patreonCalls.php';
+      
+                    //TODO: REMOVE THESE LINES!
+                    echo 'coming soon...';
+                    return;
+          
       $myStories = getStoryList($conn, true, "../");
       // echo "is pledger: " .IsPledger(100);
-			if (IsPLedger(100)) {
+			if (IsPLedger(100)) { 
 				if ($myStories != "") {
 					echo "<ul class='myList'> " . $myStories. "</ul>";
 				} else {

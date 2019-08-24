@@ -182,17 +182,20 @@ export default class StoryPartsHandeler {
 
         let currentDataStart = 0;
         let parentID = this.storyParts[0].data.parentID;
+        let chosenID = this.storyParts[0].data.ID;
         let index = 0; 
         while (currentDataStart == 0 && index < 50) {
             index++;
 
             let part: StoryPartObject = this.loadPart(parentID, null, false, true);
+            part.selectButtonForPart(chosenID);
+            console.log(parentID);
             currentDataStart = part.data.start;
             parentID =  part.data.parentID;
+            chosenID = part.data.ID;
         }
-        // window.scrollTo(this.storyParts[this.storyParts.length-1].domObject);
-        this.scrollTo(this.storyParts[this.storyParts.length-1].domObject, 1);
-        this.scrollTo(this.storyParts[this.storyParts.length-2].domObject, 500);
+            this.scrollTo(this.storyParts[this.storyParts.length-1].domObject, 1);
+            // this.scrollTo(this.storyParts[this.storyParts.length-1].domObject, 500);
     }
 
     //removes a story part from the view and list.
@@ -270,7 +273,7 @@ class StoryPartObject {
                 if (this.selectedButton != null) {
                     this.selectedButton.classList.remove('selected');
                 }
-                this.selectedButton = button;
+                this.selectedButton = button; 
                 this.selectedButton.classList.add('selected');
 
 
@@ -375,7 +378,7 @@ class StoryPartObject {
         let content = '<div class="storywrapper">' +
         '<div class="storyHeader"> ' +
             '<div class="layerNumber">page '+data.layer+' <div class="author">' +
-                    '<i>'+ (data.authorName != "anonymous" ? "written by" + data.authorName : "") + '</i></div>' +
+                    '<i>'+ (data.authorName != "anonymous" ? "written by <b>" + data.authorName : "") + '</b></i></div>' +
             '</div>' +
             '<div class="storyTitle">' +
                 '<a href="storyinfo.php?ID='+STORYID+'&offset=0">' +
@@ -395,7 +398,6 @@ class StoryPartObject {
          '     class="goToBeginning">Load previous parts</a>' +
        '     '+ (data.start == 0 ? "<i><p> You chose...<br> <b>"+data.option_text+" </b>  </p></i>" : "<i><h3>This is the start of the story</h3></i>") +
       '  </div>' +
-      '  <br>' +
       '  <hr>' +
        ' <div class="duoWrapper">' +
       '      <div class="leftside">' +
@@ -438,7 +440,7 @@ class StoryPartObject {
             // console.log(button.id);
             if (button.id == id) {
                 console.log("button found", id);
-                this.selectButtonForPart = button;
+                this.selectedButton = button;
                 this.selectedButton.classList.add('selected');
 
             }

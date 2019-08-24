@@ -23,6 +23,16 @@ session_start(); ?>
         <hr>
 
 
+		<h3> Reading flow | 24-8-2019</h3>
+        <p>I've now made the story parts link to each other in one single webpage to make it more easier for the reader to understand where they are in the story. This was done by using AJAX (Asynchronous JavaScript And XML) and it makes reading so much faster and better!
+I changed the existing 'go back' and 'go to beginning' buttons into just one 'load previous parts' and remove the buttons on other parts. Damn... this design is getting slick!</p>
+<p>Of course I also made other changes too!</p>
+<p>Here are some of them:</p>
+<li>You can resend the vertification mail on the profile page.</li>
+<li>There is a top 3 users list on each story detail page (this is mainly to encourage more writers to log in.</li>
+<p>There are more changes, but I forgot what those were XD</p>
+<p>As for the next update, I'll create you users the ability to START a story yourselves! But that will sadly be an exclusive feature for patreon syupporters in the future. Don't worry, it wont be expensive! But I want a small income to maintain the website a little bit. I hope you understand.</p>
+		<hr>
 		<h3> Account system | 11-8-2019</h3>
         <p> I've made a user account system so that you and I can get to know eachother! It has an e-mail verify system and even an password forgot functionality. :D</p>
         <p> There is also a profile page on where you can only your username and a log-out button. But thats not all! I've also made a favourite list where you can see your favourite story parts! You can add a story part to your favourites by clicking on the star right on the page of the corresponding part. </p>

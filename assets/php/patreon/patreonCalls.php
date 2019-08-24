@@ -185,6 +185,9 @@ function StoryIsOpen($conn, $storyID) {
 
 function IsPLedger($amount, $token = "") {
 
+    //TODO: REMOVE THESE LINES!
+    return false;
+
     $access_token = $token;
     if ($access_token == "") {
         if (isset($_SESSION['access_token'])){

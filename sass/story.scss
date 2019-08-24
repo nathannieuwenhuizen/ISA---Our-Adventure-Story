@@ -361,6 +361,9 @@
             .selected {
                 outline-width: 10px;
             }
+            .selected:hover {
+                outline-width: 10px;
+            }
      
         }
     }
