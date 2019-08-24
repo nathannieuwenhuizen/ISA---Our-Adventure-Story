@@ -59,6 +59,12 @@ export default class StoryPartsHandeler {
         return data;
     }
 
+    public removeLoadButton() {
+        for( let i = 1; i < this.storyParts.length; i++) {
+            this.storyParts[i].goToBeginningButton.setAttribute('style', 'display: none;')
+        }
+    }
+
     //returns a new part based on the id.
     public loadPart(id:number, parentObject: StoryPartObject = null, scrollTo: boolean = true, before: boolean = false): StoryPartObject {
         let newPart: StoryPartObject;
@@ -81,6 +87,7 @@ export default class StoryPartsHandeler {
         if (scrollTo) {
             this.scrollTo(newPart.domObject);
         }
+        this.removeLoadButton();
         return newPart;
 
     }
@@ -384,7 +391,7 @@ class StoryPartObject {
           '  <div id="starMessage" class ="starMessage">'+ data.likeMessage+'</div>' +
        ' </div>' +
       '  <div class="chooseMessage">' +
-         '  <a style="display:'+(((STARTID == data.parentID) || data.start == 1) ? "none" : "inline-block")+ '" ' +
+         '  <a style="display:'+(( data.start == 1) ? "none" : "inline-block")+ '" ' +
          '     class="goToBeginning">Load previous parts</a>' +
        '     '+ (data.start == 0 ? "<i><p> You chose...<br> <b>"+data.option_text+" </b>  </p></i>" : "<i><h3>This is the start of the story</h3></i>") +
       '  </div>' +
