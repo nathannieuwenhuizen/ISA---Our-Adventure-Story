@@ -9,7 +9,7 @@ session_start(); ?>
 <?php require "assets/php/connect.php" ?>
 
 <HEAD>
-	<TITLE>Circular branch tree | Our adventure story</TITLE>
+	<TITLE>Circular branch tree</TITLE>
 	<link rel="icon" type="image/png" href="./assets/img/logo.png" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 	<link id="stylesheet" rel="stylesheet" href="assets/style.css" type="text/css" />

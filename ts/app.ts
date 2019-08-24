@@ -37,7 +37,6 @@ export default class App {
     public storyPartHandeler: StoryPartsHandeler;
     //the start function goes here
     constructor() {
-        document.title = APP_NAME;
 
         this.checkCacheUpdate();
         this.checkBranchCanvasAndApply();

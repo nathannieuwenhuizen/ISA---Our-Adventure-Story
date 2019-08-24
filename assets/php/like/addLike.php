@@ -30,7 +30,7 @@ if ($storyPartID != -1 && $storyID != -1) {
     
         if ($conn->query($sql) === TRUE) {
             // $last_id = $conn->insert_id;
-            $object = '{"result": "1", "message" : "remove like!"}';
+            $object = '{"result": "1", "message" : "like added!"}';
     
         } else {
             $object = '{"result": "0", "message" : "no internet connection"}';

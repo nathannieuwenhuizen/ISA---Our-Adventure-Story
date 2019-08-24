@@ -22,7 +22,7 @@ if ($storyPartID != -1) {
 
         if ($conn->query($sql) === TRUE) {
             // $last_id = $conn->insert_id;
-            $object = '{"result" : "1", "message" : "add like!"}';
+            $object = '{"result" : "1", "message" : "like removed..."}';
     
         }
     }
