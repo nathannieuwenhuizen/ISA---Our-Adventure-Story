@@ -1,6 +1,6 @@
 <?php 
 require 'assets/php/patreon/src/API.php';
-require 'assets/php/patreon/src/Oauth.php';
+require 'assets/php/patreon/src/OAuth.php';
 		
 require 'assets/php/patreon/patreonCalls.php';
 
@@ -53,17 +53,17 @@ session_start();
 			
 			                    //TODO: REMOVE THESE LINES!
 								echo 'coming soon...';
-								return;
+			// 					return;
 			
-			if (IsPLedger(100)) {
-				if ($myStories != "") {
-					echo "<ul class='storyList'> " . $myStories. "</ul>";
-				} else {
-					echo '<a class="newStoryButton" href="newstory.php"> Start a new Story</a>';
-				}
-			} else {
-				CreateUnlockButton();
-			}	
+			// if (IsPLedger(100)) {
+			// 	if ($myStories != "") {
+			// 		echo "<ul class='storyList'> " . $myStories. "</ul>";
+			// 	} else {
+			// 		echo '<a class="newStoryButton" href="newstory.php"> Start a new Story</a>';
+			// 	}
+			// } else {
+			// 	CreateUnlockButton();
+			// }	
 			 ?>
 
 						

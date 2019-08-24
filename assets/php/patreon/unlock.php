@@ -26,7 +26,7 @@ A ready-made 'Unlock with Patreon' image created per official design guidelines 
 */
 
 require 'assets/php/patreon/src/API.php';
-require 'assets/php/patreon/src/Oauth.php';
+require 'assets/php/patreon/src/OAuth.php';
 use Patreon\API; 
 use Patreon\OAuth;
 

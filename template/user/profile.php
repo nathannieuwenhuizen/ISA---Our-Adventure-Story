@@ -111,7 +111,7 @@ if (mysqli_num_rows($result) > 0) {
 
 <head>
   <meta charset="UTF-8">
-  <title>Welcome <?= $username ?></title>
+  <title>Welcome <?= $_SESSION['username'] ?></title>
   <link rel="icon" type="image/png" href="../assets/img/logo.png" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 	<link id="stylesheet" rel="stylesheet" href="../assets/style.css" type="text/css" />
@@ -199,25 +199,25 @@ if ($offset + 1 >= Round( $amountOfParts / 10)) {
       <h3> My story </h3>
       <?php 
 			require '../assets/php/patreon/src/API.php';
-			require '../assets/php/patreon/src/Oauth.php';
+			require '../assets/php/patreon/src/OAuth.php';
 		
       include '../assets/php/patreon/patreonCalls.php';
       
                     //TODO: REMOVE THESE LINES!
                     echo 'coming soon...';
-                    return;
+      //               return;
           
-      $myStories = getStoryList($conn, true, "../");
-      // echo "is pledger: " .IsPledger(100);
-			if (IsPLedger(100)) { 
-				if ($myStories != "") {
-					echo "<ul class='myList'> " . $myStories. "</ul>";
-				} else {
-					echo '<a class="newStoryButton" href="../newstory.php"> Start a new Story</a>';
-				}
-			} else {
-				CreateUnlockButton("../");
-      }			
+      // $myStories = getStoryList($conn, true, "../");
+      // // echo "is pledger: " .IsPledger(100);
+			// if (IsPLedger(100)) { 
+			// 	if ($myStories != "") {
+			// 		echo "<ul class='myList'> " . $myStories. "</ul>";
+			// 	} else {
+			// 		echo '<a class="newStoryButton" href="../newstory.php"> Start a new Story</a>';
+			// 	}
+			// } else {
+			// 	CreateUnlockButton("../");
+      // }			
 			 ?>
 <br>
 <hr>

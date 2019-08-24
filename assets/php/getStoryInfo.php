@@ -4,7 +4,7 @@ include 'assets/php/connect.php';
 include 'assets/php/globalfunctions.php'; 
 
 require 'assets/php/patreon/src/API.php';
-require 'assets/php/patreon/src/Oauth.php';
+require 'assets/php/patreon/src/OAuth.php';
 include 'assets/php/patreon/patreonCalls.php'; 
 
 //retreive url var

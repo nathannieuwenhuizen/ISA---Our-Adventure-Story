@@ -149,7 +149,7 @@ function StoryIsOpen($conn, $storyID) {
     $sql = "SELECT `AuthorID` FROM `storyInfo` WHERE  ID = $storyID";
     $result = mysqli_query($conn, $sql);
     $creatorID = "";
-    if (mysqli_num_rows($result) > 0) { 
+    if ($result && mysqli_num_rows($result) > 0) { 
         // output data of each row
         while($row = mysqli_fetch_assoc($result)) {
             $creatorID = $row['AuthorID'];

@@ -9,7 +9,7 @@ require 'db.php';
 
 
 require '../assets/php/patreon/src/API.php';
-require '../assets/php/patreon/src/Oauth.php';
+require '../assets/php/patreon/src/OAuth.php';
 		
 require '../assets/php/patreon/patreonCalls.php';
 

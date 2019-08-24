@@ -44,7 +44,6 @@ if (mysqli_num_rows($result) > 0) {
         $end = $row["end"];
         $option_text .= removeAllTags($row["option_text"]);
         $content_text = html_entity_decode(( removeScriptTags($row["content_text"])));
-        // $content_text = html_entity_decode(str_replace("\n", " ABC ",  removeScriptTags($row["content_text"])));
         $question_text = ($row["question_text"]);
         $optionIDs = $row["option_IDs"];
         $layer = $row["layer"];
@@ -187,7 +186,7 @@ $object .= '{
     "ID": "'. $storyPartID.'",
     "start": "'. $start.'",
     "end": "'. $end.'",
-    "option_text": "'. ($option_text).'",
+    "option_text": "'. htmlspecialchars($option_text).'",
     "content_text": "'. htmlspecialchars($content_text).'",
     "question_text": "'. ($question_text).'",
     "optionIDs": "'. $optionIDs.'",

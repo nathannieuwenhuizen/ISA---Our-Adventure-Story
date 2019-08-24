@@ -6,7 +6,7 @@ include 'globalfunctions.php';
 
 
 require './patreon/src/API.php';
-require './patreon/src/Oauth.php';
+require './patreon/src/OAuth.php';
 include './patreon/patreonCalls.php'; 
 session_start();
 

@@ -1,6 +1,7 @@
 <?php 
 /* Reset your password form, sends reset.php password link */
 require 'db.php';
+require '../assets/php/global.php';
 session_start();
 
 $email = $_SESSION['email'];
@@ -25,17 +26,17 @@ else { // User exists (num_rows != 0)
 
     // Send registration confirmation link (reset.php)
     $to      = $email;
-    $subject = 'Password Reset Link ( Our TG captions )';
+    $subject = 'Account Verification | ' . $websiteName;
     $message_body = '
-    Hello '.$username.',
+    Hello '.$username.', 
 
-    You have requested password reset!
+    Thank you for signing up!
 
-    Please click this link to reset your password:
+    Please click this link to activate your account:
 
-    '.$websiteURL.'user/reset.php?email='.$email.'&hash='.$hash;  
+    '.$websiteURL.'user/verify.php?email='.$email.'&hash='.$hash;  
 
-    mail($to, $subject, $message_body);
+    mail( $to, $subject, $message_body );
 
     header("location: profile.php");
 }

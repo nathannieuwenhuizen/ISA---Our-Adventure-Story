@@ -118,7 +118,7 @@ module.exports = {
         ]),
         new webpack.DefinePlugin({
             PRODUCTION: JSON.stringify(true),
-            APP_NAME: "'Our TG captions'",
+            APP_NAME: "'Our Adventure stories'",
             BROWSER_SUPPORTS_HTML5: true,
             TWO: "1+1",
             "typeof window": JSON.stringify("object")

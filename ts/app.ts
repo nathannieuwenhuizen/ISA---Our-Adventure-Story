@@ -44,8 +44,9 @@ export default class App {
         this.editButtonEvents();
         this.checkStoryView();
 
-        console.log("hello");
-        this.storyPartHandeler = new StoryPartsHandeler();
+        if (document.getElementsByClassName('createWrapper')[0]) {
+            this.storyPartHandeler = new StoryPartsHandeler();
+        }
     }
 
     public LoginEvents() {

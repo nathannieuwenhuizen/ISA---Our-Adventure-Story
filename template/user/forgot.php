@@ -1,6 +1,8 @@
 <?php 
 /* Reset your password form, sends reset.php password link */
 require 'db.php';
+require '../assets/php/global.php';
+
 session_start();
 
 // Check if form submitted with method="post"
@@ -28,7 +30,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' )
 
         // Send registration confirmation link (reset.php)
         $to      = $email;
-        $subject = 'Password Reset Link ( Our TG captions )';
+        $subject = 'Password Reset Link ( Our '.$websiteName.' )';
         $message_body = '
         Hello '.$username.',
 

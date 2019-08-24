@@ -4,7 +4,7 @@ include 'connect.php';
 include 'globalfunctions.php'; 
 
 require './patreon/src/API.php';
-require './patreon/src/Oauth.php';
+require './patreon/src/OAuth.php';
 include './patreon/patreonCalls.php'; 
 
 ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);

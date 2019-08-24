@@ -3,6 +3,7 @@
    and sends account confirmation email message
  */
 require 'db.php';
+require '../assets/php/global.php';
 
 
 // Set session variables to be used on profile.php page
@@ -57,9 +58,9 @@ if ( $result->num_rows > 0 ) {
 
             // Send registration confirmation link (verify.php)
             $to      = $email;
-            $subject = 'Account Verification | Our TG Caption!';
+            $subject = 'Account Verification | ' . $websiteName;
             $message_body = '
-            Hello '.$username.',
+            Hello '.$username.', 
 
             Thank you for signing up!
 

@@ -5,7 +5,7 @@
 // require_once __DIR__.'/vendor/autoload.php';
  
 require 'assets/php/patreon/src/API.php';
-require 'assets/php/patreon/src/Oauth.php';
+require 'assets/php/patreon/src/OAuth.php';
 use Patreon\API; 
 use Patreon\OAuth;
 

@@ -129,7 +129,7 @@ if (mysqli_num_rows($result) > 0) {
 
 
 require 'assets/php/patreon/src/API.php';
-require 'assets/php/patreon/src/Oauth.php';
+require 'assets/php/patreon/src/OAuth.php';
 include 'assets/php/patreon/patreonCalls.php'; 
 session_start();
 
