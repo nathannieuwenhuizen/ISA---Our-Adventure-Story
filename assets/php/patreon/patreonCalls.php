@@ -54,10 +54,10 @@ function CreateUnlockButton($basePath = "./") {
     
         // Simply echoing it here. You can present the login link/button in any other way.
     
-        echo '<a href="'.$href.'"><img class="patreonButton" src="'. $basePath.'assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
+        // echo '<a href="'.$href.'"><img class="patreonButton" src="'. $basePath.'assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
     } else {
         $href = "user/";
-        echo '<a href="'.$href.'"><img class="patreonButton" src="'.$basePath.'assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
+        // echo '<a href="'.$href.'"><img class="patreonButton" src="'.$basePath.'assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
     }
    
 }
@@ -188,48 +188,48 @@ function IsPLedger($amount, $token = "") {
     //TODO: REMOVE THESE LINES!
     return false;
 
-    $access_token = $token;
-    if ($access_token == "") {
-        if (isset($_SESSION['access_token'])){
-            $access_token = $_SESSION['access_token'];
-        }    
-    }
-    // echo "<br>mail from ispledger function: " . getEmailFromToken($access_token);
+    // $access_token = $token;
+    // if ($access_token == "") {
+    //     if (isset($_SESSION['access_token'])){
+    //         $access_token = $_SESSION['access_token'];
+    //     }    
+    // }
+    // // echo "<br>mail from ispledger function: " . getEmailFromToken($access_token);
 
 
-    if (isset($access_token) && $access_token != "") {
+    // if (isset($access_token) && $access_token != "") {
 
-        // echo $access_token;
-        $api_client = new API($access_token); 
+    //     // echo $access_token;
+    //     $api_client = new API($access_token); 
     
-        // Return from the API can be received in either array, object or JSON formats by setting the return format. It defaults to array if not specifically set. Specifically setting return format is not necessary. 
-        // Below is shown as an example of having the return parsed as an object. If there is anyone using Art4 JSON parser lib or any other parser, they can just set the API return to JSON and then have the return 
-        // parsed by that parser
+    //     // Return from the API can be received in either array, object or JSON formats by setting the return format. It defaults to array if not specifically set. Specifically setting return format is not necessary. 
+    //     // Below is shown as an example of having the return parsed as an object. If there is anyone using Art4 JSON parser lib or any other parser, they can just set the API return to JSON and then have the return 
+    //     // parsed by that parser
     
-        // You dont need the below line if you simply want the result as an array
-        $api_client->api_return_format = 'object';
+    //     // You dont need the below line if you simply want the result as an array
+    //     $api_client->api_return_format = 'object';
     
-        // Now get the current user:
-        $patron_response = $api_client->fetch_user();
-        if (isset($patron_response->included[0]->attributes->currently_entitled_amount_cents)) {
-            $myAmount = $patron_response->included[0]->attributes->currently_entitled_amount_cents;
-            // print_r ($amount);
-            $data = json_encode((array)$patron_response->data->attributes->email);
-            // echo $access_token . $data;
+    //     // Now get the current user:
+    //     $patron_response = $api_client->fetch_user();
+    //     if (isset($patron_response->included[0]->attributes->currently_entitled_amount_cents)) {
+    //         $myAmount = $patron_response->included[0]->attributes->currently_entitled_amount_cents;
+    //         // print_r ($amount);
+    //         $data = json_encode((array)$patron_response->data->attributes->email);
+    //         // echo $access_token . $data;
 
-            if ($myAmount >= $amount) {
-                return true;
-            } 
+    //         if ($myAmount >= $amount) {
+    //             return true;
+    //         } 
     
-        }    
+    //     }    
         
-    }
-    return false;
+    // }
+    // return false;
 }
 
 // function duplicatePatreonEmails
 function getEmailFromToken($access_token) {
-    echo $access_token;
+    // echo $access_token;
 
     $api_client = new API($access_token);
     $api_client->api_return_format = 'object';
@@ -244,7 +244,3 @@ function getEmailFromToken($access_token) {
     }    
     return "";
 }
-
-
-?>
-

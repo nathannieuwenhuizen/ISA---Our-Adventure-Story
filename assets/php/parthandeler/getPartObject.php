@@ -2,6 +2,7 @@
 //MySQL Database Connect 
 include '../connect.php'; 
 include '../globalfunctions.php'; 
+session_start();
 
 //retreive url var
 $stringname = 'storypart';
@@ -104,9 +105,6 @@ if (mysqli_num_rows($result) > 0) {
     //there are no results
     //echo "0 results";
 }
-
-session_start();
-
 $canEdit = false;
 if ($optionIDs == "" && $end == 0 && $start == 0) {
     $canEdit = true;
@@ -188,7 +186,7 @@ $object .= '{
     "end": "'. $end.'",
     "option_text": "'. htmlspecialchars($option_text).'",
     "content_text": "'. htmlspecialchars($content_text).'",
-    "question_text": "'. ($question_text).'",
+    "question_text": "'. htmlspecialchars($question_text).'",
     "optionIDs": "'. $optionIDs.'",
     "layer": "'. $layer.'",
     "image": "'. $image.'",

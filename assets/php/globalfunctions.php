@@ -141,4 +141,3 @@ function amountofParts($conn, $storyID) {
     }
     return $amountOfParts;
 }
-?>

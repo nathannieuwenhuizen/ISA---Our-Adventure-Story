@@ -184,10 +184,10 @@ export default class StoryPartsHandeler {
 
         setTimeout(()=> {
             let currentDataStart = 0;
-            let parentID = this.storyParts[0].data.parentID;
+            let parentID = this.storyParts[0].data.parentID; 
             let chosenID = this.storyParts[0].data.ID;
             let index = 0; 
-            while (currentDataStart == 0 && index < 10) {
+            while (currentDataStart == 0 && index < 5) {
                 index++;
     
                 let part: StoryPartObject = this.loadPart(parentID, null, false, true);
@@ -237,11 +237,9 @@ class StoryPartObject {
         this.data = _data;
 
         // console.log(this.data.content_text,  this.data.content_text.split('#039;').join("'"));
-        this.data.content_text = this.data.content_text.split('#039;').join("'");
-        this.data.content_text = this.data.content_text.split("&").join("");
-        this.data.content_text = this.data.content_text.split("amp;").join("");
-        this.data.content_text = this.data.content_text.split("quot;").join('"');
-        this.data.option_text = this.data.option_text.split("/[&quot;]/").join('"');
+        this.data.content_text = this.filterSpecialChars(this.data.content_text);
+        this.data.option_text = this.filterSpecialChars(this.data.option_text);
+        this.data.question_text = this.filterSpecialChars(this.data.question_text);
 
         this.data.content_text = this.data.content_text.split('ABC').join( '<br>');
         
@@ -305,6 +303,16 @@ class StoryPartObject {
 
         this.checkImageURL();
 
+    }
+    private filterSpecialChars(value: string): string {
+        let result = value;
+        result = result.split('#039;').join("'");
+        result = result.split("&").join("");
+        result = result.split("amp;").join("");
+        result = result.split("quot;").join('"');
+        result = result.split("/[&quot;]/").join('"');
+
+        return result;
     }
 
     //changes the url header and title.
@@ -399,7 +407,7 @@ class StoryPartObject {
        ' </div>' +
       '  <div class="chooseMessage">' +
          '  <a style="display:'+(( data.start == 1) ? "none" : "inline-block")+ '" ' +
-         '     class="goToBeginning">Load previous parts</a>' +
+         '     class="goToBeginning">Load previous 5 parts</a>' +
        '     '+ (data.start == 0 ? "<i><p> You chose...<br> <b>"+data.option_text+" </b>  </p></i>" : "<i><h3>This is the start of the story</h3></i>") +
       '  </div>' +
       '  <hr>' +

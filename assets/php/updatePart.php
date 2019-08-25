@@ -1,4 +1,9 @@
 <?php
+
+ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
+ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
+session_start();
+
 //MySQL Database Connect 
 include 'connect.php'; 
 include 'globalfunctions.php'; 
@@ -7,9 +12,6 @@ require './patreon/src/API.php';
 require './patreon/src/OAuth.php';
 include './patreon/patreonCalls.php'; 
 
-ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
-ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
-session_start();
 
 /*
 Creates the new story part
@@ -54,16 +56,16 @@ if ($optionIDs != "") {
 
 function UpdatePart($conn, $id, $option, $consequence, $question, $image, $end) {
     $sql = "UPDATE `storyparts` SET `end`='$end', `option_text` = '$option', `content_text` = '$consequence', `question_text` = '$question', `image` = '$image' WHERE id = $id LIMIT 1";
-if ($conn->query($sql) === TRUE) {
-//    echo "<br>New part created successfully.<br>";
-} else {
-    // echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
-}
+    if ($conn->query($sql) === TRUE) {
+    //    echo "<br>New part created successfully.<br>";
+    } else {
+        // echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+    }
 
 }
 //backup
 //echo "<br><a href='../../?storypart=". $id."'>go back to page</a> <br>";
-//echo $sql;
+// echo $sql;
 
 
 

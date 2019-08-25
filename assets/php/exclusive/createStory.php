@@ -78,10 +78,10 @@ function CreateStory($storyTitle, $storyDescription, $conn) {
 function SetStartID($id, $storyID, $conn) {
     $sql = "UPDATE `storyInfo` SET `Introduction_ID` = $id WHERE `ID` = $storyID LIMIT 1"; 
     if ($conn->query($sql) === TRUE) {
-        echo "<br>New part created successfully.<br>";
+        // echo "<br>New part created successfully.<br>";
         // header("location: ../../../storyinfo.php?ID=". $storyID ."&offset=0");
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+        // echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
     }
 }
 
@@ -173,9 +173,9 @@ function DuplicateTokens($conn) {
             $email = getEmailFromToken($row['access_token']);
 
             if ($email != "") {
-                echo "<br> refreshed token: ". $row['access_token'] ." and email: ".$email."<br>";
-                echo "<br> refreshed token: ". $_SESSION['access_token']." and email: ".$myEmail."<br>";
-                echo "is pledher". IsPLedger(100);
+                // echo "<br> refreshed token: ". $row['access_token'] ." and email: ".$email."<br>";
+                // echo "<br> refreshed token: ". $_SESSION['access_token']." and email: ".$myEmail."<br>";
+                // echo "is pledher". IsPLedger(100);
                 // $data = json_encode((array)$tokens);
                 // print_r($data);
                 if ($myEmail == $email) {
@@ -184,7 +184,7 @@ function DuplicateTokens($conn) {
                 }
         }
     } else {
-        echo $conn->error;
+        // echo $conn->error;
     }
     return false;
 }

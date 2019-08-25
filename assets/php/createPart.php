@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 //MySQL Database Connect 
 
 include 'connect.php'; 
@@ -8,7 +10,6 @@ include 'globalfunctions.php';
 require './patreon/src/API.php';
 require './patreon/src/OAuth.php';
 include './patreon/patreonCalls.php'; 
-session_start();
 
 /*
 Creates the new story part
