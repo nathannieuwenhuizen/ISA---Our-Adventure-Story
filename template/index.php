@@ -49,19 +49,15 @@ require 'assets/php/patreon/patreonCalls.php';
 			<?php 
 			// echo "is pledger: " .IsPledger(100);
 			
-			                    //TODO: REMOVE THESE LINES!
-								echo 'coming soon...';
-			// 					return;
-			
-			// if (IsPLedger(100)) {
-			// 	if ($myStories != "") {
-			// 		echo "<ul class='storyList'> " . $myStories. "</ul>";
-			// 	} else {
-			// 		echo '<a class="newStoryButton" href="newstory.php"> Start a new Story</a>';
-			// 	}
-			// } else {
-			// 	CreateUnlockButton();
-			// }	
+			if (IsPLedger(100)) {
+				if ($myStories != "") {
+					echo "<ul class='storyList'> " . $myStories. "</ul>";
+				} else {
+					echo '<a class="newStoryButton" href="newStory.php"> Start a new Story</a>';
+				}
+			} else {
+				CreateUnlockButton();
+			}	
 			 ?>
 
 						

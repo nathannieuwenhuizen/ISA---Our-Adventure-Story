@@ -63,7 +63,7 @@ if (isset( $_SESSION['userID'])) {
     }
 }
 if (!StoryIsOpen($conn, $storyID)) {
-    $canEdit = false;
+    $canEdit = false; 
     $status = "CLOSED";
 } else {
     $status = "OPEN";

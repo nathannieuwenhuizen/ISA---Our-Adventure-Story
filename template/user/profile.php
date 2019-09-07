@@ -203,21 +203,18 @@ if ($offset + 1 >= Round( $amountOfParts / 10)) {
 		
       include '../assets/php/patreon/patreonCalls.php';
       
-                    //TODO: REMOVE THESE LINES!
-                    echo 'coming soon...';
-      //               return;
           
-      // $myStories = getStoryList($conn, true, "../");
-      // // echo "is pledger: " .IsPledger(100);
-			// if (IsPLedger(100)) { 
-			// 	if ($myStories != "") {
-			// 		echo "<ul class='myList'> " . $myStories. "</ul>";
-			// 	} else {
-			// 		echo '<a class="newStoryButton" href="../newstory.php"> Start a new Story</a>';
-			// 	}
-			// } else {
-			// 	CreateUnlockButton("../");
-      // }			
+      $myStories = getStoryList($conn, true, "../");
+      // echo "is pledger: " .IsPledger(100);
+			if (IsPLedger(100)) { 
+				if ($myStories != "") {
+					echo "<ul class='myList'> " . $myStories. "</ul>";
+				} else {
+					echo '<a class="newStoryButton" href="../newStory.php"> Start a new Story</a>';
+				}
+			} else {
+				CreateUnlockButton("../");
+      }			
 			 ?>
 <br>
 <hr>

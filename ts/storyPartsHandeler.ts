@@ -116,6 +116,13 @@ export default class StoryPartsHandeler {
             element.classList.remove('hide');
 
             element.getElementsByTagName("input")[0].value = data.data.option_text;
+            if (data.data.start == 1) {
+                element.getElementsByTagName("input")[0].required = "";
+            } else {
+                console.log("toggle must be required");
+                element.getElementsByTagName("input")[0].required = "required";
+            }
+
             element.getElementsByTagName("input")[1].checked = data.data.end == 1;
             element.getElementsByTagName("input")[2].value = data.data.question_text;
             element.getElementsByTagName("input")[3].value = data.data.image;
@@ -429,7 +436,7 @@ class StoryPartObject {
   '      <div class="optionsList">' +
   '          <ul>' + data.optionList +
   '          </ul>' +
-  '          <div class="createnewPartButton '+(STATUS == 0 || data.end == 1? "hide" : "")+'">Create your own Path! </div>' + (data.status == 0 ? "<div class='closeMessage'>This story is closed, you cant add any more parts</div>" : "")+
+  '          <div class="createnewPartButton '+(STATUS == 0 || data.end == 1? "hide" : "")+'">Create your own Path! </div>' + (STATUS == 0 ? "<div class='closeMessage'>This story is closed, you can't add/edit any parts :(</div>" : "")+
   '      </div>' +
   '  </div>';
 

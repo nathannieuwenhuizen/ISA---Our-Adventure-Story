@@ -17,7 +17,7 @@ $storyTitle = htmlspecialchars( removeAllTags( $_POST['storyTitle']), ENT_QUOTES
 $storyDescription = htmlspecialchars(removeScriptTags( $_POST['storyDescription']), ENT_QUOTES);
 $id = htmlspecialchars($_POST['id']);
 
-$sql = "UPDATE `storyInfo` SET `Name`='$storyTitle', `Description` = '$storyDescription' WHERE `ID` = $id LIMIT 1";
+$sql = "UPDATE `storyinfo` SET `Name`='$storyTitle', `Description` = '$storyDescription' WHERE `ID` = $id LIMIT 1";
 
 if (IsCreator($conn, $id)) {
     if (IsPledger(100)) {
@@ -26,7 +26,7 @@ if (IsCreator($conn, $id)) {
             return;
         } else {
             $_SESSION['message'] = "Failed to update a story";
-            echo $conn->error;
+            // echo $conn->error;
         }
     } else {
         $_SESSION['message'] = "You aren't pledged";

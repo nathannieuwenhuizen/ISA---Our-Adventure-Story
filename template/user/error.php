@@ -1,4 +1,9 @@
-<?php//set cookie lifetime for 100 days (60sec * 60mins * 24hours * 7days)
+<?php
+//set cookie lifetime for 100 days (60sec * 60mins * 24hours * 7days)
+ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
+ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
+
+session_start();
 require 'db.php';
 
 ?>
@@ -20,15 +25,11 @@ require 'db.php';
     <h1>Error</h1>
     <p>
     <?php 
-        ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
-        ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
-        session_start();
     
-    if( isset($_SESSION['message']) AND !empty($_SESSION['message']) ):
+    if( isset($_SESSION['message']) ):
         echo $_SESSION['message'];    
-        unset( $_SESSION['message'] );
     else:
-        header( "location: index.php" );
+        // header( "location: index.php" );
     endif;
     ?>
     </p>     

@@ -31,7 +31,7 @@ if (!DuplicateTokens($conn)) {
     //check if the user already made story before.
     if (getStoryList($conn, true) == "") {
         if (IsPLedger(100)) {
-            echo "I'm pledged";
+            // echo "I'm pledged";
             if (!strictEmpty($consequence) && !strictEmpty($storyDescription) && !strictEmpty($storyTitle) && !strictEmpty($question)) {
                 $storyID = CreateStory($storyTitle, $storyDescription, $conn);
                 if ($storyID != -1) {
@@ -43,7 +43,7 @@ if (!DuplicateTokens($conn)) {
                 $message = "Some of your submissions are empty";
             }
         } else {
-            echo "I'm not pledged";
+            // echo "I'm not pledged";
 
             $message = "You aren't pledged or your pledge amount isn't high enough";
         }
@@ -60,7 +60,7 @@ header("location: ../../../user/error.php");
 
 function CreateStory($storyTitle, $storyDescription, $conn) {
     //check if a story already is submitted with the same values
-    $sql = "SELECT * FROM storyInfo WHERE (`Name` = $storyTitle AND `Description` = '$storyDescription')  LIMIT 1";
+    $sql = "SELECT * FROM storyinfo WHERE (`Name` = $storyTitle AND `Description` = '$storyDescription')  LIMIT 1";
     $result = mysqli_query($conn, $sql);
 
     if ($result) {
@@ -70,16 +70,18 @@ function CreateStory($storyTitle, $storyDescription, $conn) {
         $sql = "INSERT INTO `storyinfo` (`ID`, `Name`, `Description`, `Date`, `AuthorID`) VALUES (NULL, '$storyTitle', '$storyDescription', NOW(), ". $_SESSION['userID']. ");";
         if ($conn->query($sql) === TRUE) {
             return $conn->insert_id;
+        } else {
+            // echo $conn->error;
         }
     }
     return -1;
 
 }
 function SetStartID($id, $storyID, $conn) {
-    $sql = "UPDATE `storyInfo` SET `Introduction_ID` = $id WHERE `ID` = $storyID LIMIT 1"; 
+    $sql = "UPDATE `storyinfo` SET `Introduction_ID` = $id WHERE `ID` = $storyID LIMIT 1"; 
     if ($conn->query($sql) === TRUE) {
         // echo "<br>New part created successfully.<br>";
-        // header("location: ../../../storyinfo.php?ID=". $storyID ."&offset=0");
+        header("location: ../../../storyinfo.php?ID=". $storyID ."&offset=0");
     } else {
         // echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
     }
@@ -172,7 +174,7 @@ function DuplicateTokens($conn) {
         while($row = mysqli_fetch_assoc($result)) {
             $email = getEmailFromToken($row['access_token']);
 
-            if ($email != "") {
+            if ($email != "" && $row['ID'] != $_SESSION['userID']) {
                 // echo "<br> refreshed token: ". $row['access_token'] ." and email: ".$email."<br>";
                 // echo "<br> refreshed token: ". $_SESSION['access_token']." and email: ".$myEmail."<br>";
                 // echo "is pledher". IsPLedger(100);

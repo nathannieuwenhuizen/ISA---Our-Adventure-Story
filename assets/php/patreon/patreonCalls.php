@@ -11,10 +11,10 @@ use Patreon\OAuth;
 function CreateUnlockButton($basePath = "./") {
 
     if (isset($_SESSION['userID'])) {
-        $client_id = 'KdUXDDsA01kaI2EZiJQ0UsnIICK0mhPVBi6YeMGwxJKTmK9VgoWRd3vnYUPuiWvh';      // Replace with your data
-        $client_secret = 'IcN4YFb3dW3xvB6jdv-kb9xDzGJ4LHB_ym8NbgxayVFj0cbsi0ShTvfclgF0Qohb';  // Replace with your data
-    
-        $redirect_uri = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/user/success.php";
+        $client_id = '-28JiJ67Xl_o-Am0bkLZnrN0NHxsh0WvBf5sDK9aXbecN46KNt5VMR_bFSJoVIdN';      // Replace with your data
+        $client_secret = 'RzhFVDmt0dlbxSRuLhg2FKmGofsYwaydmpC0KtGwLeZ4h3fzKsQRSrVV_4-WDXIM';  // Replace with your data
+        
+        $redirect_uri = "https://ourinteractivetgcaption.000webhostapp.com/user/success.php";
 
     
         // Min cents is the amount in cents that you locked your content or feature with. Say, if a feature or content requires $5 to access in your site/app, 
@@ -54,20 +54,20 @@ function CreateUnlockButton($basePath = "./") {
     
         // Simply echoing it here. You can present the login link/button in any other way.
     
-        // echo '<a href="'.$href.'"><img class="patreonButton" src="'. $basePath.'assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
+        echo '<a href="'.$href.'"><img class="patreonButton" src="'. $basePath.'assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
     } else {
         $href = "user/";
-        // echo '<a href="'.$href.'"><img class="patreonButton" src="'.$basePath.'assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
+        echo '<a href="'.$href.'"><img class="patreonButton" src="'.$basePath.'assets/php/patreon/assets/images/unlock_with_patreon.png"></a>';
     }
    
 }
 
 // The below code snippet needs to be active wherever the the user is landing in $redirect_uri parameter above. It will grab the auth code from Patreon and get the tokens via the oAuth client
 function CheckGetVariable() {
-    $redirect_uri = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/user/success.php";
+    $redirect_uri = "https://ourinteractivetgcaption.000webhostapp.com/user/success.php";
 
-    $client_id = 'KdUXDDsA01kaI2EZiJQ0UsnIICK0mhPVBi6YeMGwxJKTmK9VgoWRd3vnYUPuiWvh';      // Replace with your data
-    $client_secret = 'IcN4YFb3dW3xvB6jdv-kb9xDzGJ4LHB_ym8NbgxayVFj0cbsi0ShTvfclgF0Qohb';  // Replace with your data
+    $client_id = '-28JiJ67Xl_o-Am0bkLZnrN0NHxsh0WvBf5sDK9aXbecN46KNt5VMR_bFSJoVIdN';      // Replace with your data
+    $client_secret = 'RzhFVDmt0dlbxSRuLhg2FKmGofsYwaydmpC0KtGwLeZ4h3fzKsQRSrVV_4-WDXIM';  // Replace with your data
 
     if (isset( $_GET['code'])) {
         if ( $_GET['code'] != '' ) {
@@ -92,40 +92,38 @@ function CheckGetVariable() {
     }    
 }
 
-//needs duplication glitch fix/check
 function updateTokens ($access_token, $refresh_token) {
     require '../assets/php/connect.php';
 
-    $redirect_uri = "http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/user/success.php";
-
-    $client_id = 'KdUXDDsA01kaI2EZiJQ0UsnIICK0mhPVBi6YeMGwxJKTmK9VgoWRd3vnYUPuiWvh';      // Replace with your data
-    $client_secret = 'IcN4YFb3dW3xvB6jdv-kb9xDzGJ4LHB_ym8NbgxayVFj0cbsi0ShTvfclgF0Qohb';  // Replace with your data
-
-
+    $redirect_uri = "https://ourinteractivetgcaption.000webhostapp.com/user/success.php";
+    
+    $client_id = '-28JiJ67Xl_o-Am0bkLZnrN0NHxsh0WvBf5sDK9aXbecN46KNt5VMR_bFSJoVIdN';      // Replace with your data
+    $client_secret = 'RzhFVDmt0dlbxSRuLhg2FKmGofsYwaydmpC0KtGwLeZ4h3fzKsQRSrVV_4-WDXIM';  // Replace with your data
+    
     if (isset($_SESSION['userID']) && isset($access_token) && isset($refresh_token)) {
 
         $DuplicateTokens = false;
 
-        // $sql = "SELECT `ID`, `access_token` FROM `users` WHERE NOT `access_token` = '' OR NOT `refresh_token` = ''";
+        $sql = "SELECT `ID`, `access_token` FROM `users` WHERE NOT `access_token` = '' OR NOT `refresh_token` = ''";
 
         // echo $sql;
-        // $result = mysqli_query($conn, $sql);
-        // if ($result && mysqli_num_rows($result) > 0) { 
-        //     // output data of each row
-        //     while($row = mysqli_fetch_assoc($result)) {
-        //         $email = getEmailFromToken($row['access_token']);
-        //         echo "<br> refreshed token: ". $row['access_token'] ." and email: ".$email."<br>";
+        $result = mysqli_query($conn, $sql);
+        if ($result && mysqli_num_rows($result) > 0) { 
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result)) {
+                $email = getEmailFromToken($row['access_token']);
+                // echo "<br> refreshed token: ". $row['access_token'] ." and email: ".$email."<br>";
 
-        //         // $data = json_encode((array)$tokens);
-        //         // print_r($data);
+                // $data = json_encode((array)$tokens);
+                // print_r($data);
     
-        //         if ($_SESSION['userID'] != $row['ID']) {
-        //             // $DuplicateTokens = true;
-        //         }
-        //     }
-        // } else {
-        //     echo $conn->error;
-        // }
+                if ($_SESSION['userID'] != $row['ID']) {
+                    $DuplicateTokens = true;
+                }
+            }
+        } else {
+            echo $conn->error;
+        }
         if (!$DuplicateTokens) {
             $sql = "UPDATE `users` SET `access_token`='$access_token', `refresh_token` = '$refresh_token' WHERE id = " . $_SESSION['userID'] .";";
             if ($conn->query($sql) === TRUE) {
@@ -146,7 +144,7 @@ function updateTokens ($access_token, $refresh_token) {
 
 function StoryIsOpen($conn, $storyID) {
     //checks if the creator is pledged at all.
-    $sql = "SELECT `AuthorID` FROM `storyInfo` WHERE  ID = $storyID";
+    $sql = "SELECT `AuthorID` FROM `storyinfo` WHERE  ID = $storyID";
     $result = mysqli_query($conn, $sql);
     $creatorID = "";
     if ($result && mysqli_num_rows($result) > 0) { 
@@ -185,46 +183,43 @@ function StoryIsOpen($conn, $storyID) {
 
 function IsPLedger($amount, $token = "") {
 
-    //TODO: REMOVE THESE LINES!
+    $access_token = $token;
+    if ($access_token == "") {
+        if (isset($_SESSION['access_token'])){
+            $access_token = $_SESSION['access_token'];
+        }    
+    }
+    // echo "<br>mail from ispledger function: " . getEmailFromToken($access_token);
+
+
+    if (isset($access_token) && $access_token != "") {
+
+        // echo $access_token;
+        $api_client = new API($access_token); 
+
+        // Return from the API can be received in either array, object or JSON formats by setting the return format. It defaults to array if not specifically set. Specifically setting return format is not necessary. 
+        // Below is shown as an example of having the return parsed as an object. If there is anyone using Art4 JSON parser lib or any other parser, they can just set the API return to JSON and then have the return 
+        // parsed by that parser
+
+        // You dont need the below line if you simply want the result as an array
+        $api_client->api_return_format = 'object';
+
+        // Now get the current user:
+        $patron_response = $api_client->fetch_user();
+        if (isset($patron_response->included[0]->attributes->currently_entitled_amount_cents)) {
+            $myAmount = $patron_response->included[0]->attributes->currently_entitled_amount_cents;
+            // print_r ($amount);
+            $data = json_encode((array)$patron_response->data->attributes->email);
+            // echo $access_token . $data;
+
+            if ($myAmount >= $amount) {
+                return true;
+            } 
+
+        }    
+     
+    }
     return false;
-
-    // $access_token = $token;
-    // if ($access_token == "") {
-    //     if (isset($_SESSION['access_token'])){
-    //         $access_token = $_SESSION['access_token'];
-    //     }    
-    // }
-    // // echo "<br>mail from ispledger function: " . getEmailFromToken($access_token);
-
-
-    // if (isset($access_token) && $access_token != "") {
-
-    //     // echo $access_token;
-    //     $api_client = new API($access_token); 
-    
-    //     // Return from the API can be received in either array, object or JSON formats by setting the return format. It defaults to array if not specifically set. Specifically setting return format is not necessary. 
-    //     // Below is shown as an example of having the return parsed as an object. If there is anyone using Art4 JSON parser lib or any other parser, they can just set the API return to JSON and then have the return 
-    //     // parsed by that parser
-    
-    //     // You dont need the below line if you simply want the result as an array
-    //     $api_client->api_return_format = 'object';
-    
-    //     // Now get the current user:
-    //     $patron_response = $api_client->fetch_user();
-    //     if (isset($patron_response->included[0]->attributes->currently_entitled_amount_cents)) {
-    //         $myAmount = $patron_response->included[0]->attributes->currently_entitled_amount_cents;
-    //         // print_r ($amount);
-    //         $data = json_encode((array)$patron_response->data->attributes->email);
-    //         // echo $access_token . $data;
-
-    //         if ($myAmount >= $amount) {
-    //             return true;
-    //         } 
-    
-    //     }    
-        
-    // }
-    // return false;
 }
 
 // function duplicatePatreonEmails

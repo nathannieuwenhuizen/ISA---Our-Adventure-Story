@@ -2,6 +2,8 @@
 //MySQL Database Connect 
 include '../connect.php'; 
 include '../globalfunctions.php'; 
+ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
+ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
 session_start();
 
 //retreive url var

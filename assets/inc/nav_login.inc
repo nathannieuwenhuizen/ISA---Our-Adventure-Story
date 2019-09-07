@@ -18,9 +18,9 @@
 		<a href="../about.php">
 			<li class="about">About</li>
 		</a>
-		<a href="../">
+		<!--<a href="../">
 			<li class="index">Stories</li>
-		</a>
+		</a>-->
 	</ul>
 
 	<h1> <a href="../">
