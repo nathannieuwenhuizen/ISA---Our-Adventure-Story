@@ -67,7 +67,7 @@ function getStoryList($conn, $filter = false, $basePath = "./") {
     $sql = "";
 
     if ($filter) {
-        $author = -1;
+        $author = 0;
         if (isset($_SESSION['userID'])) {
             $author = $_SESSION['userID'];
         }

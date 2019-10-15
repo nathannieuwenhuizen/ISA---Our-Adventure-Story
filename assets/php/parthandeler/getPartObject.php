@@ -17,10 +17,9 @@ if ($storyPartID < 1) {
     $storyPartID = 1;
 }
 
-
-
 //retreive database storypart
-$sql = "SELECT * FROM storyparts WHERE ID = $storyPartID LIMIT 1";
+// $sql = "SELECT * FROM storyparts WHERE ID = $storyPartID LIMIT 1";
+$sql = "SELECT * FROM storyparts LEFT JOIN users ON storyparts.authorID = users.id WHERE storyparts.ID = $storyPartID LIMIT 1";
 $result = mysqli_query($conn, $sql);
 
 
@@ -36,6 +35,7 @@ $parentID;
 $storyID; 
 $optionList = "";//defined in the next sql call
 $authorID;
+$authorName = 'anonymous';
 
 //if there is any result
 if (mysqli_num_rows($result) > 0) {
@@ -54,26 +54,14 @@ if (mysqli_num_rows($result) > 0) {
         $parentID = $row["parentID"];
         $storyID = $row["storyID"];
         $authorID = $row["authorID"];
+        if (isset($row["username"])) {
+            $authorName = $row["username"];
+        }
 
     }
 } else {
     //there are no results
     // echo "0 results";
-}
-// echo $option_text . "<br>";
-
-$authorName = 'anonymous';
-if ($authorID != -1) {
-    $sql = "SELECT username FROM users WHERE id = $authorID LIMIT 1";
-    $result = mysqli_query($conn, $sql);
-    
-    //if there is any result
-    if (mysqli_num_rows($result) > 0) {
-        // output data of each row
-        while($row = mysqli_fetch_assoc($result)) {
-            $authorName = $row["username"];
-        }
-    }
 }
 
 /*

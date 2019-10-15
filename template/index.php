@@ -53,7 +53,12 @@ require 'assets/php/patreon/patreonCalls.php';
 				if ($myStories != "") {
 					echo "<ul class='storyList'> " . $myStories. "</ul>";
 				} else {
-					echo '<a class="newStoryButton" href="newStory.php"> Start a new Story</a>';
+					if (isset($_SESSION['userID'])) {
+						echo '<a class="newStoryButton" href="newStory.php"> Start a new Story</a>';
+					} else {
+						echo '<a class="newStoryButton" href="./user"> Log in</a>';
+
+					}
 				}
 			} else {
 				CreateUnlockButton();

@@ -95,18 +95,8 @@ export default class App {
     }
 
     public checkCacheUpdate() {
-        window.applicationCache.addEventListener('updateready', () => {
-            window.applicationCache.update();
-            console.log("cache update!");
+        
 
-        });;
-
-        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-            console.log("cache update!");
-            window.applicationCache.update();
-        } else {
-            console.log("no cache update!");
-        }
     }
 
     public checkBranchCanvasAndApply() {

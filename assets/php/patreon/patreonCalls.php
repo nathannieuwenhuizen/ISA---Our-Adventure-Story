@@ -14,7 +14,7 @@ function CreateUnlockButton($basePath = "./") {
         $client_id = '-28JiJ67Xl_o-Am0bkLZnrN0NHxsh0WvBf5sDK9aXbecN46KNt5VMR_bFSJoVIdN';      // Replace with your data
         $client_secret = 'RzhFVDmt0dlbxSRuLhg2FKmGofsYwaydmpC0KtGwLeZ4h3fzKsQRSrVV_4-WDXIM';  // Replace with your data
         
-        $redirect_uri = "https://ourinteractivetgcaption.000webhostapp.com/user/success.php";
+        $redirect_uri = "http://ourinteractivetgcaption.hostingerapp.com/user/success.php";
 
     
         // Min cents is the amount in cents that you locked your content or feature with. Say, if a feature or content requires $5 to access in your site/app, 
@@ -31,12 +31,12 @@ function CreateUnlockButton($basePath = "./") {
     
         // Generate the unified flow url - this is different from oAuth login url. oAuth login url just processes oAuth login. 
         // Unified flow will do everything.
-        $href = 'https://www.patreon.com/oauth2/become-patron?response_type=code&min_cents=' . $min_cents . '&client_id=' . $client_id . $scope_parameters . '&redirect_uri=' . urlencode($redirect_uri);
+        $href = 'http://www.patreon.com/oauth2/become-patron?response_type=code&min_cents=' . $min_cents . '&client_id=' . $client_id . $scope_parameters . '&redirect_uri=' . urlencode($redirect_uri);
     
         // You can send an array of vars to Patreon and receive them back as they are. Ie, state vars to set the user state, app state or any other info which should be sent back and forth. 
         $state = array();
     
-        $state['final_redirect'] = 'http://localhost:3000/ISA---Our-Adventure-Story/builds/dev/'; //locked content
+        $state['final_redirect'] = 'http://ourinteractivetgcaption.hostingerapp.com/'; //locked content
     
         // Or, http://mydomain.com/premium-feature. Or any url at which a locked feature or content will be unlocked after the user is verified to become a qualifying member 
     
@@ -64,7 +64,7 @@ function CreateUnlockButton($basePath = "./") {
 
 // The below code snippet needs to be active wherever the the user is landing in $redirect_uri parameter above. It will grab the auth code from Patreon and get the tokens via the oAuth client
 function CheckGetVariable() {
-    $redirect_uri = "https://ourinteractivetgcaption.000webhostapp.com/user/success.php";
+    $redirect_uri = "http://ourinteractivetgcaption.hostingerapp.com/user/success.php";
 
     $client_id = '-28JiJ67Xl_o-Am0bkLZnrN0NHxsh0WvBf5sDK9aXbecN46KNt5VMR_bFSJoVIdN';      // Replace with your data
     $client_secret = 'RzhFVDmt0dlbxSRuLhg2FKmGofsYwaydmpC0KtGwLeZ4h3fzKsQRSrVV_4-WDXIM';  // Replace with your data
@@ -95,36 +95,35 @@ function CheckGetVariable() {
 function updateTokens ($access_token, $refresh_token) {
     require '../assets/php/connect.php';
 
-    $redirect_uri = "https://ourinteractivetgcaption.000webhostapp.com/user/success.php";
+    $redirect_uri = "http://ourinteractivetgcaption.hostingerapp.com/user/success.php";
     
     $client_id = '-28JiJ67Xl_o-Am0bkLZnrN0NHxsh0WvBf5sDK9aXbecN46KNt5VMR_bFSJoVIdN';      // Replace with your data
     $client_secret = 'RzhFVDmt0dlbxSRuLhg2FKmGofsYwaydmpC0KtGwLeZ4h3fzKsQRSrVV_4-WDXIM';  // Replace with your data
     
     if (isset($_SESSION['userID']) && isset($access_token) && isset($refresh_token)) {
 
-        $DuplicateTokens = false;
+        // $DuplicateTokens = false;
 
-        $sql = "SELECT `ID`, `access_token` FROM `users` WHERE NOT `access_token` = '' OR NOT `refresh_token` = ''";
+        // $sql = "SELECT `ID`, `access_token` FROM `users` WHERE NOT `access_token` = '' OR NOT `refresh_token` = ''";
 
-        // echo $sql;
-        $result = mysqli_query($conn, $sql);
-        if ($result && mysqli_num_rows($result) > 0) { 
-            // output data of each row
-            while($row = mysqli_fetch_assoc($result)) {
-                $email = getEmailFromToken($row['access_token']);
-                // echo "<br> refreshed token: ". $row['access_token'] ." and email: ".$email."<br>";
+        // $result = mysqli_query($conn, $sql);
+        // if ($result && mysqli_num_rows($result) > 0) { 
+        //     // output data of each row
+        //     while($row = mysqli_fetch_assoc($result)) {
+        //         $email = getEmailFromToken($row['access_token']);
+        //         // echo "<br> refreshed token: ". $row['access_token'] ." and email: ".$email."<br>";
 
-                // $data = json_encode((array)$tokens);
-                // print_r($data);
+        //         // $data = json_encode((array)$tokens);
+        //         // print_r($data);
     
-                if ($_SESSION['userID'] != $row['ID']) {
-                    $DuplicateTokens = true;
-                }
-            }
-        } else {
-            echo $conn->error;
-        }
-        if (!$DuplicateTokens) {
+        //         if ($_SESSION['userID'] != $row['ID']) {
+        //             $DuplicateTokens = true;
+        //         }
+        //     }
+        // } else {
+        //     echo $conn->error;
+        // }
+        if (true) {
             $sql = "UPDATE `users` SET `access_token`='$access_token', `refresh_token` = '$refresh_token' WHERE id = " . $_SESSION['userID'] .";";
             if ($conn->query($sql) === TRUE) {
                 // echo "<br>User update created successfully.<br>";
@@ -183,6 +182,7 @@ function StoryIsOpen($conn, $storyID) {
 
 function IsPLedger($amount, $token = "") {
 
+    return true;
     $access_token = $token;
     if ($access_token == "") {
         if (isset($_SESSION['access_token'])){

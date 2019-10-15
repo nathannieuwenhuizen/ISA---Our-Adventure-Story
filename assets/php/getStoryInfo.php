@@ -35,7 +35,9 @@ $description;
 $date;
 $startID;
 
-$sql = "SELECT * FROM storyinfo WHERE ID = $storyID LIMIT 1 ";
+$sql = "SELECT * FROM storyinfo LEFT JOIN users ON storyinfo.AuthorID = users.id WHERE storyinfo.ID = $storyID LIMIT 1 ";
+
+// $sql = "SELECT * FROM storyinfo WHERE ID = $storyID LIMIT 1 ";
 $result = mysqli_query($conn, $sql);
 
 
@@ -48,7 +50,7 @@ if (mysqli_num_rows($result) > 0) {
         $name = $row["Name"];
         $description = $row["Description"];
         $startID = $row["Introduction_ID"];
-        $storyAuthorName = getAuthorName($conn, $row['AuthorID']);
+        $storyAuthorName = $row['username'];
         $storyAuthorID = $row['AuthorID'];
         if ($storyAuthorName == "") {
             $storyAuthorName = "everyone";
@@ -103,7 +105,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 $sqlOffset = $offset * 10;
-$sql = "SELECT `ID`, `option_text`, `Date`, `image`, `authorID` FROM `storyparts` WHERE `storyID` = $storyID ORDER BY `storyparts`.`Date` DESC LIMIT 10 OFFSET $sqlOffset ";
+$sql = "SELECT storyparts.ID, storyparts.option_text, storyparts.Date, storyparts.image, storyparts.authorID, users.username FROM `storyparts` LEFT JOIN users ON storyparts.authorID = users.id WHERE `storyID` = $storyID ORDER BY `storyparts`.`Date` DESC LIMIT 10 OFFSET $sqlOffset ";
 $result = mysqli_query($conn, $sql);
 
 $addedPartsList = "";
@@ -127,7 +129,7 @@ if (mysqli_num_rows($result) > 0) {
 
         $writerName = '';
 
-        $authorID = getAuthorName($conn, $row["authorID"]);
+        $authorID = $row["username"];
         if ($authorID != "") {
             $writerName = " | written by " . $authorID;
         }
@@ -162,7 +164,7 @@ $topAuthorsTable = GetTop3Authors($conn, $storyID);
 function GetTop3Authors($conn, $storyID)
 {
 
-    $sql = "SELECT authorID, COUNT(*) FROM `storyparts` WHERE NOT authorID = -1 AND storyID = $storyID GROUP BY authorID ORDER BY COUNT(*) DESC LIMIT 10";
+    $sql = "SELECT authorID, COUNT(*), username FROM `storyparts` LEFT JOIN users ON storyparts.authorID = users.id  WHERE NOT authorID = -1 AND storyID = $storyID GROUP BY authorID ORDER BY COUNT(*) DESC LIMIT 10";
     // $sql = "SELECT * FROM `users`";
     $table = "";
     $result = mysqli_query($conn, $sql);
@@ -175,7 +177,7 @@ function GetTop3Authors($conn, $storyID)
         // echo "there is result";
         while($row = mysqli_fetch_assoc($result)) {
             $amount++;
-            $authorTableValues .= "<tr><td>" . getAuthorName($conn, $row["authorID"]) . "</td><td>";
+            $authorTableValues .= "<tr><td>" .  $row["username"]. "</td><td>";
         }
     } else {
         // echo "there is no result";

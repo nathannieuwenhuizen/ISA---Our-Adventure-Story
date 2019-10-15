@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sign-Up/Login Form</title>
+  <title>Sign-Up/Login</title>
   <link rel="icon" type="image/png" href="../assets/img/logo.png" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 	<link id="stylesheet" rel="stylesheet" href="../assets/style.css" type="text/css" />
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	<ul>
 		<a href="../user/">
 			<li class="index">
-                Login
+                Login 
             </li>
 		</a>
 		<a href="../blog.php">
@@ -62,8 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 	<h1> <a href="../">
 			<img src="../assets/img/logo.png">
-			Our TG Captions</a></h1>
-	<h4>Interactive TG aptions created by the internet</h4>
+			Our Adventure Stories</a></h1>
+	<h4>Interactive Adventure Stories created by the internet</h4>
 </div>
   <div class="form">
       
