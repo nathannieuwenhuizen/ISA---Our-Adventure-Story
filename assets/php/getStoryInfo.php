@@ -8,24 +8,26 @@ require 'assets/php/patreon/src/OAuth.php';
 include 'assets/php/patreon/patreonCalls.php'; 
 
 //retreive url var
-$stringname = 'ID';
-$storyID = 1;
-if ( isset($_GET[$stringname]) || !empty($_GET[$stringname]))
-{
-    $storyID = $_GET[$stringname];
-}
-if ($storyID < 0) {
-    $storyID = 0;
-}
+$storyID =  GetURLVariable('ID', 0, -1);
 
-$stringname = 'offset';
-$offset = 1;
-if ( isset($_GET[$stringname]) || !empty($_GET[$stringname]))
-{
-    $offset = $_GET[$stringname];
-}
-if ($offset < 0) {
-    $offset = 0;
+$offset = GetURLVariable('offset',0, -1);
+
+$orderBy = GetURLVariable('orderby',0,  3);
+
+function GetURLVariable($urlVar,$minNumber, $maxNumber) {
+    $result = 0;
+    if ( isset($_GET[$urlVar]) || !empty($_GET[$urlVar]))
+    {
+        $result = $_GET[$urlVar];
+    }
+    if ($result > $maxNumber && $maxNumber != -1) {
+        $offresultset = $maxNumber;
+        }
+    if ($result < 0 && $minNumber != -1) {
+        $result = $minNumber;
+    }
+
+    return $result;
 }
 
 
@@ -34,8 +36,16 @@ $name;
 $description;
 $date;
 $startID;
+$amountOfLikes;
 
-$sql = "SELECT * FROM storyinfo LEFT JOIN users ON storyinfo.AuthorID = users.id WHERE storyinfo.ID = $storyID LIMIT 1 ";
+
+$sql = "SELECT storyinfo.Name, storyinfo.Description, storyinfo.Introduction_ID, storyinfo.AuthorID,  storyinfo.Date,
+users.username, COUNT(likes.storyID) as likes  FROM storyinfo 
+LEFT JOIN users ON storyinfo.AuthorID = users.id 
+LEFT JOIN likes ON likes.storyID = storyinfo.ID  
+WHERE storyinfo.ID = $storyID LIMIT 1";
+
+//$sql = "SELECT * FROM storyinfo LEFT JOIN users ON storyinfo.AuthorID = users.id WHERE storyinfo.ID = $storyID LIMIT 1 ";
 
 // $sql = "SELECT * FROM storyinfo WHERE ID = $storyID LIMIT 1 ";
 $result = mysqli_query($conn, $sql);
@@ -52,6 +62,7 @@ if (mysqli_num_rows($result) > 0) {
         $startID = $row["Introduction_ID"];
         $storyAuthorName = $row['username'];
         $storyAuthorID = $row['AuthorID'];
+        $amountOfLikes = $row['likes'];
         if ($storyAuthorName == "") {
             $storyAuthorName = "everyone";
         }
@@ -104,8 +115,30 @@ if (mysqli_num_rows($result) > 0) {
 
 }
 
+//list of parts
+switch ($orderBy) {
+    case 0:
+    $sqlOrderBy = "`storyparts`.`Date`DESC";
+    break;
+    case 1:
+    $sqlOrderBy = "`storyparts`.`Date` ASC";
+    break;
+    case 2:
+    $sqlOrderBy = "COUNT(likes.storypartID) DESC";
+    break;
+    default:
+    $sqlOrderBy = "`storyparts`.`Date`DESC";
+    break;
+}
 $sqlOffset = $offset * 10;
-$sql = "SELECT storyparts.ID, storyparts.option_text, storyparts.Date, storyparts.image, storyparts.authorID, users.username FROM `storyparts` LEFT JOIN users ON storyparts.authorID = users.id WHERE `storyID` = $storyID ORDER BY `storyparts`.`Date` DESC LIMIT 10 OFFSET $sqlOffset ";
+
+$sql = "SELECT  storyparts.ID, storyparts.option_text, storyparts.Date, storyparts.image, storyparts.authorID, users.username , COUNT(likes.storypartID) as likes 
+FROM `storyparts`
+LEFT JOIN likes ON likes.storypartID = storyparts.ID  
+LEFT JOIN users ON storyparts.authorID = users.id  WHERE storyparts.storyID = $storyID 
+GROUP BY storyparts.ID ORDER BY $sqlOrderBy LIMIT 10 OFFSET $sqlOffset" ;
+
+//$sql = "SELECT storyparts.ID, storyparts.option_text, storyparts.Date, storyparts.image, storyparts.authorID, users.username FROM `storyparts` LEFT JOIN users ON storyparts.authorID = users.id WHERE `storyID` = $storyID ORDER BY `storyparts`.`Date` DESC LIMIT 10 OFFSET $sqlOffset ";
 $result = mysqli_query($conn, $sql);
 
 $addedPartsList = "";
@@ -118,29 +151,41 @@ if (mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_assoc($result)) {
         $addeddate = GetIntervalRounded($row["Date"]);
         //echo "id: " . $row["ID"]. "<br>";
+
+        //check if start
         $option =  $row["option_text"];
         if ($option == "") {
             $option = "-start of the story-";
         }
+
+        //image check
         $image = "";
         if ($row["image"] != "") {
             $image .= "<section></section>";
         }
 
+        //author check
         $writerName = '';
-
         $authorID = $row["username"];
         if ($authorID != "") {
             $writerName = " | written by " . $authorID;
         }
         
-        $addedPartsList .= "<a href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate . " ago" .$writerName." </p> ". $image." </li> </a>";
+        //likes check
+        $likesText = '';
+        $likes = $row["likes"];
+        if ($likes != 0) {
+            $likesText = " | " . $likes . " likes";
+        }
+        
+        //adds the html text to json object
+        $addedPartsList .= "<a href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate . " ago" .$writerName . $likesText . " </p> ". $image." </li> </a>";
 
     }
-
+ 
 } else {
     //there are no results
-    $addedPartsList = "0 results";
+    $addedPartsList = "no results";
 }
 
 function getAuthorName($conn, $id) {

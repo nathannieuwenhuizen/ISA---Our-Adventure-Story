@@ -46,6 +46,7 @@ export default class App {
         this.editButtonEvents();
         this.checkStoryView();
 
+        this.checkOrderBySelection();
         if (document.getElementsByClassName('createWrapper')[0]) {
             this.storyPartHandeler = new StoryPartsHandeler();
         }        
@@ -110,6 +111,15 @@ export default class App {
             this.LoginEvents();
         }
 
+    }
+
+    public checkOrderBySelection() {
+        if (document.getElementById('orderByOptions')) {
+            let orderByObject = document.getElementById('orderByOptions');
+            orderByObject.onchange = () => {
+                window.location.href = './storyinfo.php?ID=' + STORYID+'&offset=0&orderby=' + orderByObject.value;
+            };
+        }
     }
 
     public editButtonEvents() {

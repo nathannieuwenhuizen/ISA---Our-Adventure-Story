@@ -92,7 +92,7 @@ export default class StoryPartsHandeler {
             this.importTree.Show();
     
             if (this.importTree != null && this.createParentObject != null) {
-                this.importTree.SetMergePoint(Number(this.createParentObject.data.ID));
+                this.importTree.SetMergePoint(this.createParentObject.data.ID);
             }
     
             this.importButton.scrollIntoView({
@@ -457,7 +457,7 @@ class StoryPartObject {
             '<i>' + (data.authorName != "anonymous" ? "written by <b>" + data.authorName : "") + '</b></i></div>' +
             '</div>' +
             '<div class="storyTitle">' +
-            '<a href="storyinfo.php?ID=' + STORYID + '&offset=0">' +
+            '<a href="storyinfo.php?ID=' + STORYID + '&offset=0&orderby=0">' +
             '<h2>' + TITLE + '</h2>' +
             '</a>' +
             '<a href="branchtree.php?ID=' + STORYID + '">Branch tree</a>' +

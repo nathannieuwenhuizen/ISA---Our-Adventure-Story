@@ -154,7 +154,7 @@ export default class ImportTree {
         }
     }
 
-    public SetMergePoint(_id: Number) {
+    public SetMergePoint(_id: string) {
         this.mergeFromPoint = this.points[this.GetPointIndexWithID(_id)];
         this.ScrollToMerge();
     }

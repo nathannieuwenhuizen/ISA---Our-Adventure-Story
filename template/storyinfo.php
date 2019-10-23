@@ -17,9 +17,12 @@ session_start();
 </HEAD>
 
 <BODY>
-    <?php 	include 'assets/php/getStoryInfo.php'; ?>
+    <?php 	include 'assets/php/getStoryInfo.php';
+     ?>
+
     <script>
         NAME = "<?php echo $name ?>";
+		STORYID = "<?php echo $storyID ?>"
 	</script>
 
 
@@ -54,6 +57,7 @@ session_start();
 
                     <p><b> Amount of story parts </b> <?php echo $amountOfParts; ?></p>
                     <p><b> Amount of endings </b> <?php echo $amountOfEnds; ?></p>
+                    <p><b> Amount of likes </b> <?php echo $amountOfLikes; ?></p>
                     <p><b> Deepest layer into the story </b> <?php echo $deepestLayer; ?></p>
                     <br>
                     <a class="startReadingButton" href="story.php?storypart=<?php echo $startID; ?>"> Start from beginning
@@ -82,8 +86,15 @@ session_start();
             <div class="half">
                 <div class="infoPanel added-parts">
 
-                    <h3> Recently added parts </h3>
-                    <hr>
+                    <h3> All parts </h3>
+                    <p> Order by
+                    <select id="orderByOptions">
+    <option value="0" <?php if ($orderBy == 0) { echo "selected='selected'";} ?>><a href="./">Most recent</a></option>
+    <option value="1" <?php if ($orderBy == 1) { echo "selected='selected'";} ?>>Oldest</option>
+    <option value="2" <?php if ($orderBy == 2) { echo "selected='selected'";} ?>>Likes</option>
+</select>
+                    </p>
+                    
 
                     <div class="navigationButtons">
 
@@ -93,13 +104,13 @@ session_start();
     } else {
         echo "something";
     }
-?> href="?ID=<?php echo $storyID; ?>&offset=0"> << </a> 
+?> href="?ID=<?php echo $storyID; ?>&offset=0&orderby=<?php echo $orderBy; ?>"> << </a> 
 <a class=<?php 
 if ($offset <= 0) {
     echo "hide";
 } else {
     echo "something";
-}?> href="?ID=<?php echo $storyID; ?>&offset=<?php echo $offset - 1; ?>"> < </a> 
+}?> href="?ID=<?php echo $storyID; ?>&offset=<?php echo $offset - 1; ?>&orderby=<?php echo $orderBy; ?>"> < </a> 
     <b> <?php echo $offset + 1  ?> / <?php echo Round($amountOfParts / 10); ?> </b>
     
     <a class=<?php 
@@ -107,13 +118,13 @@ if ($offset + 1 >= Round( $amountOfParts / 10)) {
     echo "hide";
 } else {
     echo "something";
-}?> href="?ID=<?php echo $storyID; ?>&offset=<?php echo $offset + 1; ?>"> ></a>
+}?> href="?ID=<?php echo $storyID; ?>&offset=<?php echo $offset + 1; ?>&orderby=<?php echo $orderBy; ?>"> ></a>
     <a class=<?php 
 if ($offset + 1 >= Round( $amountOfParts / 10)) {
     echo "hide";
 } else {
     echo "something";
-}?> href="?ID=<?php echo $storyID; ?>&offset=<?php echo Round($amountOfParts / 10) - 1; ?>"> >></a>
+}?> href="?ID=<?php echo $storyID; ?>&offset=<?php echo Round($amountOfParts / 10) - 1; ?>&orderby=<?php echo $orderBy; ?>"> >></a>
 </div>
                     <ul class="storyList">
                         <?php echo  $addedPartsList;?>

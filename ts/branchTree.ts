@@ -109,7 +109,7 @@ export default class BranchTree {
         }
 
         if (this.hoverPoint != null) {
-            //this.chosenoptionButton.setAttribute('href', './story.php?storypart=' + this.hoverPoint.data.id);
+            this.chosenoptionButton.setAttribute('href', './story.php?storypart=' + this.hoverPoint.data.id);
             this.focusPoint = this.hoverPoint;
 
             $('#startReadingButton').css('display', 'block');
@@ -117,7 +117,7 @@ export default class BranchTree {
             $('#startReadingButton').css('left', (this.focusPoint.pos.x -30) + 'px');
             $('#startReadingButton').css('width', '150px');
             
-            // window.location.href = './story.php?storypart=' + this.hoverPoint.data.id;
+             //window.location.href = './story.php?storypart=' + this.hoverPoint.data.id;
         } else {
             this.focusPoint = null;
             $('#startReadingButton').css('display', 'none');
