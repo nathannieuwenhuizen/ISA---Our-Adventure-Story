@@ -1,9 +1,10 @@
 import 'jquery';
-import App from './app';
 import Vector from './vector';
 import BranchPoint from './branchPoint';
 import IBranch from './branchPoint';
-export default class BranchTree {
+import DottedLine from './dottedLine';
+import App from './app';
+export default class ImportTree {
 
     //canvases and contextes
     public canvas: HTMLCanvasElement;
@@ -11,6 +12,7 @@ export default class BranchTree {
     public Hcanvas: HTMLCanvasElement;
     private Hctx: CanvasRenderingContext2D;
 
+    public canvasHolder: any;
     //sizes
     private width: number = 4000;
     private xPos: number = 0;
@@ -22,7 +24,10 @@ export default class BranchTree {
     private amountOfLayers: number;
 
     private hoverPoint: BranchPoint;
+    private hoverDottedLine: DottedLine = new DottedLine();
+
     private focusPoint: BranchPoint;
+    private focusDottedLine: DottedLine = new DottedLine();
 
     //colors
     private circleColor: string = "#F6F976";
@@ -32,29 +37,37 @@ export default class BranchTree {
 
     private hoversOverButton: boolean = false;
 
+    //merge points
+    private pointID: number;
+    private mergeFromPoint: BranchPoint;
+
     //other dom elements
     private chosenoptionButton: Element;
 
     //the start function goes here
-    constructor(_canvas: any, _hcanvas: any) {
+    constructor(_canvas: any, _hcanvas: any, _mergeID: number = 0) {
         this.canvas = _canvas;
         this.Hcanvas = _hcanvas;
-        console.log("id",  App.getQueryVariable("ID"));
-        this.pointData = this.getSQLData("assets/php/getBranch.php?ID=" + App.getQueryVariable("ID"));
+        this.pointID = App.getQueryVariable('storypart');
+        
+        this.pointData = this.getSQLData("assets/php/getBranch.php?ID=" + _mergeID);
 
         //amount of layers is defined
         this.amountOfLayers = this.pointData[this.pointData.length-1].layer;
 
 
         this.chosenoptionButton = document.getElementById('startReadingButton');
+        //this.chosenoptionButton.setAttribute('href', '');
+        this.chosenoptionButton.addEventListener('click', () => {
+            this.MergePart();
+        });
 
         this.width = Math.max(500,  this.amountOfLayers * 150);
         this.canvas.width = this.Hcanvas.width = this.width; 
         this.canvas.height = this.Hcanvas.height = this.width;
         
-        let size: Vector = new Vector(document.getElementById('canvasHolder').clientWidth,document.getElementById('canvasHolder').clientHeight);
-        $('#canvasHolder').scrollTop(this.width / 2 - size.y / 2);
-        $('#canvasHolder').scrollLeft(this.width / 2 - size.x / 2);
+        this.canvasHolder = document.getElementById('canvasHolder');
+        this.Show();
         
         this.xPos = this.width / 2;
         this.yPos = this.width / 2;
@@ -63,21 +76,23 @@ export default class BranchTree {
 
         this.CreateBranchTree();
         this.Draw();
-    
+
+
+        this.ScrollToMerge();
+
         $("#startReadingButton").mouseover(() =>{
-            console.log("mouse over button")
             this.hoversOverButton = true;
             
         });
           
         $("#startReadingButton").mouseleave(() => {
-            console.log("mouse leave button");
             this.hoversOverButton = false;
         });
           
         // this.canvas.onmousemove = event => this.MouseMove(event);
         addEventListener("mousemove", event => this.MouseMove(event));
         addEventListener("click", () => this.MouseClick());
+        requestAnimationFrame(this.DrawHoverCanvas.bind(this));
     }
     private MouseMove(e: MouseEvent) {
         if (this.hoversOverButton) {
@@ -90,8 +105,10 @@ export default class BranchTree {
         // this.ctx.fillRect(x, y, 16, 16);
         this.points.forEach(point => {
             if ( Math.abs(point.pos.x - x) < point.radius && Math.abs(point.pos.y - y) < point.radius){
-                hoverPoint = point;
-                return;
+                if (this.AbleToMerge(point)) {
+                    hoverPoint = point;
+                    return;
+                }
             }
         });
         this.hoverPoint = hoverPoint;
@@ -100,7 +117,7 @@ export default class BranchTree {
         } else {
             document.getElementById("canvasHolder").style.cursor = "default";
         }
-        this.DrawHoveredPoint();
+        //this.DrawHoverCanvas();
         // this.Draw();
     }
     private MouseClick() {
@@ -109,24 +126,91 @@ export default class BranchTree {
         }
 
         if (this.hoverPoint != null) {
-            //this.chosenoptionButton.setAttribute('href', './story.php?storypart=' + this.hoverPoint.data.id);
-            this.focusPoint = this.hoverPoint;
-
-            $('#startReadingButton').css('display', 'block');
-            $('#startReadingButton').css('top', (this.focusPoint.pos.y - 60) + 'px');
-            $('#startReadingButton').css('left', (this.focusPoint.pos.x -30) + 'px');
-            $('#startReadingButton').css('width', '150px');
+            if (this.AbleToMerge(this.hoverPoint)) {
+                this.focusPoint = this.hoverPoint;
+    
+                $('#startReadingButton').css('display', 'block');
+                $('#startReadingButton').css('top', (this.focusPoint.pos.y - 60) + 'px');
+                $('#startReadingButton').css('left', (this.focusPoint.pos.x -30) + 'px');
+                $('#startReadingButton').css('width', '150px');
+            }
             
-            // window.location.href = './story.php?storypart=' + this.hoverPoint.data.id;
         } else {
             this.focusPoint = null;
             $('#startReadingButton').css('display', 'none');
 
         }
-        this.DrawHoveredPoint();
+        // this.DrawHoverCanvas();
+
+    }
+    private MergePart() {
+        console.log(this.mergeFromPoint, this.focusPoint);
+        console.log("./assets/php/mergePart.php?story="+STORYID+"&mergeFrom="+this.mergeFromPoint.data.id+"&mergeTo="+this.focusPoint.data.id)
+
+        let result = App.setSQLData("./assets/php/mergePart.php?story="+STORYID+"&mergeFrom="+this.mergeFromPoint.data.id+"&mergeTo="+this.focusPoint.data.id);
+        console.log(result); 
+        if (result.result != 0) {
+            window.location.href = './story.php?storypart=' + this.mergeFromPoint.data.id;
+        }
+    }
+
+    public SetMergePoint(_id: Number) {
+        this.mergeFromPoint = this.points[this.GetPointIndexWithID(_id)];
+        this.ScrollToMerge();
+    }
+
+    public Show() {
+        this.canvasHolder.style.display = "block";
+    }
+    
+    public Hide() {
+        this.canvasHolder.style.display = "none";
 
     }
 
+    private ScrollToMerge() {
+        let size: Vector = new Vector(document.getElementById('canvasHolder').clientWidth,document.getElementById('canvasHolder').clientHeight);
+        $('#canvasHolder').scrollTop(this.mergeFromPoint.pos.y - size.y / 2);
+        $('#canvasHolder').scrollLeft(this.mergeFromPoint.pos.x - size.x / 2);
+    }
+    
+    //returns whether a point can be merged, prevents loops and bugs on front-end
+    private AbleToMerge(point: BranchPoint) : Boolean {
+        //check if its self.
+        if (this.mergeFromPoint == point) {
+            //this.chosenoptionButton.innerHTML ="It is self";
+
+            return false;
+        }
+
+        //check parent/prevents direct loop
+        let cPoint: BranchPoint = this.points[this.mergeFromPoint.parentPoint];
+        while (cPoint.parentPoint != -1) {
+            if (cPoint == point) {
+                //this.chosenoptionButton.innerHTML ="It is parent";
+                return false;
+            }
+            cPoint = this.points[cPoint.parentPoint];
+        }
+
+        //check origin
+        if (point.parentPoint == -1) {
+            return false;
+        }
+
+        //check direct children 
+        for (let i = 0; i < this.mergeFromPoint.childPoints.length; i++) {
+
+            if (this.mergeFromPoint.childPoints[i] == this.points.indexOf(point)) {
+                //this.chosenoptionButton.innerHTML ="It is direct child";
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    //retrieves the sql data as a JSON object
     private getSQLData(url: string): any {
         let request: XMLHttpRequest = new XMLHttpRequest();
         request.open('GET', url, false);
@@ -151,7 +235,7 @@ export default class BranchTree {
         return data;
     }
 
-    
+    //creates the branchtree with all the points in it.
     public CreateBranchTree() {
         //all point objects are declared
         this.points = [];
@@ -166,6 +250,9 @@ export default class BranchTree {
         this.points.forEach(point => {
             let angle = Math.PI * 2 / this.GetAmountOfCreatainLayer(point.data.layer);
             cAngle += angle;
+            if (Number(point.data.id) == this.pointID){
+                this.mergeFromPoint = point;
+            }
 
             point.pos.x = this.xPos + (this.width * .5) * ((point.data.layer - 1) / this.amountOfLayers) * Math.cos(cAngle) + cOffset * Math.cos(cAngle);
             point.pos.y = this.yPos + (this.width * .5) * ((point.data.layer - 1) / this.amountOfLayers) * Math.sin(cAngle) + cOffset * Math.sin(cAngle);
@@ -178,12 +265,15 @@ export default class BranchTree {
         });
     }
 
-    public DrawHoveredPoint() {
+    public DrawHoverCanvas() {
         this.Hctx.clearRect(0,0, this.width, this.width);
         this.DrawPointWithLines(this.hoverPoint);
-        this.DrawPointWithLines(this.focusPoint, 2);
+        this.DrawPointWithLines(this.focusPoint, 2, this.focusDottedLine);
+        this.DrawPointWithLines(this.mergeFromPoint,2);
+        requestAnimationFrame(this.DrawHoverCanvas.bind(this));
+
     }
-    public DrawPointWithLines(point: BranchPoint, lw: number = 1) {
+    public DrawPointWithLines(point: BranchPoint, lw: number = 1, dottedLine: DottedLine = null) {
         if (point != null) { 
     
             this.Hctx.fillStyle = this.circleColor;
@@ -191,7 +281,7 @@ export default class BranchTree {
 
             let cPoint = point;
             this.Hctx.lineWidth = lw; 
-            this.DrawLineTOParent(cPoint, this.Hctx);
+            this.DrawLineToParent(cPoint, this.Hctx);
             cPoint.radius = 10;
             cPoint.Draw(this.Hctx, true);
             this.Hctx.fillStyle = this.circleColor;
@@ -199,19 +289,25 @@ export default class BranchTree {
 
             for (let i = 0; i < cPoint.childPoints.length; i++) {
                 this.Hctx.lineWidth = lw; 
-                this.DrawLineTOParent(this.points[cPoint.childPoints[i]], this.Hctx);
+                this.DrawLineToParent(this.points[cPoint.childPoints[i]], this.Hctx);
             }
             while (cPoint.parentPoint != -1) {
                 this.Hctx.lineWidth = lw; 
-                this.DrawLineTOParent(cPoint, this.Hctx);
+                this.DrawLineToParent(cPoint, this.Hctx);
                 cPoint = this.points[cPoint.parentPoint];
                 cPoint.radius = 8;
                 cPoint.Draw(this.Hctx);
                 for (let i = 0; i < cPoint.childPoints.length; i++) {
                     this.Hctx.lineWidth = lw; 
-                    this.DrawLineTOParent(this.points[cPoint.childPoints[i]], this.Hctx);
+                    this.DrawLineToParent(this.points[cPoint.childPoints[i]], this.Hctx);
                 }
                 // cPoint.radius = 4;
+            }
+
+            //dottedline
+            if (dottedLine != null) {
+                dottedLine.SetPos(this.mergeFromPoint.pos, point.pos);
+                dottedLine.Draw(this.Hctx);
             }
 
             cPoint = point;
@@ -222,8 +318,8 @@ export default class BranchTree {
             // this.DrawLineTOParent(point, this.Hctx);
         }
     }
-    
 
+    //draws the whole tree, can cause lag.
     public Draw() {
         this.ctx.fillStyle = this.bg1;
         this.ctx.rect(0,0, this.width, this.width);
@@ -233,7 +329,7 @@ export default class BranchTree {
         // this.DrawLayerCircle();
         this.points.forEach(point => {
             // if (point.parentPoint != 1) { return;}
-            this.DrawLineTOParent(point, this.ctx);
+            this.DrawLineToParent(point, this.ctx);
         });
 
         this.ctx.strokeStyle = this.circleColor;
@@ -246,7 +342,7 @@ export default class BranchTree {
         });
     }
 
-    public DrawLineTOParent(point: BranchPoint, ctx: CanvasRenderingContext2D) {
+    public DrawLineToParent(point: BranchPoint, ctx: CanvasRenderingContext2D) {
         //lines are drawn between the points
         ctx.beginPath();
         ctx.moveTo(point.pos.x, point.pos.y);
@@ -285,6 +381,8 @@ export default class BranchTree {
         ctx.stroke();
         
     }
+
+    //TODO: remove this. Not needed
     public DrawLayerCircle() {
 
         for (let i = 0; i < this.amountOfLayers; i++) {
@@ -297,6 +395,7 @@ export default class BranchTree {
             // this.ctx.fill();
         }
     }
+
     public GetAmountOfCreatainLayer(layer: number): number {
         let result = 0;
         this.points.forEach(point => {
@@ -306,6 +405,8 @@ export default class BranchTree {
         });
         return result;
     }
+
+    //gets the index of array from the point that has the sql id i
     public GetPointIndexWithID(id: string): number {
         for (let i = 0; i < this.points.length; i++) {
             if (this.points[i].data.id == id) {
@@ -315,6 +416,7 @@ export default class BranchTree {
         return -1;
     }
 
+    //returns the indexes of the points array that are child to the point that has the ID in paremeter.
     public GetPointsIndexWithParentID(id: string): number[] {
         let result: number[] = [];
         for (let i: number = 0; i < this.points.length; i++) {

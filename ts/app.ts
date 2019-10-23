@@ -5,6 +5,8 @@ import {
 import BranchTree from './branchTree';
 import PatreonObject from './patreon';
 import StoryPartsHandeler from './storyPartsHandeler';
+import ImportTree from './importTree';
+let PARTID: any;
 export default class App {
 
     //test
@@ -46,7 +48,7 @@ export default class App {
 
         if (document.getElementsByClassName('createWrapper')[0]) {
             this.storyPartHandeler = new StoryPartsHandeler();
-        }
+        }        
     }
 
     public LoginEvents() {
@@ -95,7 +97,6 @@ export default class App {
     }
 
     public checkCacheUpdate() {
-        
 
     }
 
@@ -146,22 +147,19 @@ export default class App {
 
             this.starIcon.addEventListener('click', () => { 
                 if (!LOGGEDIN) { return; }
-                // console.log("your are logged in");
-                // console.log(this.starIcon.getAttribute("src"));
                 let result;
                 if (this.starIcon.getAttribute("src") == "assets/img/star_empty.png") {
                     console.log("./assets/php/like/addLike.php?id=" + PARTID +  "&story=" + STORYID);
-                    result = this.setSQLData("./assets/php/like/addLike.php?id=" + PARTID +  "&story=" + STORYID);
+                    result = App.setSQLData("./assets/php/like/addLike.php?id=" + PARTID +  "&story=" + STORYID);
                     if (result.result != 0) {
                         this.starIcon.setAttribute("src", "assets/img/star_full.png");
                     }
                 } else {
-                    result = this.setSQLData("./assets/php/like/removeLike.php?id=" + PARTID);
+                    result = App.setSQLData("./assets/php/like/removeLike.php?id=" + PARTID);
                     if (result.result != 0) {
                         this.starIcon.setAttribute("src", "assets/img/star_empty.png");
                     }
                 }
-                console.log(result.message);
                 this.starMessage.innerHTML = result.message;
 
             });
@@ -255,7 +253,7 @@ export default class App {
         return -1;
     }
 
-    private setSQLData(url: string): any {
+    public static setSQLData(url: string): any {
         let request: XMLHttpRequest = new XMLHttpRequest();
         request.open('GET', url, false);
         let data: any;

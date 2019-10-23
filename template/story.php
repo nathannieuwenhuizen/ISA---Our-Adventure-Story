@@ -93,7 +93,7 @@ include 'assets/php/getPart.php'; ?>
 				</ul>
 				<div class="createnewPartButton <?php if ($status == 0) { echo "hide"; } ?>">Create your own Path! </div>
 				<?php if ($status == 0) { echo "This story is closed, you can't add any more parts."; } ?>
-			</div>
+			</div> 
 
 		</div>
 		<!-- Create a new part field -->
@@ -114,8 +114,18 @@ include 'assets/php/getPart.php'; ?>
 		<input type="hidden" name="storyID" value="<?php echo $storyID; ?>">
 		<input type="hidden" name="parentOptions" value="<?php echo $optionIDs; ?>">
         <input type="hidden" name="parentEnd" value="<?php echo $end; ?>">
-        <input type="hidden" name="form_token" value="<?php echo $form_token; ?>" />
+        <input type="hidden" name="form_token" value="<?php echo $form_token; ?>" /> 
 		<p><input type="submit" name="submit" class="createButton" value="Create!"/></p>
+
+		<p class="createButton importButton" id ="<?php echo $storyID; ?>" style="width: 100px;"> Import </p>
+		<div id = "canvasHolder" style="display: none;">
+		<div id="loading"> <p> loading... </p> </div>
+		<canvas id="importCanvas" width="4000" height= "1000">  no canvas supported</canvas>
+		<canvas id="HbranchCanvas" width="4000" height= "1000">  no canvas supported</canvas>
+		<a id="startReadingButton"> Merge </a> 
+
+</div>
+
 	</form>
 
 <!-- Update part field -->

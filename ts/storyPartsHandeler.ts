@@ -1,4 +1,5 @@
 import 'jquery';
+import ImportTree from './importTree';
 // import App from './app';
 export default class StoryPartsHandeler {
 
@@ -8,9 +9,16 @@ export default class StoryPartsHandeler {
     public static instance: StoryPartsHandeler;
 
     public editForm: Element;
-    public hideEditButton: Element;
+    public hideEditButton: Element; 
     public createForm: Element;
     public createParentObject: StoryPartObject;
+
+    //import part
+    public importCanvas: Element;
+    public importTree: ImportTree;
+    private importButton: Element;
+
+
 
     //the start function goes here
     constructor() {
@@ -27,10 +35,13 @@ export default class StoryPartsHandeler {
             this.showEditPart(null, false);
         });
 
+        this.importButton = document.getElementsByClassName("importButton")[0];
+        this.importButton.addEventListener('click', this.toggleImportMenu.bind(this));
+
         this.wrapper = document.getElementsByClassName('wrapper')[0];
         this.parentDOMObject = document.createElement('div');
-        this.wrapper.appendChild(this.parentDOMObject); 
-        
+        this.wrapper.appendChild(this.parentDOMObject);
+
         this.loadPart(PARTID);
 
         // this.loadHistory(PARTID);
@@ -59,14 +70,48 @@ export default class StoryPartsHandeler {
         return data;
     }
 
+    public toggleImportMenu() {
+        console.log("import toggle: ", this.importButton.innerHTML);
+
+        if (this.importButton.innerHTML == "hide") {
+            //hide menu
+            this.importButton.innerHTML = "import";
+            if (this.importTree != null) {
+                this.importTree.Hide();
+                console.log("it is now hiding");
+            }
+        } else {
+            console.log("it is opening");
+
+            //open menu
+            this.importButton.innerHTML = "hide";
+            if (this.importTree == null) {
+                this.importCanvas = document.getElementById("importCanvas");
+                this.importTree = new ImportTree(document.getElementById("importCanvas"), document.getElementById("HbranchCanvas"), Number(this.importButton.id));
+            }
+            this.importTree.Show();
+    
+            if (this.importTree != null && this.createParentObject != null) {
+                this.importTree.SetMergePoint(Number(this.createParentObject.data.ID));
+            }
+    
+            this.importButton.scrollIntoView({
+                behavior: 'smooth'
+            });
+
+            console.log("it is opening");
+    
+        }
+    }
+
     public removeLoadButton() {
-        for( let i = 1; i < this.storyParts.length; i++) {
+        for (let i = 1; i < this.storyParts.length; i++) {
             this.storyParts[i].goToBeginningButton.setAttribute('style', 'display: none;')
         }
     }
 
     //returns a new part based on the id.
-    public loadPart(id:number, parentObject: StoryPartObject = null, scrollTo: boolean = true, before: boolean = false): StoryPartObject {
+    public loadPart(id: number, parentObject: StoryPartObject = null, scrollTo: boolean = true, before: boolean = false): StoryPartObject {
         let newPart: StoryPartObject;
         newPart = new StoryPartObject(this.getSQLData("assets/php/parthandeler/getPartObject.php?storypart=" + id), this.parentDOMObject, before);
 
@@ -99,37 +144,37 @@ export default class StoryPartsHandeler {
                 console.log("hide", part.domObject);
                 part.domObject.classList.remove('hide');
             }
-        }); 
+        });
     }
 
     //shows the edit part and hides the current editable part.
-    public showEditPart(data: StoryPartObject, show: boolean) {
+    public showEditPart(partObject: StoryPartObject, show: boolean) {
 
         if (!show) {
             this.editForm.classList.add('hide');
             this.showHiddenPart();
         } else {
             this.showHiddenPart();
-            data.domObject.classList.add('hide');
+            partObject.domObject.classList.add('hide');
 
-            let element: any = this.insertAfter(this.editForm, data.domObject); 
+            let element: any = this.insertAfter(this.editForm, partObject.domObject);
             element.classList.remove('hide');
 
-            element.getElementsByTagName("input")[0].value = data.data.option_text;
-            if (data.data.start == 1) {
+            element.getElementsByTagName("input")[0].value = partObject.data.option_text;
+            if (partObject.data.start == 1) {
                 element.getElementsByTagName("input")[0].required = "";
             } else {
                 console.log("toggle must be required");
                 element.getElementsByTagName("input")[0].required = "required";
             }
 
-            element.getElementsByTagName("input")[1].checked = data.data.end == 1;
-            element.getElementsByTagName("input")[2].value = data.data.question_text;
-            element.getElementsByTagName("input")[3].value = data.data.image;
-            element.getElementsByTagName("input")[4].value = data.data.ID;
-            element.getElementsByTagName("input")[5].value = STORYID;
-            element.getElementsByTagName("input")[6].value = data.data.optionList;
-            element.getElementsByTagName('textarea')[0].innerHTML = data.data.content_text;
+            element.getElementsByTagName("input")[1].checked = partObject.data.end == 1;
+            element.getElementsByTagName("input")[2].value = partObject.data.question_text;
+            element.getElementsByTagName("input")[3].value = partObject.data.image;
+            element.getElementsByTagName("input")[4].value = partObject.data.ID;
+            element.getElementsByTagName("input")[5].value = STORYID; // every part has the same story ofcourse!
+            element.getElementsByTagName("input")[6].value = partObject.data.optionList;
+            element.getElementsByTagName('textarea')[0].innerHTML = partObject.data.content_text;
 
         }
     }
@@ -137,7 +182,6 @@ export default class StoryPartsHandeler {
     //toggles the visvility of the create form.
     public toggleCfreateForm(object: StoryPartObject, show: boolean) {
         console.log("show", show);
-
         if (show) {
             this.createForm = this.insertAfter(this.createForm, object.domObject);
             this.createForm.classList.add('show');
@@ -147,6 +191,9 @@ export default class StoryPartsHandeler {
             if (this.createParentObject != null) {
                 this.createParentObject.showNewPartButton.innerHTML = 'Create your own path!';
             }
+
+            this.importButton.innerHTML = "hide";
+            this.toggleImportMenu();
 
             this.createParentObject = object;
             this.createParentObject.showNewPartButton.innerHTML = 'hide';
@@ -189,19 +236,19 @@ export default class StoryPartsHandeler {
         currentPart.goToBeginningButton.innerHTML = "loading...";
         console.log("start load history");
 
-        setTimeout(()=> {
+        setTimeout(() => {
             let currentDataStart = 0;
-            let parentID = this.storyParts[0].data.parentID; 
+            let parentID = this.storyParts[0].data.parentID;
             let chosenID = this.storyParts[0].data.ID;
-            let index = 0; 
+            let index = 0;
             while (currentDataStart == 0 && index < 5) {
                 index++;
-    
+
                 let part: StoryPartObject = this.loadPart(parentID, null, false, true);
                 part.selectButtonForPart(chosenID);
                 console.log(parentID);
                 currentDataStart = part.data.start;
-                parentID =  part.data.parentID;
+                parentID = part.data.parentID;
                 chosenID = part.data.ID;
             }
             this.scrollTo(currentPart.domObject, 1);
@@ -214,7 +261,7 @@ export default class StoryPartsHandeler {
         this.storyParts[index].removePart();
         this.storyParts.splice(index, 1);
     }
-    
+
 }
 
 
@@ -225,14 +272,14 @@ export default class StoryPartsHandeler {
 
 class StoryPartObject {
     //global objects and data
-    public domObject: Element; 
+    public domObject: Element;
     public data: IPart;
 
     //induvidual story part elements
     public consequenceImage: Element;
     public starIcon: Element;
     public starMessage: Element;
-    public optionButtons: HTMLCollectionOf<HTMLAnchorElement>;
+    public optionButtons: HTMLCollectionOf < HTMLAnchorElement > ;
     public contentPanel: Element;
     public editButton: Element;
     public showNewPartButton: Element;
@@ -248,8 +295,8 @@ class StoryPartObject {
         this.data.option_text = this.filterSpecialChars(this.data.option_text);
         this.data.question_text = this.filterSpecialChars(this.data.question_text);
 
-        this.data.content_text = this.data.content_text.split('ABC').join( '<br>');
-        
+        this.data.content_text = this.data.content_text.split('ABC').join('<br>');
+
         this.constructPart(_data, parentElement, before);
 
         this.consequenceImage = this.domObject.getElementsByClassName('consequenceImage')[0];
@@ -275,14 +322,14 @@ class StoryPartObject {
                 //this prevents href to reload the page but still show which pages you have visited.
                 let href: string = button.getAttribute('href');
                 button.removeAttribute('href');
-                requestAnimationFrame(() =>{
+                requestAnimationFrame(() => {
                     button.setAttribute('href', href);
                 });
 
                 if (this.selectedButton != null) {
                     this.selectedButton.classList.remove('selected');
                 }
-                this.selectedButton = button; 
+                this.selectedButton = button;
                 this.selectedButton.classList.add('selected');
 
 
@@ -298,13 +345,19 @@ class StoryPartObject {
         }
 
         // console.log(this.optionButtons.length);
-        this.starIcon.addEventListener('click', () => { this.starButtonCLick() });
-        this.editButton.addEventListener('click', () => { StoryPartsHandeler.instance.showEditPart(this, true); });
-        this.goToBeginningButton.addEventListener('click', () => { StoryPartsHandeler.instance.loadHistory(this); });
+        this.starIcon.addEventListener('click', () => {
+            this.starButtonCLick()
+        });
+        this.editButton.addEventListener('click', () => {
+            StoryPartsHandeler.instance.showEditPart(this, true);
+        });
+        this.goToBeginningButton.addEventListener('click', () => {
+            StoryPartsHandeler.instance.loadHistory(this);
+        });
         this.showNewPartButton.addEventListener('click', () => {
-            console.log("click");
+            console.log("click", StoryPartsHandeler.instance);
             StoryPartsHandeler.instance.toggleCfreateForm(this, this.showNewPartButton.innerHTML != 'hide');
-            
+
         });
 
 
@@ -323,9 +376,11 @@ class StoryPartObject {
     }
 
     //changes the url header and title.
-    private processAjaxData(pageTitle: any, urlPath: string){ 
+    private processAjaxData(pageTitle: any, urlPath: string) {
         document.title = pageTitle;
-        window.history.pushState({"pageTitle":pageTitle},"", urlPath);
+        window.history.pushState({
+            "pageTitle": pageTitle
+        }, "", urlPath);
     }
 
     //checks wether the image url is valid by loading it in an image object.
@@ -346,12 +401,14 @@ class StoryPartObject {
 
     //fires when the star button is clicked, adds/removes the part to the likes table.
     public starButtonCLick() {
-        if (!LOGGEDIN) { return; }
+        if (!LOGGEDIN) {
+            return;
+        }
         // console.log("your are logged in");
         // console.log(this.starIcon.getAttribute("src"));
         let result;
         if (this.starIcon.getAttribute("src") == "assets/img/star_empty.png") {
-            result = this.setSQLData("./assets/php/like/addLike.php?id=" + this.data.ID +  "&story=" + STORYID);
+            result = this.setSQLData("./assets/php/like/addLike.php?id=" + this.data.ID + "&story=" + STORYID);
             if (result != null) {
                 this.starIcon.setAttribute("src", "assets/img/star_full.png");
             }
@@ -395,60 +452,60 @@ class StoryPartObject {
             data.canEdit = 1;
         }
         let content = '<div class="storywrapper">' +
-        '<div class="storyHeader"> ' +
-            '<div class="layerNumber">page '+data.layer+' <div class="author">' +
-                    '<i>'+ (data.authorName != "anonymous" ? "written by <b>" + data.authorName : "") + '</b></i></div>' +
+            '<div class="storyHeader"> ' +
+            '<div class="layerNumber">page ' + data.layer + ' <div class="author">' +
+            '<i>' + (data.authorName != "anonymous" ? "written by <b>" + data.authorName : "") + '</b></i></div>' +
             '</div>' +
             '<div class="storyTitle">' +
-                '<a href="storyinfo.php?ID='+STORYID+'&offset=0">' +
-                    '<h2>'+TITLE+'</h2>' +
-                '</a>' +
-                '<a href="branchtree.php?ID='+STORYID+'">Branch tree</a>' +
-           ' </div>' +
-      '  </div>' +
-       ' <img class="editButton '+ ((data.canEdit == 1 && STATUS == 1) ? "" : "hide") + '" src="assets/img/edit_icon.png">' +
-     '   <div id="starElement">' +
-      '      <p>'+data.amountOfLikes+'</p>' +
-        '    <img class="starIcon" src= '+(data.like == 1 ? "assets/img/star_full.png" : "assets/img/star_empty.png")+'>' +
-          '  <div id="starMessage" class ="starMessage">'+ data.likeMessage+'</div>' +
-       ' </div>' +
-      '  <div class="chooseMessage">' +
-         '  <a style="display:'+(( data.start == 1) ? "none" : "inline-block")+ '" ' +
-         '     class="goToBeginning">Load previous 5 parts</a>' +
-       '     '+ (data.start == 0 ? "<i><p> You chose...<br> <b>"+data.option_text+" </b>  </p></i>" : "<i><h3>This is the start of the story</h3></i>") +
-      '  </div>' +
-      '  <hr>' +
-       ' <div class="duoWrapper">' +
-      '      <div class="leftside">' +
-      '          <img class="consequenceImage show" src="'+data.image+'" />' +
-  '          </div>' +
-  '          <div class="rightside">' +
-  '              <div class="contentPanel">' + data.content_text +
-  '              </div>' +
-  '          </div>' +
-  '      </div>' +
-  '      <hr>' +
-  '      <i>' +
-  '          <div class="questionPanel">' +
-  '              '+(data.end == 1 ? '<br><h3>this is the end of this branch</h3><br><br>' :'<p>'+data.question_text+'</p>') +
-  '          </div>' +
-  '      </i>' +
-  '      <div class="optionsList">' +
-  '          <ul>' + data.optionList +
-  '          </ul>' +
-  '          <div class="createnewPartButton '+(STATUS == 0 || data.end == 1? "hide" : "")+'">Create your own Path! </div>' + (STATUS == 0 ? "<div class='closeMessage'>This story is closed, you can't add/edit any parts :(</div>" : "")+
-  '      </div>' +
-  '  </div>';
+            '<a href="storyinfo.php?ID=' + STORYID + '&offset=0">' +
+            '<h2>' + TITLE + '</h2>' +
+            '</a>' +
+            '<a href="branchtree.php?ID=' + STORYID + '">Branch tree</a>' +
+            ' </div>' +
+            '  </div>' +
+            ' <img class="editButton ' + ((data.canEdit == 1 && STATUS == 1) ? "" : "hide") + '" src="assets/img/edit_icon.png">' +
+            '   <div id="starElement">' +
+            '      <p>' + data.amountOfLikes + '</p>' +
+            '    <img class="starIcon" src= ' + (data.like == 1 ? "assets/img/star_full.png" : "assets/img/star_empty.png") + '>' +
+            '  <div id="starMessage" class ="starMessage">' + data.likeMessage + '</div>' +
+            ' </div>' +
+            '  <div class="chooseMessage">' +
+            '  <a style="display:' + ((data.start == 1) ? "none" : "inline-block") + '" ' +
+            '     class="goToBeginning">Load previous 5 parts</a>' +
+            '     ' + (data.start == 0 ? "<i><p> You chose...<br> <b>" + data.option_text + " </b>  </p></i>" : "<i><h3>This is the start of the story</h3></i>") +
+            '  </div>' +
+            '  <hr>' +
+            ' <div class="duoWrapper">' +
+            '      <div class="leftside">' +
+            '          <img class="consequenceImage show" src="' + data.image + '" />' +
+            '          </div>' +
+            '          <div class="rightside">' +
+            '              <div class="contentPanel">' + data.content_text +
+            '              </div>' +
+            '          </div>' +
+            '      </div>' +
+            '      <hr>' +
+            '      <i>' +
+            '          <div class="questionPanel">' +
+            '              ' + (data.end == 1 ? '<br><h3>this is the end of this branch</h3><br><br>' : '<p>' + data.question_text + '</p>') +
+            '          </div>' +
+            '      </i>' +
+            '      <div class="optionsList">' +
+            '          <ul>' + data.optionList +
+            '          </ul>' +
+            '          <div class="createnewPartButton ' + (STATUS == 0 || data.end == 1 ? "hide" : "") + '">Create your own path!</div>' + (STATUS == 0 ? "<div class='closeMessage'>This story is closed, you can't add/edit any parts :(</div>" : "") +
+            '      </div>' +
+            '  </div>';
 
-  this.domObject =   document.createElement('div');
-  this.domObject.innerHTML = content;
+        this.domObject = document.createElement('div');
+        this.domObject.innerHTML = content;
 
-  if (before) {
-      el.insertBefore(this.domObject, el.childNodes[0]);
-} else {
-    el.appendChild(this.domObject);
-}
-//   console.log("do you work?");
+        if (before) {
+            el.insertBefore(this.domObject, el.childNodes[0]);
+        } else {
+            el.appendChild(this.domObject);
+        }
+        //   console.log("do you work?");
 
     }
 
@@ -469,7 +526,9 @@ class StoryPartObject {
 
     //destroy function 
     public removePart() {
-        this.starIcon.removeEventListener('click', () => { this.starButtonCLick() });
+        this.starIcon.removeEventListener('click', () => {
+            this.starButtonCLick()
+        });
         // document.removeChild(this.domObject);
 
         this.domObject.remove();
@@ -499,5 +558,4 @@ export interface IPart {
     amountOfLikes: string;
     storyTitle: string;
     startID: number;
-  }
-  
+}

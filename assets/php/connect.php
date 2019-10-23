@@ -11,14 +11,15 @@ $dbname = "ouradventurestorydb";
 // $password = "5PpbZUQgNX";
 // $dbname = "NBEf0XGIkY";
 
-$websiteURL = "https://ourinteractivetgcaption.000webhostapp.com/";
-$servername = "remotemysql.com";
-$username = "mTTXio0REs";
-$password = "43Kz77Z0Ql";
-$dbname = "mTTXio0REs";
+// $websiteURL = "https://ourinteractivetgcaption.000webhostapp.com/";
+// $servername = "remotemysql.com";
+// $username = "mTTXio0REs";
+// $password = "43Kz77Z0Ql";
+// $dbname = "mTTXio0REs";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
+
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

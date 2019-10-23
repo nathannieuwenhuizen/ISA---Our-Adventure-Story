@@ -69,6 +69,18 @@ Loads in the option ids and text associated with this story part.
  */
 //create an array from the options.
 $optionArray = explode(",", $optionIDs);
+
+//additional merges if there are any
+$sql = "SELECT toPart FROM `merges` WHERE fromPart = $storyPartID";
+$result = mysqli_query($conn, $sql);
+if (mysqli_num_rows($result) > 0) {
+    while($row = mysqli_fetch_assoc($result)) {
+        $new = array_push($optionArray, $row["toPart"]);
+        //echo $row["toPart"];
+    }
+}
+
+
 $sql = "SELECT option_text, ID FROM storyparts WHERE ID IN ( ";
 for ($i = 0; $i < sizeof($optionArray); $i++) {
     $sql .= "'". (int)$optionArray[$i] . "'";
