@@ -21,7 +21,18 @@ session_start(); ?>
 		<div class="blogWrapper">
         <h2>Blog</h2>
         <hr>
+		<h3> Merging paths together (prototype) | 23-10-2019</h3>
+        <p> After a long hiatus due to my studies, I finally went to working again!</p>
+        <p> This time I made the possebility to merging parts of a story together by importing the option from another 'unrelated' part. This way multiple options can lead to the same result. But why do I want to create meaningless choices? Well, 
+		this way the story becomes more coherent and the chances that one simple small option doesnt create a whole universe of chapters that needs to be filled. </p>
+		<p> You can import a part by going to the create form, and instead of filling out the form, click on the 'IMPORT' button. </p>
+		<img src="https://i.gyazo.com/004e9455d1702656b343f03a3a3b9ffe.png" width="80%" alt="Image from Gyazo"/>
+		<p>There you will be headed to the circular branch tree. There you click on the point you want to merge and then click on the green merge button.</p> <p> On big stories, this may become a little bit troublesome, my excuses.</p>
+		<img src="https://i.gyazo.com/83b68e24474ac22e45f442993e89fa1e.gif" width="80%" alt="Image from Gyazo"/>
 
+        <p> </p>
+        <p>Other updates, I've also created an order function to view parts from most recent to the most popular parts based on the ammount of likes! </p>
+		<hr>
 
 		<h3> Reading flow | 24-8-2019</h3>
         <p>I've now made the story parts link to each other in one single webpage to make it more easier for the reader to understand where they are in the story. This was done by using AJAX (Asynchronous JavaScript And XML) and it makes reading so much faster and better!
@@ -33,6 +44,7 @@ I changed the existing 'go back' and 'go to beginning' buttons into just one 'lo
 <p>There are more changes, but I forgot what those were XD</p>
 <p>As for the next update, I'll create you users the ability to START a story yourselves! But that will sadly be an exclusive feature for patreon syupporters in the future. Don't worry, it wont be expensive! But I want a small income to maintain the website a little bit. I hope you understand.</p>
 		<hr>
+
 		<h3> Account system | 11-8-2019</h3>
         <p> I've made a user account system so that you and I can get to know eachother! It has an e-mail verify system and even an password forgot functionality. :D</p>
         <p> There is also a profile page on where you can only your username and a log-out button. But thats not all! I've also made a favourite list where you can see your favourite story parts! You can add a story part to your favourites by clicking on the star right on the page of the corresponding part. </p>
@@ -43,6 +55,7 @@ I changed the existing 'go back' and 'go to beginning' buttons into just one 'lo
 <li> Small style tweaks in the info page.</li>
 <img src="https://i.gyazo.com/7a7593759d0226a6a949fb7d7b4662b5.png" width="80%" alt="Image from Gyazo"/>
 		<hr>
+
 <h3> Circular branch tree | 16-7-2019</h3>
         <p> I've made a circular branch tree where you can navigate towards the selected parts. That way it will be easier to navigate complicated narative branches like the one down under. You can see the tree branch by clicking the 'tree branch' button in the story information page and in every story page.
 </p>
@@ -53,6 +66,7 @@ I changed the existing 'go back' and 'go to beginning' buttons into just one 'lo
 <br>
 		<img src="https://i.gyazo.com/a05f50bc0d88496887df5571811281f6.gif" alt="Image from Gyazo"/>
 		<hr>
+
         <h3> Second itteration | 7-6-2019</h3>
         <p>
         The website has been updated. It is therfore the end of my induvidual study for tihs project. I'll probably work on it later in July when I have summer vacation. <br>
