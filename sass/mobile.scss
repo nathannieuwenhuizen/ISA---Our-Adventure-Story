@@ -1,0 +1,137 @@
+.form {
+    margin-left: 5%;
+     max-width: 100%;
+     input {
+         font-size: 50pt;
+     }
+}
+
+body {
+    overflow-x: hidden;
+    //margin: 0;
+    padding: 0;
+
+    font-size: 30pt;
+    // color: red;
+    .wrapper {
+        width: 100vw;
+        .navigation {
+            text-align: center;
+            align-content: center;
+            h1, h4 {
+                width: 100%;
+            }
+            h4 {
+                margin-bottom: 250px;
+            }
+            ul {
+                align-content: center;
+                text-align: center;
+                float:both;
+                width: 100vw;
+                top: 200pt;
+                left: 0%;
+                right: 0%;
+                a {
+                    display: inline-block;
+                    font-size: 40pt;
+                }
+            }
+        }
+        .aboutwrapper, .storywrapper, .blogWrapper {
+            margin-left: 2.5%;
+            // margin-right: 2%;
+            // border: 4px solid blue;
+            position: relative;
+            width: 100%;
+        }
+        .storywrapper {
+
+            h2 {
+                text-align: center;
+            }
+            .half {
+                text-align: center;
+                width: 99%;
+                .infoPanel {
+                    p {
+                        #orderByOptions {
+                            font-size: 30pt;
+                            border: 5px solid grey;
+                        }
+                    }
+                    table {
+                        width: 100%;
+                    }
+                }
+            }
+
+            .duoWrapper {
+                .leftside{
+                    width: 100%;
+                }
+                .rightside { 
+                    text-align: center;
+                    width: 100%;
+                }
+            }
+            .layerNumber {
+                font-size: 40px;
+            }
+            #starElement {
+                position: absolute;
+                display: block;
+                right: 10%;
+                margin-top: -120px;
+                .starIcon {
+                    margin-top: 20px;
+                    margin-left: 40px;
+                    width: 70px;
+                }
+                p {
+                    width: 300px;
+                    font-size: 30pt;
+                    right: 90px;
+                }
+                #starMessage {
+                    width: 300px;
+                    right: 0;
+                    margin-right: 0;
+                }
+            }   
+            
+            
+            .optionsList {
+                ul {
+                    width: 100%;
+                    li {
+                        white-space: nowrap;
+
+                        a{
+                            padding: 20px;
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+        .createWrapper, .updateWrapper {
+            width: 110%;
+            
+            input,textarea {
+                font-size: 35pt;
+            }
+    
+            .createButton {
+                font-size: 30pt;
+            }
+        }
+    }
+
+    footer {
+        margin: 0;
+        width: 100%;
+    }
+}

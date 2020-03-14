@@ -138,3 +138,6 @@ body {
         font-size: 10px;
       }
 }
+@media screen and (orientation: portrait) and (max-width:1020px){
+    @import 'mobile';
+}

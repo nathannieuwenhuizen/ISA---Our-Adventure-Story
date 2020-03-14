@@ -182,7 +182,7 @@ function StoryIsOpen($conn, $storyID) {
 
 function IsPLedger($amount, $token = "") {
 
-    return true;
+    //return true;
     $access_token = $token;
     if ($access_token == "") {
         if (isset($_SESSION['access_token'])){

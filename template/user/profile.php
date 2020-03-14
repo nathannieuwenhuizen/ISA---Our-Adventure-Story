@@ -114,8 +114,8 @@ if (mysqli_num_rows($result) > 0) {
   <title>Welcome <?= $_SESSION['username'] ?></title>
   <link rel="icon" type="image/png" href="../assets/img/logo.png" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-	<link id="stylesheet" rel="stylesheet" href="../assets/style.css" type="text/css" />
-	<script src="../app.js"></script>
+	<link id="stylesheet" rel="stylesheet" href="../assets/style.css?v=2" type="text/css" />
+	<script src="../app.js?v=2"></script>
   <link rel="icon" type="image/png" href="./assets/img/logo.png" />
 
 </head>

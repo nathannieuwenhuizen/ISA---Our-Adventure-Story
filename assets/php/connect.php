@@ -6,24 +6,25 @@ $password = "";
 $dbname = "ouradventurestorydb";
 
 
-$websiteURL = "https://studenthome.hku.nl/~nathan.nieuwenhuizen/assets/ouradventurestory/";
-$servername = "remotemysql.com";
-$username = "JgXArYmH8J";
-$password = "SiSh3Qozx9";
-$dbname = "JgXArYmH8J";
-//port 3306
-
 // $websiteURL = "https://studenthome.hku.nl/~nathan.nieuwenhuizen/assets/ouradventurestory/";
 // $servername = "remotemysql.com";
-// $username = "NBEf0XGIkY";
-// $password = "5PpbZUQgNX";
-// $dbname = "NBEf0XGIkY";
+// $username = "1iA2pkiSy7";
+// $password = "l9ICitDlpw";
+// $dbname = "1iA2pkiSy7";
+//port 3306
 
-// $websiteURL = "https://ourinteractivetgcaption.000webhostapp.com/";
+
+// $websiteURL = "http://ourinteractivetgcaption.hostingerapp.com/";
 // $servername = "remotemysql.com";
 // $username = "mTTXio0REs";
 // $password = "43Kz77Z0Ql";
 // $dbname = "mTTXio0REs";
+
+// $websiteURL = "http://ourinteractivetgcaption.hostingerapp.com/";
+// $servername = "localhost";
+// $username = "u127270417_devnathan";
+// $password = "schorpioen";
+// $dbname = "u127270417_ourstoryDB";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

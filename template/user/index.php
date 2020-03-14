@@ -23,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   <title>Sign-Up/Login</title>
   <link rel="icon" type="image/png" href="../assets/img/logo.png" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-	<link id="stylesheet" rel="stylesheet" href="../assets/style.css" type="text/css" />
-	<script src="../app.js"></script>
+	<link id="stylesheet" rel="stylesheet" href="../assets/style.css?v=2" type="text/css" />
+	<script src="../app.js?v=2"></script>
 </head>
 
 <?php
@@ -55,9 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		<a href="../about.php">
 			<li class="about">About</li>
 		</a>
-		<a href="../">
-			<li class="index">Stories</li>
-		</a>
+
 	</ul>
 
 	<h1> <a href="../">

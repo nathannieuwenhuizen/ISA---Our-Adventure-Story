@@ -2,5 +2,5 @@
 
 $websiteName = "TG Captions";
 
-$websiteName = "Adventure Stories";
+//$websiteName = "Adventure Stories";
 ?>

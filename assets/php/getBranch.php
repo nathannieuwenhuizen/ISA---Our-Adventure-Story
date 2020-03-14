@@ -16,7 +16,7 @@ if ($storyID < 0) {
 
 //branch object
 $object = "";
-$sql = "SELECT ID, option_text, layer, parentID, `end`  FROM `storyparts` WHERE storyID = $storyID ORDER BY layer, parentID LIMIT 10000";
+$sql = "SELECT ID, option_text, layer, parentID, `end`  FROM `storyparts` WHERE storyID = $storyID ORDER BY layer, parentID LIMIT 1000";
 $result = mysqli_query($conn, $sql);
 
 $counter = 0;
