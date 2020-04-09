@@ -36,7 +36,7 @@ $storyID;
 $optionList = "";//defined in the next sql call
 $authorID;
 $authorName = 'anonymous';
-
+$authorImage ="";
 //if there is any result
 if (mysqli_num_rows($result) > 0) {
 
@@ -56,6 +56,7 @@ if (mysqli_num_rows($result) > 0) {
         $authorID = $row["authorID"];
         if (isset($row["username"])) {
             $authorName = $row["username"];
+            $authorImage = $row["profileImage"];
         }
 
     }
@@ -193,7 +194,9 @@ $object .= '{
     "layer": "'. $layer.'",
     "image": "'. $image.'",
     "parentID": "'. $parentID.'",
+    "authorID": "'. $authorID.'",
     "authorName": "'. $authorName.'",
+    "authorImage": "'. $authorImage.'",
     "optionList": "'. $optionList.'",
     "canEdit": "'. $canEdit.'",
     "likeMessage": "'. $likeMessage.'",

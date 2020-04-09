@@ -7,11 +7,12 @@
     10% {border-color: rgba(0, 0, 50, 0);}
 
   }
-body {
+body { 
     background-color: rgb(226, 214, 164);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
 
     background: linear-gradient($bg_color, $bg_color2), url("./img/pattern.jpg");
+    // position: relative;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -69,7 +70,9 @@ body {
         margin: 0;
         @import 'nav.scss';
         
-        .aboutwrapper, .storywrapper, .blogWrapper {
+        .aboutwrapper, .storywrapper, .blogWrapper, .profileWrapper {
+            border-radius: 4px;
+
             box-shadow: 18px 10px 2px -6px rgba(0, 0, 0, 0.149);
 
             width: 80%;
@@ -80,7 +83,7 @@ body {
             background-size: 100% auto;
 
             border-bottom: 3px solid rgb(194, 194, 194);
-            border-top: 3px solid rgb(194, 194, 194);
+            border-top: 4px solid rgb(194, 194, 194);
             align-content: center;
         }
         .aboutwrapper {

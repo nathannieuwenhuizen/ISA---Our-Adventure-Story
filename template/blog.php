@@ -10,8 +10,8 @@ session_start(); ?>
 	<TITLE>Blog</TITLE>
 	<link rel="icon" type="image/png" href="./assets/img/logo.png" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-	<link id="stylesheet" rel="stylesheet" href="assets/style.css?v=2" type="text/css" />
-	<script src="app.js?v=2"></script>
+	<link id="stylesheet" rel="stylesheet" href="assets/style.css?v=3" type="text/css" />
+	<script src="app.js?v=3"></script>
 </HEAD>
 
 <BODY>
@@ -20,8 +20,20 @@ session_start(); ?>
 	<?php 	include 'assets/inc/nav.inc'; ?>
 		<div class="blogWrapper">
         <h2>Blog</h2>
-        <hr>
-		<h3> Merging paths together (prototype) | 23-10-2019</h3>
+		<hr>
+		<h3> Profile page update (profile images!) | 9-4-2020</h3>
+		<p>Sorry for the long hiatus, I was working on my studies so this was dropped. </p>
+		<p>I even thaught the website was dead until I saw a certain fan made a top list of the best paths you could take in the biggest story of the website.</p>
+			<p>It blew my head and I realised I should come back and change it now.</p>
+			<p>So I first worked on the profile pages, it only showed you your favourite parts, but not even the parts you have written yourselves! <br>
+			That needed to change so that is added so you don't need to add all your parts to the favourites in order to access them. </p>
+		<img src="https://i.gyazo.com/09319da4e38bf6e2dd5c6f5494f54666.png" alt="Image from Gyazo" width="80%"/>
+		<p> Another thing I added is that now can see other members their profile page nad what they have written more than just the part you just read. </p>
+		<p> And last but not least.... PROFILE PICTURES! Yay! Who doesn't want them? You hover on your icon and lcick on it and a form will pop up where you can fill in the url link to your profile picture. <br>
+		 Because of loading time the file on the url has a max limit of 3mb otherwise it won't be added to your profile. </p>
+		 <img src="https://i.gyazo.com/a3829895fb12d3e0911fb3fcb4eebc3d.png" alt="Image from Gyazo" width="336.8"/>
+		 <hr>
+		 <h3> Merging paths together (prototype) | 23-10-2019</h3>
         <p> After a long hiatus due to my studies, I finally went to working again!</p>
         <p> This time I made the possebility to merging parts of a story together by importing the option from another 'unrelated' part. This way multiple options can lead to the same result. But why do I want to create meaningless choices? Well, 
 		this way the story becomes more coherent and the chances that one simple small option doesnt create a whole universe of chapters that needs to be filled. </p>

@@ -219,10 +219,10 @@ function GetTop3Authors($conn, $storyID)
     $authorTableValues = "";
     if ($result && mysqli_num_rows($result) > 0) {
         // output data of each row
-        // echo "there is result";
+        // echo "there is result"; 
         while($row = mysqli_fetch_assoc($result)) {
             $amount++;
-            $authorTableValues .= "<tr><td>" .  $row["username"]. "</td><td>";
+            $authorTableValues .= "<tr><td><a href ='./user/profile.php?user=" . $row["authorID"] . "'> " .  $row["username"]. " </a></td><td>";
         }
     } else {
         // echo "there is no result";

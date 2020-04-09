@@ -113,6 +113,51 @@ function getStoryList($conn, $filter = false, $basePath = "./") {
     return $list;
 }
 
+function NaviagationButtons($val, $total, $link = "?offset=") {
+    echo '<div class="navigationButtons"> ';
+    if ($val > 0) {
+        echo '<a class="something"href="'.$link.'0"><< </a> ';
+        echo '<a class="something"href="' . $link . ($val - 1) . '">< </a>';
+    }
+    echo '<b>' . ($val + 1) . ' / ' . Max(1, Round($total / 10)) . '</b>';
+    if ($val + 1 < Round( $total / 10)) {
+        echo '<a class="something" href="'. $link . ($val + 1) . ' "> > </a>';
+        echo '<a class="something" href="'. $link .  (Round($total / 10) - 1) . '"> >> </a>';
+    }
+    echo '</div>';
+}
+function PartList($result) {
+
+    $addedPartsList = "";
+    //if there is any result
+
+    if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+        $now = new DateTime(); 
+
+        while($row = mysqli_fetch_assoc($result)) {
+            $addeddate = GetIntervalRounded($row["Date"]);
+            //echo "id: " . $row["ID"]. "<br>";
+            $option =  $row["option_text"];
+            if ($option == "") {
+                $option = "-start of the story-";
+            }
+            $image = "";
+            if ($row["image"] != "") {
+                $image .= "<section></section>";
+            }
+            $addedPartsList .= "<a href='../story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate . " ago </p> ". $image." </li> </a>";
+
+        }
+
+    } else {
+        //there are no results
+        $addedPartsList = "0 results";
+    }
+    return $addedPartsList;
+}
+
+
 function getUserName($conn, $id) {
     if ($id != -1) {
         $sql = "SELECT username FROM users WHERE id = $id LIMIT 1";

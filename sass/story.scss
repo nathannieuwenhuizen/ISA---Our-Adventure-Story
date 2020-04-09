@@ -178,7 +178,21 @@
         height: 50px;
         font-size: 20px;
         .author {
+            //line-height: -30px;
             font-size: 0.7em;
+            .profileImage {
+                margin-left: 10px;
+                vertical-align: middle;
+                display: inline-block;
+                border: 2px solid $headerButtonColor;
+                border-radius: 100%;
+                width: 2em;
+                height: 2em;
+                position: relative;
+                //margin-top: 30px;
+                background-size: 2em;
+                background-position: center;
+            }
         }
     }
     .storyTitle {

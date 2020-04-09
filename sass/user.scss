@@ -182,7 +182,7 @@
         transition: all 0.5s ease;
         -webkit-appearance: none;
       }
-      .button:hover, .button:focus {
+      .button:hover, .button:focus { 
         background: $bg_color2;
       }
       
@@ -196,140 +196,215 @@
         text-align: right;
       }
 
-      .added-parts {
-        text-decoration: none;
-        a {
-            li {
-                list-style-type: none;
-                position: relative;
-                margin: 20px 0;
-                outline: 2px solid black;
-                background: aliceblue;
-                transition: outline .2s;
+      
 
-                padding: 10px 5px;
-                b {
-                    font-size: 0.8em;
-                }
-                p {
-                    position: absolute;
-                    float: right;
-                    margin-top: 15px;
-                    font-size: 0.7em;
-                    right: 2px; 
-                    top: 10px;
+  }
+  
+  
+.profileWrapper {
 
-
-                }
-                section{
-                    position: absolute;
-                    // border: 1px solid black;
-                    width: 20px;
-                    height: 15px;
-                    right: 2px; 
-                    top: 2px;
-                    background: url("./img/image_icon.PNG");
-                    background-size: cover;
-
-                }
-            }
-            li:hover{
-                background: white;
-                outline: 5px solid black;
-            }
-            
-        }
-        
-
-        .navigationButtons {
-            margin-top: 20px;
-            text-align: center;
-            align-content: center;
-            a {
-                @extend %storyBorder-button;
-                margin: 0px 10px;
-                padding: 10px 10px;
-
-            }
-            b {
-                //position: absolute;
-                widows: 100%;
-                text-align: center;
-            }
-        }
- 
+  .profileImage {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 100%;
+    border : 5px solid $headerButtonColor;
+    .profileImageEdit {
+      width: 200px;
+      height: 200px;
+      align-content: center;;
+      text-align: center;
+      opacity: 0;
+      border-radius: 200px;
+      background-color: rgba($color: #000000, $alpha: 0.2);
+      transition: opacity .3s;
+      p {
+        user-select: none;
+        position: absolute;
+        font-size: 100px;
+        line-height: 0px;
+        text-align: center;
+        color: white;
+      }
+      cursor: pointer;
     }
-    .newStoryButton {
-      color: white;
+    .profileImageEdit:hover {
+      opacity: 1;
     }
-    .newStoryButton:hover {
-      color: white;
-    }
-    .myList {
-      align-content: center;
-      list-style-type: none;
-      padding: 0px;
-      width: 80%;
-      margin: 10px auto;
 
-      a {
-        border: 0px solid black;
-        text-decoration: none;
+  }
+  .button {
+    border: 0;
+    outline: none;
+    border-radius: 0;
+    padding: 15px 0;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    background: $headerButtonColor;
+    color: #ffffff;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-appearance: none;
+  }
+  .button:hover, .button:focus { 
+    background: $bg_color2;
+  }
+  
+  .button-block {
+    display: block;
+    width: 100%;
+  }
+
+  .half {
+    padding: 2.5%;
+
+    float: left; 
+    width: 45%;
+    min-height: 200px;
+  }
+  .added-parts {
+    text-decoration: none;
+    a {
         li {
+            list-style-type: none;
+            position: relative;
             margin: 20px 0;
             outline: 2px solid black;
             background: aliceblue;
             transition: outline .2s;
-            position: relative;
-            
-            vertical-align: middle;
-            align-content: center;
 
-            .name, .info{
-                float: left;
-                // outline: 1px solid red;
-                width: auto;
-                max-width: 50%;
+            padding: 10px 5px;
+            b {
+                font-size: 0.8em;
             }
-            .info{
+            p {
+                position: absolute;
                 float: right;
-            }
-            .name {
-                // height: 200px; 
-                b {
-                    font-size: 1.5em;
-                }
-            }
-            .info {
-                // width: 25%;
-                text-align: right;
-                border-width: 0;
-                background: none;
+                margin-top: 15px;
+                font-size: 0.7em;
+                right: 2px; 
+                top: 10px;
 
-                p {
-                  text-align: right;
 
-                    padding: 0;
-                    margin: 0;
-                    font-size: 0.7em;
-                }
             }
-            
+            section{
+                position: absolute;
+                // border: 1px solid black;
+                width: 20px;
+                height: 15px;
+                right: 2px; 
+                top: 2px;
+                background: url("./img/image_icon.PNG");
+                background-size: cover;
 
-            padding: 20px 5px;
+            }
         }
         li:hover{
             background: white;
             outline: 5px solid black;
         }
-        li:after {
-            clear: both;
-            content: "";
-            display: table;
+        
+    }
+    
+
+    .navigationButtons {
+        margin-top: 20px;
+        text-align: center;
+        align-content: center;
+        a {
+            @extend %storyBorder-button;
+            margin: 0px 10px;
+            padding: 10px 10px;
+
+        }
+        b {
+            //position: absolute;
+            widows: 100%;
+            text-align: center;
         }
     }
+
+}
+.myList {
+  align-content: center;
+  list-style-type: none;
+  padding: 0px;
+  width: 80%;
+  margin: 10px auto;
+
+  a {
+    border: 0px solid black;
+    text-decoration: none;
+    li {
+        margin: 20px 0;
+        outline: 2px solid black;
+        background: aliceblue;
+        transition: outline .2s;
+        position: relative;
+        
+        vertical-align: middle;
+        align-content: center;
+
+        .name, .info{
+            float: left;
+            // outline: 1px solid red;
+            width: auto;
+            max-width: 50%;
+        }
+        .info{
+            float: right;
+        }
+        .name {
+            // height: 200px; 
+            b {
+                font-size: 1.5em;
+            }
+        }
+        .info {
+            // width: 25%;
+            text-align: right;
+            border-width: 0;
+            background: none;
+
+            p {
+              text-align: right;
+
+                padding: 0;
+                margin: 0;
+                font-size: 0.7em;
+            }
+        }
+        
+
+        padding: 20px 5px;
+    }
+    li:hover{
+        background: white;
+        outline: 5px solid black;
+    }
+    li:after {
+        clear: both;
+        content: "";
+        display: table;
+    }
+}
+}
+a {
+  text-decoration: none;
+  color: $headerButtonColor;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
 }
 
-  }
-  
-  
+
+.newStoryButton {
+  color: white;
+}
+.newStoryButton:hover {
+  color: white;
+}
+
+}

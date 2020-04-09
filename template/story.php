@@ -13,8 +13,8 @@ include 'assets/php/getPart.php'; ?>
 <TITLE></TITLE>
 	<link rel="icon" type="image/png" href="./assets/img/logo.png" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-	<link id="stylesheet" rel="stylesheet" href="assets/style.css?v=2" type="text/css" />
-	<script src="app.js?2"></script>
+	<link id="stylesheet" rel="stylesheet" href="assets/style.css?v=3" type="text/css" />
+	<script src="app.js?v=3"></script>
 </HEAD>
 
 <BODY>
@@ -43,10 +43,10 @@ include 'assets/php/getPart.php'; ?>
 	<?php include 'assets/inc/nav.inc'; ?>
 		<div class="storywrapper" style="display: none;">
 			<div class="storyHeader">
-				<div class="layerNumber">page <?php echo $layer; ?> <div class="author"><i><?php if ( $authorName != "anonymous") { echo "written by ". $authorName; } ?></i></div></div>
+				<div class="layerNumber">page <?php echo $layer; ?> <div class="author"><i><?php if ( $authorName != "anonymous") { echo "written by... <a href='./user/profile.php?user='". $authorID . "'> " .$authorName . "</a>"; } ?></i></div></div>
 				<div class="storyTitle">
 					<a href="storyinfo.php?ID=<?php echo $storyID; ?>&offset=0"><h2> <?php echo $storyTitle; ?></h2> </a>
-					<a href="branchtree.php?ID=<?php echo $storyID; ?>">Branch tree</a>
+					<a href="branchtree.php?ID=<?php echo $storyID; ?>">Branch tree</a> 
 				</div>
 			</div>
 			<img class="editButton <?php if (!$canEdit) { echo "hide"; } ?>" src="assets/img/edit_icon.png">

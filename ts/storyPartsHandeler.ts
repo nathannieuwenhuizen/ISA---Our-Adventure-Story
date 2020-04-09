@@ -451,16 +451,20 @@ class StoryPartObject {
         if (ISCREATOR == 1) {
             data.canEdit = 1;
         }
-        let content = '<div class="storywrapper">' +
+        let profileIcon: String = 'background-image:url("./assets/img/profileIcon.jpg");';
+        if (data.authorImage != "" {
+            profileIcon = 'background-image:url("'+ data.authorImage+'");';
+        })
+        let content = '<div class="storywrapper">' + 
             '<div class="storyHeader"> ' +
             '<div class="layerNumber">page ' + data.layer + ' <div class="author">' +
-            '<i>' + (data.authorName != "anonymous" ? "written by <b>" + data.authorName : "") + '</b></i></div>' +
+            '<i>' + (data.authorName != "anonymous" ? "written by... <b><a href='./user/profile.php?user=" + data.authorID +"'> " + data.authorName + "<div class='profileImage' style= " + profileIcon + "> </div></a>" : "") + '</b></i></div>' +
             '</div>' +
             '<div class="storyTitle">' +
             '<a href="storyinfo.php?ID=' + STORYID + '&offset=0&orderby=0">' +
             '<h2>' + TITLE + '</h2>' +
             '</a>' +
-            '<a href="branchtree.php?ID=' + STORYID + '">Branch tree</a>' +
+            '<a href="branchtree.php?ID=' + STORYID + '">Branch tree</a>' + 
             ' </div>' +
             '  </div>' +
             ' <img class="editButton ' + ((data.canEdit == 1 && STATUS == 1) ? "" : "hide") + '" src="assets/img/edit_icon.png">' +
@@ -550,6 +554,8 @@ export interface IPart {
     image: string;
     parentID: number;
     storyID: string;
+    authorID: string;
+    authorImage: string;
     authorName: string;
     optionList: string;
     canEdit: number;

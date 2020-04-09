@@ -45,7 +45,8 @@ export default class App {
 
         this.editButtonEvents();
         this.checkStoryView();
-
+        this.checkProfilePageEdit();
+        
         this.checkOrderBySelection();
         if (document.getElementsByClassName('createWrapper')[0]) {
             this.storyPartHandeler = new StoryPartsHandeler();
@@ -135,6 +136,17 @@ export default class App {
                 this.ToggleEditForm(false)
             });
             this.editForm = document.getElementsByClassName('updateWrapper')[0];
+        }
+    }
+
+    public checkProfilePageEdit() {
+        if (document.getElementsByClassName("profileImageEdit")[0]) {
+            let editProfileImage: Element = document.getElementsByClassName("profileImageEdit")[0];
+
+            editProfileImage.addEventListener("click", () => {
+                let form: Element = document.getElementsByClassName("ProfileImageForm")[0];
+                form.classList.contains("hide") ? form.classList.remove("hide") : form.classList.add("hide");
+            });
         }
     }
 
