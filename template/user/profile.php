@@ -138,6 +138,8 @@ $favouriteList = PartList($result);
 $sql = "SELECT ID, option_text, Date, image, authorID FROM storyparts WHERE authorID = $selectedUser  ORDER BY Date DESC LIMIT 10 OFFSET $sqlWrittenOffset";
 $result = mysqli_query($conn, $sql);
 $writtenList = PartList($result);
+require '../assets/php/global.php';
+
 
 ?>
 <!DOCTYPE html>
@@ -148,8 +150,8 @@ $writtenList = PartList($result);
   <title> <?php echo $selectedUsername . " | Profile" ?></title>
   <link rel="icon" type="image/png" href="../assets/img/logo.png" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-	<link id="stylesheet" rel="stylesheet" href="../assets/style.css?v=3" type="text/css" />
-	<script src="../app.js?v=3"></script>
+	<link id="stylesheet" rel="stylesheet" href="../assets/style.css?v=<?php  echo $appVersion; ?>" type="text/css" />
+	<script src="../app.js?v=<?php  echo $appVersion; ?>"></script>
   <link rel="icon" type="image/png" href="./assets/img/logo.png" />
 
 </head>

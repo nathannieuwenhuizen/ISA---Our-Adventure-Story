@@ -2,7 +2,11 @@
 //set cookie lifetime for 100 days (60sec * 60mins * 24hours * 7days)
 ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
 ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
-session_start(); ?>
+session_start(); 
+
+require 'assets/php/global.php';
+
+?>
 
 <!DOCTYPE HTML>
 <HTML>
@@ -12,8 +16,8 @@ session_start(); ?>
 	<TITLE>Circular branch tree</TITLE>
 	<link rel="icon" type="image/png" href="./assets/img/logo.png" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-	<link id="stylesheet" rel="stylesheet" href="assets/style.css?v=3" type="text/css" />
-	<script src="app.js?v=3"></script>
+	<link id="stylesheet" rel="stylesheet" href="assets/style.css?v=<?php  echo $appVersion; ?>" type="text/css" />
+	<script src="app.js?v=<?php  echo $appVersion; ?>"></script>
 </HEAD>
 
 <BODY>

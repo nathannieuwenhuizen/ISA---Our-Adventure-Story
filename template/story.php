@@ -4,7 +4,9 @@ ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
 ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
 session_start();
 
-include 'assets/php/getPart.php'; ?>
+require 'assets/php/global.php';
+include 'assets/php/getPart.php'; 
+?>
 
 <!DOCTYPE HTML>
 <HTML>
@@ -13,8 +15,8 @@ include 'assets/php/getPart.php'; ?>
 <TITLE></TITLE>
 	<link rel="icon" type="image/png" href="./assets/img/logo.png" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-	<link id="stylesheet" rel="stylesheet" href="assets/style.css?v=3" type="text/css" />
-	<script src="app.js?v=3"></script>
+	<link id="stylesheet" rel="stylesheet" href="assets/style.css?v=<?php  echo $appVersion; ?>" type="text/css" />
+	<script src="app.js?v=<?php  echo $appVersion; ?>"></script>
 </HEAD>
 
 <BODY>
