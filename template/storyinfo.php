@@ -95,6 +95,7 @@ require 'assets/php/global.php';
     <option value="0" <?php if ($orderBy == 0) { echo "selected='selected'";} ?>><a href="./">Most recent</a></option>
     <option value="1" <?php if ($orderBy == 1) { echo "selected='selected'";} ?>>Oldest</option>
     <option value="2" <?php if ($orderBy == 2) { echo "selected='selected'";} ?>>Likes</option>
+    <option value="3" <?php if ($orderBy == 3) { echo "selected='selected'";} ?>>Random</option>
 </select>
                     </p>
                     

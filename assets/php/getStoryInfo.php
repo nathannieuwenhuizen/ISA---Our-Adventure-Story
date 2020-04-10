@@ -126,6 +126,9 @@ switch ($orderBy) {
     case 2:
     $sqlOrderBy = "COUNT(likes.storypartID) DESC";
     break;
+    case 3:
+    $sqlOrderBy = "RAND()";
+    break;
     default:
     $sqlOrderBy = "`storyparts`.`Date`DESC";
     break;
