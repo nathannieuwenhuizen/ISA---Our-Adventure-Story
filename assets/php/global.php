@@ -1,6 +1,6 @@
 <?php
 
-$appVersion = 4;
+$appVersion = 3.1;
 $websiteName = "TG Captions";
 
 //$websiteName = "Adventure Stories";

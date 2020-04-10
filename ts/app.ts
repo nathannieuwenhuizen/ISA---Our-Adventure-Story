@@ -39,8 +39,11 @@ export default class App {
     public storyPartHandeler: StoryPartsHandeler;
     //the start function goes here
     constructor() {
-        console.log('%c Our TG captions welcomes you! ', 'background: #57074e; color: #f0ccec');
+        var script =  document.currentScript || document.querySelector('script[src*="app.js"]')
+        let versionNumber = script.src.split("v=")[1];
+        console.log('%c Our TG captions version ' + versionNumber + ' ' , 'background: #57074e; color: #f0ccec');
 
+        
         this.checkBranchCanvasAndApply();
 
         this.editButtonEvents();
