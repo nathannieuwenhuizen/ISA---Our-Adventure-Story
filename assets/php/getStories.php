@@ -5,9 +5,9 @@ include 'assets/php/globalfunctions.php';
 
 //retreive database storypart
 $storyList = getStoryList($conn, false);
-
-
 $myStories = getStoryList($conn, true);
+
+$amountOfUsers = getUserAmount($conn);
 
 $conn->close();
 ?>

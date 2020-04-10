@@ -33,27 +33,11 @@ if ( isset($_GET[$stringname]) || !empty($_GET[$stringname]))
 $isOwnProfile = $selectedUser == $userID;
 
 
-$stringname = 'favoffset';
-$favOffset = 0;
-if ( isset($_GET[$stringname]) || !empty($_GET[$stringname]))
-{
-    $favOffset = $_GET[$stringname];
-}
-if ($favOffset < 0) {
-    $favOffset = 0;
-}
+$favOffset  = GetURLVariable('favoffset',0, -1);
 $sqlFavOffset = $favOffset * 10;
 
 
-$stringname = 'writtenoffset';
-$writtenOffset = 0;
-if ( isset($_GET[$stringname]) || !empty($_GET[$stringname]))
-{
-    $writtenOffset = $_GET[$stringname];
-}
-if ($writtenOffset < 0) {
-    $writtenOffset = 0;
-}
+$writtenOffset = GetURLVariable('writtenoffset',0, -1);
 $sqlWrittenOffset = $writtenOffset * 10;
 
 

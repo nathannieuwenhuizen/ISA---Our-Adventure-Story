@@ -10,9 +10,11 @@ require 'assets/php/global.php';
 <!DOCTYPE HTML>
 <HTML>
 
+<?php 	include 'assets/php/getStoryInfo.php';
+     ?>
 
 <HEAD>
-    <TITLE>Story information </TITLE>
+    <TITLE><?php echo $name; ?> | Story information </TITLE>
     <link rel="icon" type="image/png" href="./assets/img/logo.png" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link id="stylesheet" rel="stylesheet" href="assets/style.css?v=<?php  echo $appVersion; ?>" type="text/css" />
@@ -20,8 +22,6 @@ require 'assets/php/global.php';
 </HEAD>
 
 <BODY>
-    <?php 	include 'assets/php/getStoryInfo.php';
-     ?>
 
     <script>
         NAME = "<?php echo $name ?>";
@@ -91,7 +91,7 @@ require 'assets/php/global.php';
 
                     <h3> All parts </h3>
                     <input type="search" placeholder="Search keys" class="searchBar" value="<?php echo $search; ?>">
-                    <input type="submit" value="search" class="searchButton"/>
+                    <input type="button" value="search" class="searchButton"/>
                     <p> Order by
                     <select id="orderByOptions">
     <option value="0" <?php if ($orderBy == 0) { echo "selected='selected'";} ?>><a href="./">Most recent</a></option>

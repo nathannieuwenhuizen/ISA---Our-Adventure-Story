@@ -35,22 +35,6 @@ if ($search != "") {
     }
 }
 
-function GetURLVariable($urlVar,$minNumber, $maxNumber, $defaultVal = 0) {
-    $result = $defaultVal;
-    if ( isset($_GET[$urlVar]) || !empty($_GET[$urlVar]))
-    {
-        $result = $_GET[$urlVar];
-    }
-    if ($result > $maxNumber && $maxNumber != -1) {
-        $offresultset = $maxNumber;
-        }
-    if ($result < 0 && $minNumber != -1) {
-        $result = $minNumber;
-    }
-
-    return $result;
-}
-
 //general info
 $name;
 $description;
@@ -131,7 +115,6 @@ if ($search != "") {
 } else {
     $searchAmmount = $amountOfParts;
 }
-echo $searchAmmount;
 
 $amountOfEnds = 0;
 $sql = "SELECT COUNT(`end`) FROM `storyparts` WHERE `end` = 1 AND `storyID` = $storyID";

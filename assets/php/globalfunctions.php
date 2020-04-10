@@ -7,6 +7,22 @@ function removeAllTags($data) {
     return  strip_tags($data);
 }
 
+function GetURLVariable($urlVar,$minNumber, $maxNumber, $defaultVal = 0) {
+    $result = $defaultVal;
+    if ( isset($_GET[$urlVar]) || !empty($_GET[$urlVar]))
+    {
+        $result = $_GET[$urlVar];
+    }
+    if ($result > $maxNumber && $maxNumber != -1) {
+        $offresultset = $maxNumber;
+        }
+    if ($result < 0 && $minNumber != -1) {
+        $result = $minNumber;
+    }
+
+    return $result;
+}
+
 function GetIntervalRounded ($date) {
     $now = new DateTime();
     $current = new DateTime($date);
@@ -157,6 +173,17 @@ function PartList($result) {
     return $addedPartsList;
 }
 
+function getUserAmount($conn)
+{
+    $sql = "SELECT count(id) FROM users";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            return $row["count(id)"];
+        }
+    }
+    return 0;
+}
 
 function getUserName($conn, $id) {
     if ($id != -1) {

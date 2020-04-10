@@ -29,6 +29,7 @@ require 'assets/php/global.php';
 		<div class="storywrapper">
 		<div class="storyHeader">
 				<div class="storyTitle">
+				<p> Amount of users: <?php echo $amountOfUsers; ?> </p>
 					<h2>List of stories</h2>
 				</div>
 			</div>

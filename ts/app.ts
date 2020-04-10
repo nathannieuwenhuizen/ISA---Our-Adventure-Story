@@ -124,6 +124,7 @@ export default class App {
             let searchButton: Element = document.getElementsByClassName("searchButton")[0];
             let searchBar: Element = document.getElementsByClassName("searchBar")[0];
             searchButton.addEventListener("click", ()=> {
+                console.log("new search");
                 window.location.href = './storyinfo.php?ID=' + STORYID+'&offset=0&orderby=' + orderByObject.value + "&search=" + searchBar.value;
             });
         }

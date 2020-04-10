@@ -220,6 +220,7 @@
       background-color: rgba($color: #000000, $alpha: 0.2);
       transition: opacity .3s;
       p {
+        margin-left: 15px;
         user-select: none;
         position: absolute;
         font-size: 100px;
