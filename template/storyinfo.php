@@ -90,6 +90,8 @@ require 'assets/php/global.php';
                 <div class="infoPanel added-parts">
 
                     <h3> All parts </h3>
+                    <input type="search" placeholder="Search keys" class="searchBar" value="<?php echo $search; ?>">
+                    <input type="submit" value="search" class="searchButton"/>
                     <p> Order by
                     <select id="orderByOptions">
     <option value="0" <?php if ($orderBy == 0) { echo "selected='selected'";} ?>><a href="./">Most recent</a></option>
@@ -99,37 +101,8 @@ require 'assets/php/global.php';
 </select>
                     </p>
                     
+                    <?php NaviagationButtons($offset, $searchAmmount, "?ID=".$storyID."&orderby=".$orderBy."&search=". $search ."&offset=");?>
 
-                    <div class="navigationButtons">
-
-<a class=<?php 
-    if ($offset <= 0) {
-        echo "hide";
-    } else {
-        echo "something";
-    }
-?> href="?ID=<?php echo $storyID; ?>&offset=0&orderby=<?php echo $orderBy; ?>"> << </a> 
-<a class=<?php 
-if ($offset <= 0) {
-    echo "hide";
-} else {
-    echo "something";
-}?> href="?ID=<?php echo $storyID; ?>&offset=<?php echo $offset - 1; ?>&orderby=<?php echo $orderBy; ?>"> < </a> 
-    <b> <?php echo $offset + 1  ?> / <?php echo Round($amountOfParts / 10); ?> </b>
-    
-    <a class=<?php 
-if ($offset + 1 >= Round( $amountOfParts / 10)) {
-    echo "hide";
-} else {
-    echo "something";
-}?> href="?ID=<?php echo $storyID; ?>&offset=<?php echo $offset + 1; ?>&orderby=<?php echo $orderBy; ?>"> ></a>
-    <a class=<?php 
-if ($offset + 1 >= Round( $amountOfParts / 10)) {
-    echo "hide";
-} else {
-    echo "something";
-}?> href="?ID=<?php echo $storyID; ?>&offset=<?php echo Round($amountOfParts / 10) - 1; ?>&orderby=<?php echo $orderBy; ?>"> >></a>
-</div>
                     <ul class="storyList">
                         <?php echo  $addedPartsList;?>
                     </ul>

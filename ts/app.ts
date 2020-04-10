@@ -118,8 +118,14 @@ export default class App {
         if (document.getElementById('orderByOptions')) {
             let orderByObject = document.getElementById('orderByOptions');
             orderByObject.onchange = () => {
-                window.location.href = './storyinfo.php?ID=' + STORYID+'&offset=0&orderby=' + orderByObject.value;
+                window.location.href = './storyinfo.php?ID=' + STORYID+'&offset=0&orderby=' + orderByObject.value + "&search=" + searchBar.value;
             };
+
+            let searchButton: Element = document.getElementsByClassName("searchButton")[0];
+            let searchBar: Element = document.getElementsByClassName("searchBar")[0];
+            searchButton.addEventListener("click", ()=> {
+                window.location.href = './storyinfo.php?ID=' + STORYID+'&offset=0&orderby=' + orderByObject.value + "&search=" + searchBar.value;
+            });
         }
     }
 

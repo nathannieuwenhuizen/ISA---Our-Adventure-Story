@@ -12,10 +12,31 @@ $storyID =  GetURLVariable('ID', 0, -1);
 
 $offset = GetURLVariable('offset',0, -1);
 
-$orderBy = GetURLVariable('orderby',0,  3);
+$orderBy = GetURLVariable('orderby',0,  4);
 
-function GetURLVariable($urlVar,$minNumber, $maxNumber) {
-    $result = 0;
+$search = GetURLVariable('search',-1,-1, "");
+$searchAmmount = 0;
+$searchFilter = "";
+if ($search != "") {
+    if (strpos($search, ' ') !== false) {
+        $parts = preg_split('/\s+/', $search);
+        $searchFilter = "AND(";
+        for ($i = 0; $i < count($parts); $i++) { 
+            if ($i != 0) {
+                $searchFilter .= " OR ";
+            }
+
+            $searchFilter .= "(storyparts.option_text like '%". $parts[$i] ."%')";
+        }
+        $searchFilter .= ")";
+    } else {
+        $searchFilter = "AND storyparts.option_text like '%". $search ."%'";
+
+    }
+}
+
+function GetURLVariable($urlVar,$minNumber, $maxNumber, $defaultVal = 0) {
+    $result = $defaultVal;
     if ( isset($_GET[$urlVar]) || !empty($_GET[$urlVar]))
     {
         $result = $_GET[$urlVar];
@@ -29,7 +50,6 @@ function GetURLVariable($urlVar,$minNumber, $maxNumber) {
 
     return $result;
 }
-
 
 //general info
 $name;
@@ -98,10 +118,20 @@ if (mysqli_num_rows($result) > 0) {
         $layerTableValues .= "<tr><td>" . $row["layer"] . "</td><td>" . $row["COUNT(id)"] . "</td></tr>";
     }
 
+} 
+
+if ($search != "") {
+    $sql = "SELECT COUNT(id) FROM `storyparts` WHERE `storyID` = $storyID $searchFilter";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            $searchAmmount = $row["COUNT(id)"];
+        }
+    }
 } else {
-    //there are no results
-    // echo "0 results";
+    $searchAmmount = $amountOfParts;
 }
+echo $searchAmmount;
 
 $amountOfEnds = 0;
 $sql = "SELECT COUNT(`end`) FROM `storyparts` WHERE `end` = 1 AND `storyID` = $storyID";
@@ -134,11 +164,10 @@ switch ($orderBy) {
     break;
 }
 $sqlOffset = $offset * 10;
-
 $sql = "SELECT  storyparts.ID, storyparts.option_text, storyparts.Date, storyparts.image, storyparts.authorID, users.username , COUNT(likes.storypartID) as likes 
 FROM `storyparts`
 LEFT JOIN likes ON likes.storypartID = storyparts.ID  
-LEFT JOIN users ON storyparts.authorID = users.id  WHERE storyparts.storyID = $storyID 
+LEFT JOIN users ON storyparts.authorID = users.id  WHERE storyparts.storyID = $storyID $searchFilter
 GROUP BY storyparts.ID ORDER BY $sqlOrderBy LIMIT 10 OFFSET $sqlOffset" ;
 
 //$sql = "SELECT storyparts.ID, storyparts.option_text, storyparts.Date, storyparts.image, storyparts.authorID, users.username FROM `storyparts` LEFT JOIN users ON storyparts.authorID = users.id WHERE `storyID` = $storyID ORDER BY `storyparts`.`Date` DESC LIMIT 10 OFFSET $sqlOffset ";
