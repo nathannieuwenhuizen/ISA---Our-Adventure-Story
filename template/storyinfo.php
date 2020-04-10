@@ -26,6 +26,7 @@ require 'assets/php/global.php';
     <script>
         NAME = "<?php echo $name ?>";
 		STORYID = "<?php echo $storyID ?>"
+		SHOWPREVIEW = "<?php echo $showPreview ?>"
 	</script>
 
 

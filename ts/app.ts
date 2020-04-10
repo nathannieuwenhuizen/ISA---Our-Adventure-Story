@@ -39,7 +39,7 @@ export default class App {
     public storyPartHandeler: StoryPartsHandeler;
     //the start function goes here
     constructor() {
-        console.log("app start");
+        console.log('%c Our TG captions welcomes you! ', 'background: #57074e; color: #f0ccec');
 
         this.checkBranchCanvasAndApply();
 
@@ -126,24 +126,26 @@ export default class App {
 
             let imageHover: Element = document.getElementsByClassName("imageHover")[0];
             let storyList: Element = document.getElementsByClassName("storyList")[0];
-            for(let i: number =0; i < storyList.children.length; i++) {
-                
-                storyList.children[i].addEventListener("mouseover", () => {
-                    if (storyList.children[i].name != "") {
-                        let objImg = new Image();
-                        objImg.src = storyList.children[i].name;
-                        objImg.onload= ()=> {
-                            imageHover.classList.remove("hide");
-                            imageHover.children[0].setAttribute("src", storyList.children[i].name);
+
+            if (SHOWPREVIEW == 1) {
+                for(let i: number =0; i < storyList.children.length; i++) {
+                    storyList.children[i].addEventListener("mouseover", () => {
+                        if (storyList.children[i].name != "") {
+                            let objImg = new Image();
+                            objImg.src = storyList.children[i].name;
+                            objImg.onload= ()=> {
+                                imageHover.classList.remove("hide");
+                                imageHover.children[0].setAttribute("src", storyList.children[i].name);
+                            }
+                            imageHover.style.top = storyList.children[i].offsetTop +"px";    
                         }
-                        imageHover.style.top = storyList.children[i].offsetTop +"px";    
-                    }
 
-                });
-                storyList.children[i].addEventListener("mouseleave" , () => {
-                    imageHover.classList.add("hide");
-                });
+                    });
+                    storyList.children[i].addEventListener("mouseleave" , () => {
+                        imageHover.classList.add("hide");
+                    });
 
+                }
             }
 
         }
@@ -173,6 +175,15 @@ export default class App {
                 let form: Element = document.getElementsByClassName("ProfileImageForm")[0];
                 form.classList.contains("hide") ? form.classList.remove("hide") : form.classList.add("hide");
             }); 
+
+            let editProfile: Element = document.getElementsByClassName("userEditButton")[0];
+            editProfile.addEventListener("click", () => {
+                let form: Element = document.getElementsByClassName("UpdateUserForm")[0];
+                console.log("Form", form);
+                form.classList.contains("hide") ? form.classList.remove("hide") : form.classList.add("hide");
+            }); 
+
+            
         }
     }
 

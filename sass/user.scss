@@ -195,13 +195,26 @@
         margin-top: -20px;
         text-align: right;
       }
-
-      
-
   }
   
   
 .profileWrapper {
+
+  .ProfileImageForm, .UpdateUserForm {
+    margin: 50px 30px;
+    padding: 5px 20px;
+    color: $headerButtonColor;
+    border: 3px solid $headerButtonColor;
+  } 
+  .userEditButton {
+    float: right;
+    margin: 30px;
+    opacity: .8;
+    cursor: pointer;
+  }
+  .userEditButton:hover {
+    opacity: 1;
+  }
 
   .profileImage {
     width: 200px;

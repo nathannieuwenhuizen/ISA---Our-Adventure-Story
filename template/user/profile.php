@@ -13,6 +13,7 @@ if ( $_SESSION['logged_in'] == 1 ) {
     $email = $_SESSION['email'];
     $active = $_SESSION['active']; 
 }
+
 function CheckLogin() {
   if ( $_SESSION['logged_in'] != 1 ) {
     $_SESSION['message'] = "You must log in before viewing your profile page!";
@@ -74,7 +75,9 @@ if ($result != null) {
 $selectedUsername;
 $dateCreated;
 $profileImage;
-$sql = "SELECT `username`, profileImage, date FROM users WHERE id = $selectedUser LIMIT 1";
+$description;
+$showPreview = 0;
+$sql = "SELECT `username`, profileImage, `description`, showPreviewImage,  `date` FROM users WHERE id = $selectedUser LIMIT 1";
 $result = mysqli_query($conn, $sql);
 if ($result != null) {
   if (mysqli_num_rows($result) > 0) {
@@ -82,10 +85,14 @@ if ($result != null) {
       $selectedUsername = $row["username"];
       $dateCreated = $row["date"];
       $profileImage = $row["profileImage"];
+      $description = $row["description"];
+      $showPreview = $row["showPreviewImage"];
     }
-  }
+  } 
 }
-
+if ($description == "" ){
+  $description = "...";
+}
 
 
 //get favourites id at the offset
@@ -146,28 +153,7 @@ require '../assets/php/global.php';
 
     <div class="profileWrapper">
 
-    <div class = "half" style="width: auto;">
-      <div class ="profileImage" style="background-image: url( 
-        <?php if ($profileImage == NULL && $profileImage == "") { 
-          echo '../assets/img/profileIcon.jpg'; }
-          else { 
-            echo "'". $profileImage ."'"; } ?>); "> 
-
-          <?php if ($isOwnProfile) {
-            echo "<div class='profileImageEdit'><p> Edit </p> </div>";
-          } ?>
-      </div>
-    </div>
-
-
-    <div class = "half">
-      <h1><?php if ($isOwnProfile) {
-        echo "Welcome ";
-      }
-      echo $selectedUsername; 
-      ?> </h1>
-
-      <p>
+    <p>
         <?php 
      
           // Display message about account verification link only once
@@ -194,19 +180,54 @@ require '../assets/php/global.php';
           }
           ?>
 
-      <ul>Created at: <?php echo $dateCreated; ?></ul>
-      <ul>Wrote <?php echo $amountOfWrittenParts; ?> parts </ul>
-      <ul>Has <?php echo $amountOfFavourites; ?> Favourites </ul>
+
+    <div class = "half" style="width: auto;">
+      <div class ="profileImage" style="background-image: url( 
+        <?php if ($profileImage == NULL && $profileImage == "") { 
+          echo '../assets/img/profileIcon.jpg'; }
+          else { 
+            echo "'". $profileImage ."'"; } ?>); "> 
+
+          <?php if ($isOwnProfile) {
+            echo "<div class='profileImageEdit'><p> Edit </p> </div>";
+          } ?>
+      </div>
+    </div>
+
+
+    <div class = "half">
+      <h1><?php if ($isOwnProfile) {
+        echo "Welcome ";
+      }
+      echo $selectedUsername; 
+      ?> </h1>
+
+
+      <p>Created at: <?php echo $dateCreated; ?> <br>
+      Contributed <?php echo $amountOfWrittenParts; ?> parts <br>
+      Has <?php echo $amountOfFavourites; ?> Favourites <br>
+      <p> <b> About myself </b> <br> <?php echo $description; ?> 
+        </p>
         </div>
+        <?php if ($isOwnProfile) { echo '<img class="userEditButton" src="../assets/img/edit_icon.png">'; } ?>
+
+
         <div style="clear: both;"></div> 
 
         <form class="ProfileImageForm hide" action="../assets/php/user/profileImageUpdate.php" method="post"> 
-        <p>Image url (max 5mb in size) <input type="text" name="image" placeholder="www.... jpg, png, gif" required /></p>
+        <p>Image url (max 3mb in size) <input type="text" name="image" placeholder="www.... jpg, png, gif" required /></p>
         <p><input type="submit" name="submit" class="createButton" value="Upload"/></p>
         </form>
 
-      <div class=" added-parts half">
+        <form class="UpdateUserForm hide " action="../assets/php/user/profileUpdate.php" method="post"> 
+        <p>About info </p>
+        <textarea name="description" cols="40" rows="5"
+		  	placeholder="Tell us anything about you :)"><?php if ($description != "...") echo $description; ?></textarea>
+        <p>Show preview images? <input type="checkbox" name="showPreview" <?php if ($showPreview == 1) echo "checked" ?>/></p>
+        <p><input type="submit" name="submit" class="createButton" value="Update"/></p>
+        </form>
 
+      <div class=" added-parts half">
       <h3>Written parts</h3>
       <hr>
       <?php NaviagationButtons($writtenOffset, $amountOfWrittenParts, "?user=".$selectedUser."&favoffset=". $favOffset ."&writtenoffset=");?>
@@ -216,7 +237,6 @@ require '../assets/php/global.php';
       </div>
 
       <div class=" added-parts half">
-
       <h3>Favourites </h3>
       <hr>
       <?php NaviagationButtons($favOffset, $amountOfFavourites, "?user=".$selectedUser."&writtenoffset=". $writtenOffset ."&favoffset=");?>
@@ -224,7 +244,9 @@ require '../assets/php/global.php';
         <?php echo  $favouriteList;?> 
       </ul>
       </div>
+
       <div style="clear: both;"></div> 
+
       <hr>
       <h3>Made story </h3>
       <?php 
@@ -250,6 +272,7 @@ require '../assets/php/global.php';
         echo "<p>This user has made no stories. </p>";
       }			
 			 ?>
+
 <br>
 <hr>
       <br>

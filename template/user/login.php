@@ -20,6 +20,7 @@ else { // User exists
         $_SESSION['userID'] = $user['id'];
         $_SESSION['access_token'] = $user['access_token'];
         $_SESSION['refresh_token'] = $user['refresh_token'];
+        $_SESSION['previewImage'] = $user['showPreviewImage'];
 
         $_SESSION['message'] = "You are logged in.";
 

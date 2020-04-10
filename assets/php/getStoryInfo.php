@@ -79,6 +79,11 @@ if (isset( $_SESSION['userID'])) {
         $canEdit = true;
     }
 }
+$showPreview = 0;
+if (isset($_SESSION['previewImage'])) {
+    $showPreview = $_SESSION['previewImage'];
+}
+
 if (!StoryIsOpen($conn, $storyID)) {
     $canEdit = false; 
     $status = "CLOSED";
