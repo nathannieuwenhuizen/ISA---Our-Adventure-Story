@@ -33,6 +33,8 @@ require 'assets/php/global.php';
         <?php 	include 'assets/inc/nav.inc'; ?>
 
         <div class="storywrapper">
+        <div class="imageHover hide"> <img src="https://i.pinimg.com/originals/ac/3a/75/ac3a756d233d72e4594ae3f4dc948c90.jpg" /></div>
+
             <div class="storyHeader">
                 <div class="storyTitle">
                     <h2> <?php echo $name; ?> | Description and information</h2>

@@ -39,15 +39,15 @@ export default class App {
     public storyPartHandeler: StoryPartsHandeler;
     //the start function goes here
     constructor() {
+        console.log("app start");
 
-        this.checkCacheUpdate();
         this.checkBranchCanvasAndApply();
 
         this.editButtonEvents();
         this.checkStoryView();
         this.checkProfilePageEdit();
         
-        this.checkOrderBySelection();
+        this.checkStoryInfoPage();
         if (document.getElementsByClassName('createWrapper')[0]) {
             this.storyPartHandeler = new StoryPartsHandeler();
         }        
@@ -98,10 +98,6 @@ export default class App {
         });
     }
 
-    public checkCacheUpdate() {
-
-    }
-
     public checkBranchCanvasAndApply() {
         if (document.getElementById("branchCanvas") != null) {
 
@@ -114,7 +110,7 @@ export default class App {
 
     }
 
-    public checkOrderBySelection() {
+    public checkStoryInfoPage() {
         if (document.getElementById('orderByOptions')) {
             let orderByObject = document.getElementById('orderByOptions');
             orderByObject.onchange = () => {
@@ -127,6 +123,29 @@ export default class App {
                 console.log("new search");
                 window.location.href = './storyinfo.php?ID=' + STORYID+'&offset=0&orderby=' + orderByObject.value + "&search=" + searchBar.value;
             });
+
+            let imageHover: Element = document.getElementsByClassName("imageHover")[0];
+            let storyList: Element = document.getElementsByClassName("storyList")[0];
+            for(let i: number =0; i < storyList.children.length; i++) {
+                
+                storyList.children[i].addEventListener("mouseover", () => {
+                    if (storyList.children[i].name != "") {
+                        let objImg = new Image();
+                        objImg.src = storyList.children[i].name;
+                        objImg.onload= ()=> {
+                            imageHover.classList.remove("hide");
+                            imageHover.children[0].setAttribute("src", storyList.children[i].name);
+                        }
+                        imageHover.style.top = storyList.children[i].offsetTop +"px";    
+                    }
+
+                });
+                storyList.children[i].addEventListener("mouseleave" , () => {
+                    imageHover.classList.add("hide");
+                });
+
+            }
+
         }
     }
 
@@ -153,7 +172,7 @@ export default class App {
             editProfileImage.addEventListener("click", () => {
                 let form: Element = document.getElementsByClassName("ProfileImageForm")[0];
                 form.classList.contains("hide") ? form.classList.remove("hide") : form.classList.add("hide");
-            });
+            }); 
         }
     }
 

@@ -194,7 +194,7 @@ if (mysqli_num_rows($result) > 0) {
         }
         
         //adds the html text to json object
-        $addedPartsList .= "<a href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate . " ago" .$writerName . $likesText . " </p> ". $image." </li> </a>";
+        $addedPartsList .= "<a name='".$row["image"]."' href='story.php?storypart=" . $row["ID"] . "'><li>  <b>". $option ." </b> <p>Added " .  $addeddate . " ago" .$writerName . $likesText . " </p> ". $image." </li> </a>";
 
     }
  
