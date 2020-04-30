@@ -34,7 +34,7 @@
     "fork-ts-checker-notifier-webpack-plugin": "^0.4.0",
     "fork-ts-checker-webpack-plugin": "^0.4.1",
     "happypack": "^4.0.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "node-sass": "^4.11.0",
     "phaser-ce": "^2.10.1",
     "sass-loader": "^6.0.7",
@@ -47,6 +47,6 @@
     "webpack-spritesmith": "^0.4.0"
   },
   "dependencies": {
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.0"
   }
 }
